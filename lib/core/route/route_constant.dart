@@ -1,5 +1,3 @@
-import 'package:standard_project/module/ac/achievement/data/repo/achievement_repo.dart';
-
 class RouteConstant {
   static const signIn = '/signIn';
   static const profile = '/profile';
@@ -9,4 +7,7 @@ class RouteConstant {
   static const MenegementDecree = '/MenegementDecree';
   static const VisiMisi = '/visimisi';
   static const Achievement = '/Achievement';
+  static const event = '/event';
+  static const listukm = '/listukm';
+  static const report = '/report';
 }
