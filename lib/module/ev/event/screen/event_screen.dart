@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:standard_project/core/style/app_size.dart';
-import 'package:standard_project/core/style/app_color.dart';
+//import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/module/ev/event/controller/event_controller.dart';
 import 'package:standard_project/module/ev/event/data/model/userevent.dart';
 
@@ -18,6 +18,9 @@ class EventScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 233, 232, 232),
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -26,13 +29,11 @@ class EventScreen extends StatelessWidget {
                           children: [
                             Container(
                               margin: EdgeInsets.only(top: 10, left: 43),
-                              child: Text(
-                                'Kegiatan Mahasiswa',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 30.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                              child: Text('Kegiatan Mahasiswa',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.bold)),
                             ),
                             Container(
                               child: create(context, 'title'),
@@ -45,11 +46,11 @@ class EventScreen extends StatelessWidget {
                           children: [
                             Container(
                               margin: EdgeInsets.only(left: 6, bottom: 10),
-                              width: AppSize.screenWidth * 2,
+                              width: AppSize.screenWidth * 2.425,
                               height: AppSize.screenHeight * 0.06,
                               decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5)),
+                                  borderRadius: BorderRadius.circular(3)),
                               child: TextField(
                                 decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(left: 10),
@@ -91,17 +92,19 @@ class EventScreen extends StatelessWidget {
                       constraints: BoxConstraints(minHeight: 0),
                       width: AppSize.screenWidth * 3,
                       decoration: BoxDecoration(
-                        color: AppColors.bg,
+                        color: Color.fromARGB(255, 233, 232, 232),
                       ),
                       child: GridView.builder(
                         shrinkWrap: true,
                         itemCount: controller.organizationList.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4, childAspectRatio: 1.548),
+                            crossAxisCount: 4, childAspectRatio: 1.4),
                         itemBuilder: (BuildContext context, int index) {
-                          return Center(
-                              child: item(
-                                  controller.organizationList[index], context));
+                          return Column(children: [
+                            Center(
+                                child: item(controller.organizationList[index],
+                                    context))
+                          ]);
                         },
                       )),
                 ],
@@ -395,10 +398,18 @@ Widget create(context, title) {
 
 Widget item(EventOrganization model, context) {
   return Container(
-    padding: EdgeInsets.all(19),
-    margin: EdgeInsets.only(left: 5, right: 7, bottom: 5, top: 10),
+    padding: EdgeInsets.all(33),
+    margin: EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
     decoration: BoxDecoration(
-        color: Colors.white, borderRadius: BorderRadius.circular(7)),
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(3),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey,
+          spreadRadius: 1,
+        )
+      ],
+    ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -407,35 +418,18 @@ Widget item(EventOrganization model, context) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: AppSize.screenHeight * 0.027,
-              width: AppSize.screenWidth * 0.1,
-              padding: EdgeInsets.only(left: 4, top: 3.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.blueAccent.shade700,
-                    spreadRadius: 1,
-                  )
-                ],
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text("${model.no}",
-                  style: TextStyle(
-                      color: Colors.blueAccent.shade700,
-                      fontSize: 8.5,
-                      fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(height: 7),
             Text("${model.nama}",
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18.0,
+                    fontSize: 20.0,
                     fontWeight: FontWeight.bold)),
+            Divider(endIndent: 0, color: Colors.grey, indent: 0, height: 20),
             SizedBox(height: 5),
             Text("${model.waktu}",
-                style: TextStyle(color: Colors.grey, fontSize: 11.0)),
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12.0,
+                )),
             SizedBox(height: 5),
             Row(
               children: [
@@ -467,122 +461,129 @@ Widget item(EventOrganization model, context) {
         ),
         SizedBox(height: 10),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Row(children: [
-              Container(
-                alignment: Alignment.topRight,
-                child: edit(context, 'title'),
-              ),
-              SizedBox(width: 10),
-              Container(
-                alignment: Alignment.topRight,
-                child: hapus(context, 'title'),
-              ),
-              SizedBox(width: 10),
-              Row(children: [
-                InkWell(
-                  onTap: () {
-                    showDialog<void>(
-                        context: context,
-                        barrierDismissible: true,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            content: Container(
-                              height: 500,
-                              width: 415,
-                              child: Column(
-                                children: [
-                                  Column(
+            Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    alignment: Alignment.topRight,
+                    child: edit(context, 'title'),
+                  ),
+                  SizedBox(width: 10),
+                  Container(
+                    alignment: Alignment.topRight,
+                    child: hapus(context, 'title'),
+                  ),
+                  SizedBox(width: 10),
+                  Row(children: [
+                    InkWell(
+                      onTap: () {
+                        showDialog<void>(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: Container(
+                                  height: 500,
+                                  width: 415,
+                                  child: Column(
                                     children: [
-                                      InkWell(
-                                          onTap: () {
-                                            Get.back();
-                                          },
-                                          child: Icon(Icons.close)),
-                                    ],
-                                  ),
-                                  SizedBox(height: 20),
-                                  Column(
-                                    children: [
-                                      Row(
+                                      Column(
                                         children: [
-                                          Icon(Icons.camera_alt_rounded),
-                                          SizedBox(width: 5),
-                                          Text(
-                                            'Documentation',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 24.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
+                                          InkWell(
+                                              onTap: () {
+                                                Get.back();
+                                              },
+                                              child: Icon(Icons.close)),
                                         ],
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Row(children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                            image: NetworkImage(
-                                                "${model.gambar1}"),
-                                            fit: BoxFit.cover,
-                                          )),
-                                          width: AppSize.screenWidth * 0.4,
-                                          height: AppSize.screenHeight * 0.2,
-                                        ),
-                                      ]),
-                                      SizedBox(width: 15),
-                                      Row(
+                                      ),
+                                      SizedBox(height: 20),
+                                      Column(
                                         children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                              image: NetworkImage(
-                                                  "${model.gambar2}"),
-                                              fit: BoxFit.cover,
-                                            )),
-                                            width: AppSize.screenWidth * 0.4,
-                                            height: AppSize.screenHeight * 0.2,
+                                          Row(
+                                            children: [
+                                              Icon(Icons.camera_alt_rounded),
+                                              SizedBox(width: 5),
+                                              Text(
+                                                'Documentation',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 24.0,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Row(children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                image: NetworkImage(
+                                                    "${model.gambar1}"),
+                                                fit: BoxFit.cover,
+                                              )),
+                                              width: AppSize.screenWidth * 0.4,
+                                              height:
+                                                  AppSize.screenHeight * 0.2,
+                                            ),
+                                          ]),
+                                          SizedBox(width: 15),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      "${model.gambar2}"),
+                                                  fit: BoxFit.cover,
+                                                )),
+                                                width:
+                                                    AppSize.screenWidth * 0.4,
+                                                height:
+                                                    AppSize.screenHeight * 0.2,
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          );
-                        });
-                  },
-                  child: Container(
-                    height: AppSize.screenHeight * 0.035,
-                    width: AppSize.screenWidth * 0.12,
-                    decoration: BoxDecoration(
-                      color: Colors.blueAccent.shade700,
-                      borderRadius: BorderRadius.circular(2),
+                                ),
+                              );
+                            });
+                      },
+                      child: Container(
+                        height: AppSize.screenHeight * 0.035,
+                        width: AppSize.screenWidth * 0.12,
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent.shade700,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                        child: Center(
+                            child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.photo_camera,
+                                color: Colors.white, size: 11),
+                            Text('Photos',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 11)),
+                          ],
+                        )),
+                      ),
                     ),
-                    child: Center(
-                        child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.photo_camera, color: Colors.white, size: 11),
-                        Text('Photos',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 11)),
-                      ],
-                    )),
-                  ),
-                ),
-              ])
-            ]),
+                  ])
+                ]),
           ],
         ),
       ],
