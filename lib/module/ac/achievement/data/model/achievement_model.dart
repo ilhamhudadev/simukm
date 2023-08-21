@@ -1,13 +1,13 @@
 import 'dart:core';
 
-class prestasiModel {
+class AchievementModel {
   String? Keterangan;
   String? Tanggal;
   String? Waktu;
   String? Sumber;
   String? Dokumentasi;
 
-  prestasiModel({
+  AchievementModel({
     this.Keterangan = "",
     this.Tanggal = "",
     this.Waktu = "",
