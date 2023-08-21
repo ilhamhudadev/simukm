@@ -2,10 +2,11 @@ import 'dart:ui';
 
 class AppColors {
   //Primary Color
-  static const cyberyellow = Color(0xfffed000);
-  static const eerieblack = Color(0xff252525);
-  static const eerieblack80 = Color(0xcc252525);
-  static const white = Color(0xffffffff);
+  static const greybegroud = Color(0xFFDFDFDE);
+  static const piksi = Color(0xFF8A2BE2);
+  static const bluese = Color(0xff1E90FF);
+  static const bg = Color(0xFFEBEAEA);
+  static const bilu = Color(0xFF0345fc);
 
   static const greywhite = Color(0xfff5f5f5);
   static const greyl2 = Color(0xffDADADA);
