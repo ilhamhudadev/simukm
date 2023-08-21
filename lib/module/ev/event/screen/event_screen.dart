@@ -13,75 +13,106 @@ class EventScreen extends StatelessWidget {
         init: EventController(),
         builder: (EventController controller) {
           return Scaffold(
-              body: Container(
-            width: AppSize.screenWidth * 1000,
-            height: AppSize.screenHeight,
-            color: AppColors.bg,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          top: 40, bottom: 40, left: 48, right: 40),
-                      child: Text(
-                        'Kegiatan Mahasiswa',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold),
+              body: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: 10, left: 43),
+                              child: Text(
+                                'Kegiatan Mahasiswa',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 30.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Container(
+                              child: create(context, 'title'),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 6, bottom: 10),
+                              width: AppSize.screenWidth * 2,
+                              height: AppSize.screenHeight * 0.06,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.only(left: 10),
+                                    hintText: "Search a listing",
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(5),
+                                            bottomLeft: Radius.circular(5)),
+                                        borderSide: BorderSide())),
+                              ),
+                            ),
+                            Container(
+                              child: InkWell(
+                                onTap: () {},
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  height: AppSize.screenHeight * 0.06,
+                                  width: AppSize.screenWidth * 0.15,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blueAccent.shade700,
+                                    borderRadius: BorderRadius.circular(3),
+                                  ),
+                                  child: Center(
+                                      child: Text(
+                                    'Search',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 15),
+                                  )),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                      constraints: BoxConstraints(minHeight: 0),
+                      width: AppSize.screenWidth * 3,
+                      decoration: BoxDecoration(
+                        color: AppColors.bg,
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(7.0),
-                      height: AppSize.screenHeight * 0.04,
-                      width: 250,
-                      decoration:
-                          BoxDecoration(borderRadius: BorderRadius.circular(5)),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 5.0),
-                            prefixIcon: Icon(Icons.search),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide: BorderSide())),
-                      ),
-                    ),
-                    Container(
-                      child: add(context, 'title'),
-                    ),
-                  ],
-                ),
-                Container(
-                    margin: EdgeInsets.only(
-                      top: 5,
-                      left: 20,
-                    ),
-                    height: AppSize.screenHeight * 0.81,
-                    width: AppSize.screenWidth * 2.6,
-                    decoration: BoxDecoration(
-                      color: AppColors.bg,
-                    ),
-                    child: GridView.builder(
-                      itemCount: controller.organizationList.length,
-                      gridDelegate:
-                          new SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4, childAspectRatio: 1.4),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Column(children: [
-                          item(controller.organizationList[index], context)
-                        ]);
-                      },
-                    ))
-              ],
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.organizationList.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4, childAspectRatio: 1.548),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Center(
+                              child: item(
+                                  controller.organizationList[index], context));
+                        },
+                      )),
+                ],
+              ),
             ),
           ));
         });
   }
 }
 
-Widget add(context, title) {
+Widget create(context, title) {
   return InkWell(
     onTap: () {
       showDialog<void>(
@@ -120,7 +151,7 @@ Widget add(context, title) {
                                         color: Colors.black, size: 20),
                                     SizedBox(width: 5),
                                     Text(
-                                      'Form Add',
+                                      'Form Create',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 22.0,
@@ -158,9 +189,7 @@ Widget add(context, title) {
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13,
-                                        horizontal:
-                                            10), // Ubah padding teks di dalam field
+                                        vertical: 13, horizontal: 10),
                                     isDense: true,
                                   ),
                                 ),
@@ -182,9 +211,7 @@ Widget add(context, title) {
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13,
-                                        horizontal:
-                                            10), // Ubah padding teks di dalam field
+                                        vertical: 13, horizontal: 10),
                                     isDense: true,
                                   ),
                                 ),
@@ -254,9 +281,7 @@ Widget add(context, title) {
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13,
-                                        horizontal:
-                                            10), // Ubah padding teks di dalam field
+                                        vertical: 13, horizontal: 10),
                                     isDense: true,
                                   ),
                                 ),
@@ -278,9 +303,7 @@ Widget add(context, title) {
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13,
-                                        horizontal:
-                                            10), // Ubah padding teks di dalam field
+                                        vertical: 13, horizontal: 10),
                                     isDense: true,
                                   ),
                                 ),
@@ -302,9 +325,7 @@ Widget add(context, title) {
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13,
-                                        horizontal:
-                                            10), // Ubah padding teks di dalam field
+                                        vertical: 13, horizontal: 10),
                                     isDense: true,
                                   ),
                                 ),
@@ -327,12 +348,12 @@ Widget add(context, title) {
                                 height: AppSize.screenHeight * 0.04,
                                 width: AppSize.screenWidth * 0.1,
                                 decoration: BoxDecoration(
-                                  color: Colors.blue,
+                                  color: Colors.blueAccent.shade700,
                                   borderRadius: BorderRadius.circular(3),
                                 ),
                                 child: Center(
                                     child: Text(
-                                  'Add',
+                                  'Create',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 11.5),
                                 )),
@@ -350,21 +371,21 @@ Widget add(context, title) {
     },
     borderRadius: BorderRadius.circular(20),
     child: Container(
-      margin: EdgeInsets.all(20),
-      height: AppSize.screenHeight * 0.04,
-      width: AppSize.screenWidth * 0.1,
+      margin: EdgeInsets.only(top: 10, right: 33),
+      height: AppSize.screenHeight * 0.06,
+      width: AppSize.screenWidth * 0.15,
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: Colors.blueAccent.shade700,
         borderRadius: BorderRadius.circular(3),
       ),
       child: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.add_box, color: Colors.white, size: 13),
+          Icon(Icons.add, color: Colors.white, size: 13),
           Text(
-            'Add',
-            style: TextStyle(color: Colors.white, fontSize: 13),
+            'Create',
+            style: TextStyle(color: Colors.white, fontSize: 15),
           ),
         ],
       )),
@@ -375,7 +396,7 @@ Widget add(context, title) {
 Widget item(EventOrganization model, context) {
   return Container(
     padding: EdgeInsets.all(19),
-    margin: EdgeInsets.only(left: 12, right: 12, bottom: 12),
+    margin: EdgeInsets.only(left: 5, right: 7, bottom: 5, top: 10),
     decoration: BoxDecoration(
         color: Colors.white, borderRadius: BorderRadius.circular(7)),
     child: Column(
@@ -394,7 +415,7 @@ Widget item(EventOrganization model, context) {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.blue,
+                    color: Colors.blueAccent.shade700,
                     spreadRadius: 1,
                   )
                 ],
@@ -402,7 +423,7 @@ Widget item(EventOrganization model, context) {
               ),
               child: Text("${model.no}",
                   style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.blueAccent.shade700,
                       fontSize: 8.5,
                       fontWeight: FontWeight.bold)),
             ),
@@ -545,7 +566,7 @@ Widget item(EventOrganization model, context) {
                     height: AppSize.screenHeight * 0.035,
                     width: AppSize.screenWidth * 0.12,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: Colors.blueAccent.shade700,
                       borderRadius: BorderRadius.circular(2),
                     ),
                     child: Center(
@@ -815,7 +836,7 @@ Widget edit(context, title) {
                                 height: AppSize.screenHeight * 0.04,
                                 width: AppSize.screenWidth * 0.15,
                                 decoration: BoxDecoration(
-                                  color: Colors.blue,
+                                  color: Colors.blueAccent.shade700,
                                   borderRadius: BorderRadius.circular(3),
                                 ),
                                 child: Center(
@@ -841,7 +862,7 @@ Widget edit(context, title) {
       height: AppSize.screenHeight * 0.035,
       width: AppSize.screenWidth * 0.085,
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: Colors.blueAccent.shade700,
         borderRadius: BorderRadius.circular(3),
       ),
       child: Center(
@@ -864,7 +885,7 @@ Widget hapus(context, title) {
     onTap: () {
       showDialog<void>(
           context: context,
-          barrierDismissible: true, // user must tap button!
+          barrierDismissible: true,
           builder: (BuildContext context) {
             return AlertDialog(
               content: Container(
@@ -894,7 +915,7 @@ Widget hapus(context, title) {
                             width: AppSize.screenWidth * 0.06,
                             padding: EdgeInsets.only(left: 4.5),
                             decoration: BoxDecoration(
-                              color: Colors.blue,
+                              color: Colors.blueAccent.shade700,
                               borderRadius: BorderRadius.circular(3),
                             ),
                             child: Row(
@@ -920,7 +941,7 @@ Widget hapus(context, title) {
                               color: Colors.white,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.blue,
+                                  color: Colors.blueAccent.shade700,
                                   spreadRadius: 1,
                                 )
                               ],
@@ -929,7 +950,8 @@ Widget hapus(context, title) {
                             child: Center(
                                 child: Text('No',
                                     style: TextStyle(
-                                        color: Colors.blue, fontSize: 11.5))),
+                                        color: Colors.blueAccent.shade700,
+                                        fontSize: 11.5))),
                           ),
                         ),
                       ],
@@ -945,7 +967,7 @@ Widget hapus(context, title) {
       height: AppSize.screenHeight * 0.035,
       width: AppSize.screenWidth * 0.098,
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: Colors.blueAccent.shade700,
         borderRadius: BorderRadius.circular(2),
       ),
       child: Center(
