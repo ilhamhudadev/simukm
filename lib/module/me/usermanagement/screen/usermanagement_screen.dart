@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -650,9 +648,13 @@ class UsermanagementScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Row(
-                      children: [buttonEdit(context), 
-                      SizedBox(width: 10,),
-                      buttondelete()],
+                      children: [
+                        buttonEdit(context),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        buttondelete()
+                      ],
                     )
                   ],
                 ),
@@ -664,7 +666,7 @@ class UsermanagementScreen extends StatelessWidget {
     );
   }
 
-  InkWell seemore(context) {
+  Widget seemore(context) {
     return InkWell(
       onTap: () {
         showDialog<void>(
@@ -684,7 +686,7 @@ class UsermanagementScreen extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.only(left: 10, top: 10),
-        padding: EdgeInsets.only(bottom: 5, top: 5, left: 10, right: 10),
+        padding: EdgeInsets.only(bottom: 4, top: 4, left: 10, right: 10),
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: [AppColors.bluese, AppColors.piksi]),
           borderRadius: BorderRadius.circular(15),
@@ -722,7 +724,9 @@ class buttondelete extends StatelessWidget {
                       Icons.warning,
                       color: Colors.yellow[200],
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Text('Are you sure to delete '),
                   ],
                 ),

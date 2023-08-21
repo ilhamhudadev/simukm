@@ -1,13 +1,13 @@
 class RouteConstant {
   static const signIn = '/signIn';
   static const profile = '/profile';
-  static const usermanagement = '/usermanagement';
-  static const profileUkm = '/profileUkm';
-  static const proposal = '/proposal';
-  static const MenegementDecree = '/MenegementDecree';
-  static const VisiMisi = '/visimisi';
-  static const Achievement = '/Achievement';
-  static const event = '/event';
-  static const listukm = '/listukm';
+
+  static const usermenegement = '/usermenegement';
+  static const visimisi = '/visimisi';
+  static const menegementdecree = '/menegementdecree';
+  static const organizationalstruktur = '/organizationalstruktur';
   static const report = '/report';
+  static const profileukm = '/profileukm';
+  static const event = '/event';
+
 }
