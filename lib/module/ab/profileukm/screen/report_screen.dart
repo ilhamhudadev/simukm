@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
 import 'package:standard_project/module/ab/profileukm/controller/report_controller.dart';
-import 'package:standard_project/module/ab/profileukm/data/model/report_model.dart';
-import 'package:standard_project/module/ev/event/screen/event_screen.dart';
 
 class ReportScreen extends StatelessWidget {
   @override

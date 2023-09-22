@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:standard_project/core/route/route_constant.dart';
-import 'package:standard_project/module/ab/profileukm/screen/managementDecree_screen.dart';
+import 'package:standard_project/module/ab/profileukm/screen/Decree_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/organizationalStructure_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/profileukm_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/report_screen.dart';
@@ -18,9 +18,7 @@ class AppRoute {
     GetPage(
         name: RouteConstant.usermenegement, page: () => UsermanagementScreen()),
     GetPage(name: RouteConstant.visimisi, page: () => VisiMisiScreen()),
-    GetPage(
-        name: RouteConstant.menegementdecree,
-        page: () => MenegementDecreeScreen()),
+    GetPage(name: RouteConstant.decree, page: () => DecreeScreen()),
     GetPage(
         name: RouteConstant.organizationalstruktur,
         page: () => OrganizationalStruktureScreen()),

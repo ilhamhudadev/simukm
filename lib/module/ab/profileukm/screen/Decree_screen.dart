@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
-import 'package:standard_project/module/ab/profileukm/controller/VisiMisi_controller.dart';
+import 'package:standard_project/module/ab/profileukm/controller/managementDecree_controller.dart';
 
-class VisiMisiScreen extends StatelessWidget {
+class DecreeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppSize().init(context);
-    return GetBuilder<VisiMisiController>(
-        init: VisiMisiController(),
-        builder: (VisiMisiController controller) {
+    return GetBuilder<ManegementDecreeController>(
+        init: ManegementDecreeController(),
+        builder: (ManegementDecreeController controller) {
           return Scaffold(
-            backgroundColor: Color(0xDDEAEAEA),
             body: SingleChildScrollView(
                 child: Center(
               child: Column(
@@ -31,7 +30,7 @@ class VisiMisiScreen extends StatelessWidget {
                               margin: EdgeInsets.only(
                                   top: 20, left: 20, right: 20, bottom: 20),
                               child: Text(
-                                'Developer Management',
+                                'Surat Keputusan ',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -90,8 +89,8 @@ class VisiMisiScreen extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: 20,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 1,
+                          crossAxisCount: 4,
+                          childAspectRatio: 2,
                         ),
                         itemBuilder: (BuildContext context, int index) {
                           return Center(child: item(context));
@@ -172,80 +171,57 @@ class VisiMisiScreen extends StatelessWidget {
 
   Widget item(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(5),
       margin: EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 5),
       color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '20/21',
-            style: TextStyle(
-              fontSize: 20,
+      child: Container(
+        padding: EdgeInsets.only(right: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/document.jpg'))),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 3,bottom: 3,right: 5,left: 5),
+                  decoration: BoxDecoration(
+                    color: AppColors.bilu,
+                    borderRadius: BorderRadius.circular(8)
+
+                  ),
+                  child: Text('2021',style: TextStyle(color: Colors.white),),
+                )
+              ],
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Visi',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              Container(
-                child: Text(
-                  '"Terwujudnya BEM FH UI yang bersinergi serta senantiasa hadir sebagai ruang kolaborasi anggota IKM FH UI dalam melaksanakan fungsi pergerakan dan pelayanan demi memberikan kebermanfaatan bagi FH UI, UI, dan Indonesia."',
-                  textAlign: TextAlign.center,
+            SizedBox(height: 10,),
+            Row(
+              children: [
+                Text('No SK :'),
+                SizedBox(
+                  width: 15,
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Misi',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              Container(
-                child: Column(
-                  children: [
-                    Text(
-                      'Menyikap, mengawal, dan mengadvokasikan isu-isu sosial politik secara strategis dan inklusif dengan melibatkan anggota IKM FH UI dalam rangka melakukan pengabdian kepada masyarakat.',
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Memenuhi kebutuhan akademik dan keprofesian serta melakukan pengawalan dan advokasi hak-hak anggota IKM FH UI secara aktif dan aspiratif untuk meningkatkan kualitas dan kesejahteraan anggota IKM FH UI.',
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Mengakomodasi, mengembangkan, dan mengapresiasi minat dan bakat anggota IKM FH UI dalam bidang olahraga, seni dan budaya, keilmuan, pelayanan keagamaan, dan peminatan bakat lainnya di lingkup FH UI.',
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Mengoptimalkan kinerja BEM FH UI dengan meningkatkan kualitas fungsionaris BEM FH UI dan membangun tata kerja internal organisasi yang sistematis, inklusif, dan apresiatif bagi seluruh fungsionaris BEM FH UI.',
-                      textAlign: TextAlign.center,
-                    )
-                  ],
+                Text('AHU-35720.HT.06.02.TH.2009')
+              ],
+            ),
+            Row(
+              children: [
+                Text('Tentang'),
+                SizedBox(
+                  width: 10,
                 ),
-              ),
-            ],
-          )
-        ],
+                Text('Pelantikan Pengurusan Baru')
+              ],
+            ),
+            Text('Kategori')
+          ],
+        ),
       ),
     );
   }

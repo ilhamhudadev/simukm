@@ -4,7 +4,7 @@ class RouteConstant {
 
   static const usermenegement = '/usermenegement';
   static const visimisi = '/visimisi';
-  static const menegementdecree = '/menegementdecree';
+  static const decree = '/decree';
   static const organizationalstruktur = '/organizationalstruktur';
   static const report = '/report';
   static const profileukm = '/profileukm';

@@ -40,18 +40,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget gradiancolors() {
-    return Container(
-      width: 200,
-      height: 200,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Color(0xff027dfd),
-        Color(0xff4100e0),
-        AppColors.softYellow,
-      ], end: Alignment.topRight)),
-    );
-  }
+  
 
   Widget buttonEditPassword(context) {
     return InkWell(onTap: () {

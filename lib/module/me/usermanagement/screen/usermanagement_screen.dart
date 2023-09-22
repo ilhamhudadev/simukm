@@ -53,7 +53,7 @@ class UsermanagementScreen extends StatelessWidget {
                                   boxShadow: [
                                     BoxShadow(
                                         color: Colors.grey,
-                                        blurRadius: 5.0,
+                                        blurRadius: 1.0,
                                         offset: Offset(0, 1))
                                   ]),
                               margin: EdgeInsets.only(
@@ -61,7 +61,7 @@ class UsermanagementScreen extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: AppSize.screenWidth * 2.3,
+                                    width: AppSize.screenWidth * 2.25,
                                     child: TextField(
                                       decoration: InputDecoration(
                                           contentPadding:
@@ -93,7 +93,7 @@ class UsermanagementScreen extends StatelessWidget {
                         itemCount: controller.usermenejemenList.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 4,
-                          childAspectRatio: 0.8,
+                          childAspectRatio: 0.87,
                         ),
                         itemBuilder: (BuildContext context, int index) {
                           return Center(
@@ -412,20 +412,23 @@ class UsermanagementScreen extends StatelessWidget {
             });
       },
       child: Container(
-        padding: EdgeInsets.only(bottom: 5, top: 5, left: 10, right: 10),
+        padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
         decoration: BoxDecoration(
           color: AppColors.bilu,
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(2),
         ),
         child: Row(children: [
           Icon(
             Icons.edit,
-            size: 12,
+            size: 15,
             color: Colors.white,
+          ),
+          SizedBox(
+            width: 5,
           ),
           Text(
             'Edit',
-            style: TextStyle(color: Colors.white, fontSize: 12),
+            style: TextStyle(color: Colors.white, fontSize: 15),
           )
         ]),
       ),
@@ -439,9 +442,12 @@ class UsermanagementScreen extends StatelessWidget {
         margin: EdgeInsets.only(right: 20),
         padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
         decoration: BoxDecoration(
-          color: AppColors.bilu,
-          borderRadius: BorderRadius.circular(5),
-        ),
+            color: AppColors.bilu,
+            borderRadius: BorderRadius.circular(5),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey, blurRadius: 5.0, offset: Offset(0, 1,))
+            ]),
         child: Row(
           children: [
             Icon(
@@ -449,6 +455,7 @@ class UsermanagementScreen extends StatelessWidget {
               size: 15,
               color: Colors.white,
             ),
+            SizedBox(width: 5),
             Text(
               'Create',
               style: TextStyle(color: Colors.white),
@@ -463,7 +470,7 @@ class UsermanagementScreen extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Container(
-        padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
+        padding: EdgeInsets.only(right: 20, left: 20, bottom: 14, top: 14),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.only(
@@ -471,6 +478,14 @@ class UsermanagementScreen extends StatelessWidget {
         ),
         child: Row(
           children: [
+            Icon(
+              Icons.search,
+              size: 20,
+              color: Colors.white,
+            ),
+            SizedBox(
+              width: 5,
+            ),
             Text(
               'Search',
               style: TextStyle(color: Colors.white, fontSize: 15),
@@ -648,6 +663,8 @@ class UsermanagementScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         buttonEdit(context),
                         SizedBox(
@@ -666,40 +683,7 @@ class UsermanagementScreen extends StatelessWidget {
     );
   }
 
-  Widget seemore(context) {
-    return InkWell(
-      onTap: () {
-        showDialog<void>(
-            context: context,
-            barrierDismissible: true,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                content: Container(
-                  height: 300,
-                  width: 500,
-                  child: Column(
-                    children: [TextField()],
-                  ),
-                ),
-              );
-            });
-      },
-      child: Container(
-        margin: EdgeInsets.only(left: 10, top: 10),
-        padding: EdgeInsets.only(bottom: 4, top: 4, left: 10, right: 10),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [AppColors.bluese, AppColors.piksi]),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Row(children: [
-          Text(
-            'See More',
-            style: TextStyle(color: Colors.white, fontSize: 10),
-          )
-        ]),
-      ),
-    );
-  }
+ 
 }
 
 class buttondelete extends StatelessWidget {
@@ -711,7 +695,7 @@ class buttondelete extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       minWidth: 30,
-      height: 30,
+      height: 42,
       color: AppColors.bilu,
       onPressed: () {
         showDialog(
@@ -722,7 +706,6 @@ class buttondelete extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.warning,
-                      color: Colors.yellow[200],
                     ),
                     SizedBox(
                       width: 10,
@@ -733,11 +716,14 @@ class buttondelete extends StatelessWidget {
                 actions: [
                   MaterialButton(
                     onPressed: () {},
-                    color: AppColors.bilu,
+                    color: Colors.grey[200],
                     child: Text('Yes'),
                   ),
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.back();
+                    },
+                    color: Colors.grey[200],
                     child: Text('No'),
                   )
                 ],
@@ -747,12 +733,13 @@ class buttondelete extends StatelessWidget {
       child: Row(children: [
         Icon(
           Icons.delete,
-          size: 12,
+          size: 15,
           color: Colors.white,
         ),
+        SizedBox(width: 5,),
         Text(
           'Delete',
-          style: TextStyle(fontSize: 12, color: Colors.white),
+          style: TextStyle(fontSize: 15, color: Colors.white),
         )
       ]),
     );

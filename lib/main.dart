@@ -31,7 +31,7 @@ class MainScreen extends StatelessWidget {
       translations: AppLanguage(),
       locale: appLocale,
       getPages: AppRoute.all,
-      initialRoute: RouteConstant.profileukm,
+      initialRoute: RouteConstant.visimisi,
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.rightToLeft,
     );
