@@ -1,17 +1,7 @@
-//Example of Repo
-//You might not use it
 class Reportrepo {
-  //   // final _myNetwork = ProfileukmNetwork();
-
-  //   // Every function should have repo as prefix
-
   Future<void> repoFunc() async {
-    try {
-      //      servFunc();
-    } catch (e) {
+    try {} catch (e) {
       rethrow;
     }
   }
-
-  //   Stream<Object> repoAnotherFunc() async* {}
 }

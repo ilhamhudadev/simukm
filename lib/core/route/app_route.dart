@@ -4,6 +4,7 @@ import 'package:standard_project/module/ab/profileukm/screen/Decree_screen.dart'
 import 'package:standard_project/module/ab/profileukm/screen/organizationalStructure_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/profileukm_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/report_screen.dart';
+import 'package:standard_project/module/ab/profileukm/screen/sampelcuaca_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/visimisi_screen.dart';
 import 'package:standard_project/module/ev/event/screen/event_screen.dart';
 import 'package:standard_project/module/me/profile/screen/profile_screen.dart';
@@ -25,5 +26,6 @@ class AppRoute {
     GetPage(name: RouteConstant.report, page: () => ReportScreen()),
     GetPage(name: RouteConstant.profileukm, page: () => ProfileukmScreen()),
     GetPage(name: RouteConstant.event, page: () => EventScreen()),
+    GetPage(name: RouteConstant.sampelcuaca, page: () => SampelCuacaScreen()),
   ];
 }

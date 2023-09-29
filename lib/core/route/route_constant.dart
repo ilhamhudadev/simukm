@@ -9,5 +9,6 @@ class RouteConstant {
   static const report = '/report';
   static const profileukm = '/profileukm';
   static const event = '/event';
+    static const sampelcuaca = '/sampelcuaca';
 
 }

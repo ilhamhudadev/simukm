@@ -19,7 +19,7 @@ class AppEnvironment {
       id = 'PRD_VENTENY';
       name = 'Production';
       urlScheme = 'https://';
-      enviromentServer = 'https://itunes.apple.com/';
+      enviromentServer = 'ibnux.github.io/';
       enviromentSuffix = '';
     }
   }

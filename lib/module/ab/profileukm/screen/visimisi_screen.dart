@@ -38,7 +38,7 @@ class VisiMisiScreen extends StatelessWidget {
                                     fontSize: 30),
                               ),
                             ),
-                            buttonAdd()
+                            buttonAdd(context)
                           ],
                         ),
                         Row(
@@ -104,9 +104,120 @@ class VisiMisiScreen extends StatelessWidget {
         });
   }
 
-  Widget buttonAdd() {
+  Widget buttonAdd(context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        showDialog<void>(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                content: Container(
+                  height: 700,
+                  width: 500,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: Container(
+                                child: Icon(Icons.close),
+                              ),
+                            )
+                          ],
+                        ),
+                        Text(
+                          'VISI',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: 520,
+                          child: TextFormField(
+                            minLines: 4,
+                            maxLines: 10,
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                  borderRadius: BorderRadius.circular(10)),
+                              hintText: 'Visi',
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'MISI',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: 520,
+                          child: TextFormField(
+                            minLines: 8,
+                            maxLines: 10,
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue),
+                                  borderRadius: BorderRadius.circular(10)),
+                              hintText: 'Misi',
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                right: 15, left: 15, bottom: 15, top: 15),
+                            decoration: BoxDecoration(
+                                color: AppColors.bilu,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 5.0,
+                                      offset: Offset(
+                                        0,
+                                        1,
+                                      ))
+                                ]),
+                            child: Text(
+                              'Create',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            });
+      },
       child: Container(
         margin: EdgeInsets.only(right: 20),
         padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
@@ -244,8 +355,213 @@ class VisiMisiScreen extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              buttonEdit(context),
+              SizedBox(
+                width: 5,
+              ),
+              buttondelete(context),
+            ],
           )
         ],
+      ),
+    );
+  }
+
+  Widget buttondelete(context) {
+    return MaterialButton(
+      minWidth: 30,
+      height: 42,
+      color: AppColors.bilu,
+      onPressed: () {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Row(
+                  children: [
+                    Icon(
+                      Icons.warning,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('Are you sure to delete '),
+                  ],
+                ),
+                actions: [
+                  MaterialButton(
+                    onPressed: () {},
+                    color: Colors.grey[200],
+                    child: Text('Yes'),
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    color: Colors.grey[200],
+                    child: Text('No'),
+                  )
+                ],
+              );
+            });
+      },
+      child: Row(children: [
+        Icon(
+          Icons.delete,
+          size: 13,
+          color: Colors.white,
+        ),
+        SizedBox(
+          width: 5,
+        ),
+        Text(
+          'Delete',
+          style: TextStyle(fontSize: 13, color: Colors.white),
+        )
+      ]),
+    );
+  }
+
+  Widget buttonEdit(context) {
+    return InkWell(
+      onTap: () {
+        showDialog<void>(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                content: Container(
+                  height: 800,
+                  width: 520,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: Container(
+                                child: Icon(Icons.close),
+                              ),
+                            )
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'VISI',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 520,
+                              child: TextFormField(
+                                minLines: 4,
+                                maxLines: 10,
+                                textAlign: TextAlign.center,
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Visi',
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'MISI',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 520,
+                              child: TextFormField(
+                                minLines: 8,
+                                maxLines: 10,
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Misi',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                right: 20, left: 20, bottom: 10, top: 10),
+                            decoration: BoxDecoration(
+                              color: AppColors.bilu,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text('Save',
+                                style: TextStyle(color: Colors.white)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            });
+      },
+      child: Container(
+        padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+        decoration: BoxDecoration(
+          color: AppColors.bilu,
+          borderRadius: BorderRadius.circular(2),
+        ),
+        child: Row(children: [
+          Icon(
+            Icons.edit,
+            size: 13,
+            color: Colors.white,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            'Edit',
+            style: TextStyle(color: Colors.white, fontSize: 13),
+          )
+        ]),
       ),
     );
   }
