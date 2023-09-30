@@ -1,92 +1,146 @@
-import 'package:get/get.dart';
-import 'package:standard_project/module/ac/achievement/data/repo/achievement_repo.dart';
-import 'package:standard_project/module/ac/achievement/data/model/achievement_model.dart';
 
-class AchievementController extends GetxController with AchievementRepo {
-  List<prestasiModel> prestasiList = [
-    prestasiModel(
-      Keterangan: "Teater Terbaik",
-      Tanggal: "2019-09-10",
-      Waktu: "Jam 13:00",
-      Sumber: "Sumber: FESTAMASIO",
-      Dokumentasi: "",
+  import 'package:get/get.dart';
+  import 'package:standard_project/module/ac/achievement/data/repo/achievement_repo.dart';
+  import 'package:standard_project/module/ac/achievement/data/model/achievement_management.dart';
+
+
+  class AchievementController extends GetxController with AchievementRepo {
+  
+  List<achievement1> achievementList = [
+
+    achievement1(
+
+     Keterangan: 'Novice First Best Speaker',
+     Tanggal: '05 Mei 2018',
+     Waktu: 'Jam 15:00',
+     Sumber: '2018 Asian English Olympics Debate',
+     Dokumentasi: '',
+     Tempat: 'Binus University, Bandung',
+
     ),
-    prestasiModel(
-      Keterangan: "Juara 1",
-      Tanggal: "2019-09-10",
-      Waktu: "Jam 10:00",
-      Sumber: "Sumber: Futsal",
-      Dokumentasi: "",
+
+    achievement1(
+
+     Keterangan: 'Champion',
+     Tanggal: '20 Juli 2022',
+     Waktu: 'Jam 08:00',
+     Sumber: '2022 Regional Futsal',
+     Dokumentasi: '',
+     Tempat: 'Bandung',
+
     ),
-    prestasiModel(
-      Keterangan: "Juara 2",
-      Tanggal: "2023-09-10",
-      Waktu: "Jam 20:00",
-      Sumber: "Sumber: Dance All",
-      Dokumentasi: "",
+
+    achievement1(
+
+     Keterangan: 'Novice First Best Speaker',
+     Tanggal: '05 Mei 2018',
+     Waktu: 'Jam 15:00',
+     Sumber: '2018 Asian English Olympics Debate',
+     Dokumentasi: '',
+     Tempat: 'Binus University, Bandung',
+
     ),
-    prestasiModel(
-      Keterangan: "Champion",
-      Tanggal: "2019-09-10",
-      Waktu: "Jam 19:00",
-      Sumber: "Sumber: Dharma Wacana",
-      Dokumentasi: "",
+
+    achievement1(
+
+     Keterangan: 'Champion',
+     Tanggal: '20 Juli 2022',
+     Waktu: 'Jam 08:00',
+     Sumber: '2022 Regional Futsal',
+     Dokumentasi: '',
+     Tempat: 'Bandung',
+
     ),
-    prestasiModel(
-      Keterangan: "Champion",
-      Tanggal: "2019-09-10",
-      Waktu: "Jam 19:00",
-      Sumber: "Sumber: Dharma Wacana",
-      Dokumentasi: "",
+
+achievement1(
+
+     Keterangan: 'Novice First Best Speaker',
+     Tanggal: '05 Mei 2018',
+     Waktu: 'Jam 15:00',
+     Sumber: '2018 Asian English Olympics Debate',
+     Dokumentasi: '',
+     Tempat: 'Binus University, Bandung',
+
     ),
-    prestasiModel(
-      Keterangan: "Juara 2",
-      Tanggal: "2023-09-10",
-      Waktu: "Jam 20:00",
-      Sumber: "Sumber: Dance All",
-      Dokumentasi: "",
+
+    achievement1(
+
+     Keterangan: 'Champion',
+     Tanggal: '20 Juli 2022',
+     Waktu: 'Jam 08:00',
+     Sumber: '2022 Regional Futsal',
+     Dokumentasi: '',
+     Tempat: 'Bandung',
+
     ),
-    prestasiModel(
-      Keterangan: "Juara 1",
-      Tanggal: "2019-09-10",
-      Waktu: "Jam 10:00",
-      Sumber: "Sumber: Futsal",
-      Dokumentasi: "",
+
+achievement1(
+
+     Keterangan: 'Novice First Best Speaker',
+     Tanggal: '05 Mei 2018',
+     Waktu: 'Jam 15:00',
+     Sumber: '2018 Asian English Olympics Debate',
+     Dokumentasi: '',
+     Tempat: 'Binus University, Bandung',
+
     ),
-    prestasiModel(
-      Keterangan: "Teater Terbaik",
-      Tanggal: "2019-09-10",
-      Waktu: "Jam 13:00",
-      Sumber: "Sumber: FESTAMASIO",
-      Dokumentasi: "",
+
+    achievement1(
+
+     Keterangan: 'Champion',
+     Tanggal: '20 Juli 2022',
+     Waktu: 'Jam 08:00',
+     Sumber: '2022 Regional Futsal',
+     Dokumentasi: '',
+     Tempat: 'Bandung',
+
     ),
-    prestasiModel(
-      Keterangan: "Teater Terbaik",
-      Tanggal: "2019-09-10",
-      Waktu: "Jam 13:00",
-      Sumber: "Sumber: FESTAMASIO",
-      Dokumentasi: "",
+
+    achievement1(
+
+     Keterangan: 'Novice First Best Speaker',
+     Tanggal: '05 Mei 2018',
+     Waktu: 'Jam 15:00',
+     Sumber: '2018 Asian English Olympics Debate',
+     Dokumentasi: '',
+     Tempat: 'Binus University, Bandung',
+
     ),
-    prestasiModel(
-      Keterangan: "Juara 1",
-      Tanggal: "2019-09-10",
-      Waktu: "Jam 10:00",
-      Sumber: "Sumber: Futsal",
-      Dokumentasi: "",
+
+    achievement1(
+
+     Keterangan: 'Champion',
+     Tanggal: '20 Juli 2022',
+     Waktu: 'Jam 08:00',
+     Sumber: '2022 Regional Futsal',
+     Dokumentasi: '',
+     Tempat: 'Bandung',
+
     ),
-    prestasiModel(
-      Keterangan: "Juara 2",
-      Tanggal: "2023-09-10",
-      Waktu: "Jam 20:00",
-      Sumber: "Sumber: Dance All",
-      Dokumentasi: "",
+
+    achievement1(
+
+     Keterangan: 'Novice First Best Speaker',
+     Tanggal: '05 Mei 2018',
+     Waktu: 'Jam 15:00',
+     Sumber: '2018 Asian English Olympics Debate',
+     Dokumentasi: '',
+     Tempat: 'Binus University, Bandung',
+
     ),
-    prestasiModel(
-      Keterangan: "Champion",
-      Tanggal: "2019-09-10",
-      Waktu: "Jam 19:00",
-      Sumber: "Sumber: Dharma Wacana",
-      Dokumentasi: "",
+
+    achievement1(
+
+     Keterangan: 'Champion',
+     Tanggal: '20 Juli 2022',
+     Waktu: 'Jam 08:00',
+     Sumber: '2022 Regional Futsal',
+     Dokumentasi: '',
+     Tempat: 'Bandung',
+
     ),
+
+
   ];
-}
+
+  }

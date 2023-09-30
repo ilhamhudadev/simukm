@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:standard_project/core/globalcontroller/app_session.dart';
 import 'package:standard_project/core/localization/app_language.dart';
 import 'package:standard_project/core/network/status_network_binding.dart';
 import 'package:standard_project/core/style/app_color.dart';
@@ -12,7 +11,7 @@ void main() {
   // getLocale().
   //then((locale) {
   runApp(const MainScreen(
-    appLocale: Locale('en'),
+    appLocale: Locale('en'), 
   ));
   // });
 }
@@ -32,7 +31,7 @@ class MainScreen extends StatelessWidget {
       translations: AppLanguage(),
       locale: appLocale,
       getPages: AppRoute.all,
-      initialRoute: RouteConstant.signIn,
+      initialRoute: RouteConstant.decree,
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.rightToLeft,
     );
