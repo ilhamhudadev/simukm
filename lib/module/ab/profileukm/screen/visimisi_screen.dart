@@ -12,7 +12,7 @@ class VisiMisiScreen extends StatelessWidget {
         init: VisiMisiController(),
         builder: (VisiMisiController controller) {
           return Scaffold(
-            backgroundColor: Color(0xDDEAEAEA),
+            backgroundColor: Color(0xFFE9E8E8),
             body: SingleChildScrollView(
                 child: Center(
               child: Column(
@@ -20,7 +20,7 @@ class VisiMisiScreen extends StatelessWidget {
                   Container(
                     height: 150,
                     width: AppSize.screenWidth * 3,
-                    decoration: BoxDecoration(color: Color(0xFFDADADA)),
+                    decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -85,7 +85,7 @@ class VisiMisiScreen extends StatelessWidget {
                   Container(
                       constraints: BoxConstraints(minHeight: 0),
                       width: AppSize.screenWidth * 3,
-                      decoration: BoxDecoration(color: Color(0xFFDADADA)),
+                      decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
                       child: GridView.builder(
                         shrinkWrap: true,
                         itemCount: 20,

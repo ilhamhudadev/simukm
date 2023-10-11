@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
 import 'package:standard_project/module/ab/profileukm/controller/organizationalStructure_controller.dart';
+import 'package:standard_project/module/ab/profileukm/data/model/organizationStruktur_model.dart';
 
 class OrganizationalStruktureScreen extends StatelessWidget {
+  get index => null;
+
   @override
   Widget build(BuildContext context) {
     AppSize().init(context);
@@ -12,14 +15,14 @@ class OrganizationalStruktureScreen extends StatelessWidget {
         init: OrganizationStrukturController(),
         builder: (OrganizationStrukturController controller) {
           return Scaffold(
-            backgroundColor: Color(0x6BDEDDDD),
+            backgroundColor: Color(0xFFE9E8E8),
             body: SingleChildScrollView(
               child: Center(
                 child: Column(children: [
                   Container(
                     height: 150,
                     width: AppSize.screenWidth * 3,
-                    decoration: BoxDecoration(color: Color(0xFFDADADA)),
+                    decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -48,7 +51,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                   boxShadow: [
                                     BoxShadow(
                                         color: Colors.grey,
-                                        blurRadius: 5.0,
+                                        blurRadius: 2.0,
                                         offset: Offset(0, 1))
                                   ]),
                               margin: EdgeInsets.only(
@@ -79,21 +82,36 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                      constraints: BoxConstraints(minHeight: 0),
-                      width: AppSize.screenWidth * 3,
-                      decoration: BoxDecoration(color: Color(0xFFDADADA)),
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: 20,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4,
-                          childAspectRatio: 0.9,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Center(child: item(context));
-                        },
-                      )),
+                  FutureBuilder<List<WilayahModel>>(
+                      future: controller.futureWilayah(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var value = snapshot.data;
+                          return Container(
+                              constraints: BoxConstraints(minHeight: 0),
+                              width: AppSize.screenWidth * 3,
+                              decoration:
+                                  BoxDecoration(color: Color(0xFFE9E8E8)),
+                              child: GridView.builder(
+                                scrollDirection: Axis.vertical,
+                                controller: controller.scrollController,
+                                shrinkWrap: true,
+                                itemCount: value!.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 4,
+                                  childAspectRatio: 0.9,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return item(value, index, context);
+                                },
+                              ));
+                        } else {
+                          return Center(
+                            child: Text("GAK ADA DATA BROWW"),
+                          );
+                        }
+                      })
                 ]),
               ),
             ),
@@ -101,32 +119,10 @@ class OrganizationalStruktureScreen extends StatelessWidget {
         });
   }
 
-  Widget buttonsearch() {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
-        decoration: BoxDecoration(
-          color: AppColors.bilu,
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
-        ),
-        child: Row(
-          children: [
-            Text(
-              'Search',
-              style: TextStyle(color: Colors.white, fontSize: 15),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget item(BuildContext context) {
+  Widget item(List<WilayahModel> value, int index, BuildContext context) {
     return Container(
-      width: 300,
-      margin: EdgeInsets.all(10),
+      width: 350,
+      height: 380,
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
@@ -151,7 +147,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                '2020/2021',
+                '2020/2021 ',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -171,7 +167,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 15),
                 ),
                 Text(
-                  'putri',
+                  ' ${value[index].id}',
                   style: TextStyle(color: Colors.grey),
                 ),
                 SizedBox(
@@ -182,7 +178,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 15),
                 ),
                 Text(
-                  'Rifqi',
+                  '${value[index].kecamatan}',
                   style: TextStyle(color: Colors.grey),
                 ),
                 SizedBox(
@@ -193,7 +189,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 15),
                 ),
                 Text(
-                  'sabyan',
+                  ' ${value[index].kota}',
                   style: TextStyle(color: Colors.grey),
                 ),
                 Container(
@@ -222,6 +218,28 @@ class OrganizationalStruktureScreen extends StatelessWidget {
     );
   }
 
+  Widget buttonsearch() {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
+        decoration: BoxDecoration(
+          color: AppColors.bilu,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
+        ),
+        child: Row(
+          children: [
+            Text(
+              'Search',
+              style: TextStyle(color: Colors.white, fontSize: 15),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget buttonAdd(context) {
     return InkWell(
       onTap: () {
@@ -231,7 +249,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
             builder: (BuildContext context) {
               return AlertDialog(
                 content: Container(
-                  height: 700,
+                  height: 500,
                   width: 500,
                   child: SingleChildScrollView(
                     child: Column(
@@ -336,6 +354,9 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -420,7 +441,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
             builder: (BuildContext context) {
               return AlertDialog(
                 content: Container(
-                  height: 800,
+                  height: 600,
                   width: 520,
                   child: SingleChildScrollView(
                     child: Column(
@@ -539,7 +560,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                             Container(
                               width: 520,
                               child: TextFormField(
-                                minLines: 4,
+                                minLines: 9,
                                 maxLines: 10,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
@@ -667,8 +688,8 @@ class OrganizationalStruktureScreen extends StatelessWidget {
             builder: (BuildContext context) {
               return AlertDialog(
                 content: Container(
-                  height: 800,
-                  width: 700,
+                  height: 500,
+                  width: 500,
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -703,7 +724,10 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                           child: Container(
                             child: Column(
                               children: [
-                                Text('DOSEN PEMBIMBING'),
+                                Text('DOSEN PEMBIMBING',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    )),
                                 Container(
                                   height: 1,
                                   width: 100,
@@ -730,7 +754,10 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               child: Container(
                                 child: Column(
                                   children: [
-                                    Text('KETUA'),
+                                    Text('KETUA',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        )),
                                     Container(
                                       height: 1,
                                       width: 100,
@@ -751,7 +778,10 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               child: Container(
                                 child: Column(
                                   children: [
-                                    Text('WAKIL KETUA'),
+                                    Text('WAKIL KETUA',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        )),
                                     Container(
                                       height: 1,
                                       width: 100,
@@ -797,12 +827,18 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                 ),
                                 Text('Saniati'),
                                 Text('M. Taufik Munawar'),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 Text(
                                   'BENDAHARA',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text('Diva Rachman'),
                                 Text('Salma Siti F'),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 Text(
                                   'HUSMAS',
                                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -811,9 +847,6 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 20,
                         ),
                       ],
                     ),

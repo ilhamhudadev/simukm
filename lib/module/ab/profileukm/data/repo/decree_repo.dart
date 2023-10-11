@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:standard_project/module/ab/profileukm/data/model/organizationStruktur_model.dart';
+import 'package:standard_project/module/ab/profileukm/data/model/decree_model.dart';
 
-class OraganizationStrukturRepo {
+class DecreeRepo {
   Future<void> repoFunc() async {
     try {} catch (e) {
       rethrow;
     }
   }
 
-  Future<List<WilayahModel>> fetchWilayah() async {
-    debugPrint("Print Wilayah");
+  Future<List<DecreeModel>> fetchDecree() async {
+    debugPrint("Print Sampel");
     try {
       final Dio _dio = Dio();
       final response = await _dio
@@ -18,7 +18,7 @@ class OraganizationStrukturRepo {
 
       debugPrint("Print Wilayah 1 ${response.data}");
 
-      List<WilayahModel> data = wilayahListFromJson(response.data);
+      List<DecreeModel> data = DecreeListFromJson(response.data);
 
       debugPrint("Print Wilayah 4 ");
       return data;
