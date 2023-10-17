@@ -1,8 +1,11 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
 import 'package:standard_project/module/me/profile/controller/profile_controller.dart';
+import 'package:standard_project/module/me/profile/data/model/profile_model.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -25,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
                     profile(contextProfile),
                     Column(
                       children: [
-                        sosialMedia(contextProfile),
+                       sosialMedia(contextProfile),
                         Accounts(contextProfile),
                       ],
                     )
@@ -37,6 +40,170 @@ class ProfileScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  Container Sosialmedia(BuildContext contextProfile) {
+    return Container(
+                                margin: EdgeInsets.only(
+                                    left: 40, right: 20, top: 20, bottom: 40),
+                                padding: EdgeInsets.only(
+                                    left: 20, right: 20, top: 20, bottom: 20),
+                                width: 650,
+                                height: 270,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey,
+                                          blurRadius: 5.0,
+                                          offset: Offset(0, 1))
+                                    ]),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, left: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Sosial media",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          buttonedit(contextProfile),
+                                        ],
+                                      ),
+                                    ),
+                                    Divider(
+                                      endIndent: 0,
+                                      color: Colors.grey,
+                                      indent: 0,
+                                      height: 20,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(),
+                                      margin: EdgeInsets.only(
+                                          left: 20, right: 20, top: 20),
+                                      padding: EdgeInsets.all(5),
+                                      child: Container(
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      right: 15),
+                                                  height: 20,
+                                                  width: 20,
+                                                  decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/instagram.png'),
+                                                          fit: BoxFit.cover),
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(10)),
+                                                ),
+                                                Container(
+                                                  width: 150,
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        'Instagram',
+                                                        style: TextStyle(
+                                                            fontSize: 15),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'hamsi',
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      right: 15),
+                                                  height: 20,
+                                                  width: 20,
+                                                  decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/youtube.png'),
+                                                          fit: BoxFit.cover),
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(10)),
+                                                ),
+                                                Container(
+                                                  width: 150,
+                                                  child: Text(
+                                                    'Youtube',
+                                                    style: TextStyle(
+                                                        fontSize: 15),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'himpunan mahasiswa',
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      right: 15),
+                                                  height: 20,
+                                                  width: 20,
+                                                  decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/twitter.png'),
+                                                          fit: BoxFit.cover),
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(10)),
+                                                ),
+                                                Container(
+                                                  width: 150,
+                                                  child: Text(
+                                                    'Twitter',
+                                                    style: TextStyle(
+                                                        fontSize: 15),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'hamisi',
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
   }
 
   Widget buttonEditPassword(context) {

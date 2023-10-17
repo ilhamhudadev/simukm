@@ -20,7 +20,7 @@ class DecreeRepo {
 
       List<DecreeModel> data = DecreeListFromJson(response.data);
 
-      debugPrint("Print Wilayah 4 ");
+      debugPrint("Print Wilayah 4 ${response.data} ");
       return data;
     } catch (e) {
       throw Exception(null);

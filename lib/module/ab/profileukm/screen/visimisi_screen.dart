@@ -290,7 +290,7 @@ class VisiMisiScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '20/21',
+            '2020/2021',
             style: TextStyle(
               fontSize: 20,
             ),
