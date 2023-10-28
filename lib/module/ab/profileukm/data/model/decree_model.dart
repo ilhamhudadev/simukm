@@ -1,4 +1,4 @@
-class AchievemenModel {
+class DecreeModel {
   String? id;
   String? propinsi;
   String? kota;
@@ -6,10 +6,10 @@ class AchievemenModel {
   String? lat;
   String? lon;
 
-  AchievemenModel(
+  DecreeModel(
       {this.id, this.propinsi, this.kota, this.kecamatan, this.lat, this.lon});
 
-  AchievemenModel.fromJson(Map<String, dynamic> json) {
+  DecreeModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     propinsi = json['propinsi'];
     kota = json['kota'];
@@ -30,10 +30,10 @@ class AchievemenModel {
   }
 }
 
-List<AchievemenModel> achievemenListFromJson(List<dynamic> jsonList) {
-  List<AchievemenModel> list = [];
+List<DecreeModel> DecreeListFromJson(List<dynamic> jsonList) {
+  List<DecreeModel> list = [];
   for (var item in jsonList) {
-    list.add(AchievemenModel.fromJson(item));
+    list.add(DecreeModel.fromJson(item));
   }
   return list;
 }

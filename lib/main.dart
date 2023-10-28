@@ -11,7 +11,7 @@ void main() {
   // getLocale().
   //then((locale) {
   runApp(const MainScreen(
-    appLocale: Locale('en'),
+    appLocale: Locale('en'), 
   ));
   // });
 }
@@ -31,7 +31,7 @@ class MainScreen extends StatelessWidget {
       translations: AppLanguage(),
       locale: appLocale,
       getPages: AppRoute.all,
-      initialRoute: RouteConstant.sampelcuaca,
+      initialRoute: RouteConstant.decree,
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.rightToLeft,
     );

@@ -1,16 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
-import 'package:standard_project/module/ab/profileukm/controller/managementDecree_controller.dart';
+import 'package:standard_project/module/ab/profileukm/controller/Decree_controller.dart';
+import 'package:standard_project/module/ab/profileukm/data/model/decree_model.dart';
 
 class DecreeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppSize().init(context);
-    return GetBuilder<ManegementDecreeController>(
-        init: ManegementDecreeController(),
-        builder: (ManegementDecreeController controller) {
+    return GetBuilder<DecreeController>(
+        init: DecreeController(),
+        builder: (DecreeController controller) {
           return Scaffold(
             body: SingleChildScrollView(
                 child: Center(
@@ -18,8 +20,8 @@ class DecreeScreen extends StatelessWidget {
                 children: [
                   Container(
                     height: 150,
-                    width: AppSize.screenWidth * 3,
-                    decoration: BoxDecoration(color: Color(0xFFDADADA)),
+                    width: AppSize.screenWidth * 4,
+                    decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -27,6 +29,7 @@ class DecreeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
+                              //    color: Color(0xFFEEEEEE),
                               margin: EdgeInsets.only(
                                   top: 20, left: 20, right: 20, bottom: 20),
                               child: Text(
@@ -37,7 +40,7 @@ class DecreeScreen extends StatelessWidget {
                                     fontSize: 30),
                               ),
                             ),
-                            buttonAdd()
+                            buttonAdd(context)
                           ],
                         ),
                         Row(
@@ -50,8 +53,8 @@ class DecreeScreen extends StatelessWidget {
                                   boxShadow: [
                                     BoxShadow(
                                         color: Colors.grey,
-                                        blurRadius: 1.0,
-                                        offset: Offset(0, 1))
+                                        blurRadius: 0.1,
+                                        offset: Offset(0, 0.1))
                                   ]),
                               margin: EdgeInsets.only(
                                   bottom: 5, left: 20, right: 20),
@@ -81,21 +84,36 @@ class DecreeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                      constraints: BoxConstraints(minHeight: 0),
-                      width: AppSize.screenWidth * 3,
-                      decoration: BoxDecoration(color: Color(0xFFDADADA)),
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: 20,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          childAspectRatio: 2,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Center(child: item(context));
-                        },
-                      )),
+                  FutureBuilder<List<DecreeModel>>(
+                      future: controller.futureDecree(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var value = snapshot.data;
+                          return Container(
+                              constraints: BoxConstraints(minHeight: 0),
+                              width: AppSize.screenWidth * 4,
+                              decoration:
+                                  BoxDecoration(color: Color(0xFFE9E8E8)),
+                              child: GridView.builder(
+                                scrollDirection: Axis.vertical,
+                                controller: controller.scrollController,
+                                shrinkWrap: true,
+                                itemCount: value!.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  childAspectRatio: 2,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return item(value, index, context);
+                                },
+                              ));
+                        } else {
+                          return Center(
+                            child: Text('GAK ADA DATA BROWW'),
+                          );
+                        }
+                      })
                 ],
               ),
             )),
@@ -103,9 +121,86 @@ class DecreeScreen extends StatelessWidget {
         });
   }
 
-  Widget buttonAdd() {
+  Widget buttonAdd(context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        showDialog<void>(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                content: Container(
+                  height: 400,
+                  width: 300,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: Container(
+                                child: Icon(Icons.close),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          'File ',
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                            height: 200,
+                            width: 200,
+                            child: Image(
+                                image: AssetImage(
+                              'assets/upload.png',
+                            ))),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: Container(
+                              width: 200,
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: AppColors.bilu,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.upload,
+                                    size: 30,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Uploud file',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              )),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            });
+      },
       child: Container(
         margin: EdgeInsets.only(right: 20),
         padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
@@ -169,10 +264,10 @@ class DecreeScreen extends StatelessWidget {
     );
   }
 
-  Widget item(BuildContext context) {
+  Widget item(List<DecreeModel> value, int index, BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(15),
-      margin: EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 5),
+      padding: EdgeInsets.all(20),
+      margin: EdgeInsets.only(left: 20, right: 5, bottom: 10, top: 10),
       color: Colors.white,
       child: Container(
         padding: EdgeInsets.only(right: 10),
@@ -187,7 +282,7 @@ class DecreeScreen extends StatelessWidget {
                   height: 50,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('assets/document.jpg'))),
+                          image: AssetImage('assets/documen.png'))),
                 ),
                 Container(
                   padding:
@@ -203,7 +298,7 @@ class DecreeScreen extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             Container(
               padding: EdgeInsets.only(left: 15),
@@ -218,7 +313,7 @@ class DecreeScreen extends StatelessWidget {
                       SizedBox(
                         width: 15,
                       ),
-                      Text('AHU-35720.HT.06.02.TH.2009')
+                      Text('${value[index].id}')
                     ],
                   ),
                   SizedBox(
@@ -231,7 +326,7 @@ class DecreeScreen extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Text('Pelantikan Pengurusan Baru')
+                      Text('${value[index].kecamatan}')
                     ],
                   ),
                   SizedBox(
@@ -244,7 +339,7 @@ class DecreeScreen extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Text('pendidikan '),
+                      Text('${value[index].kota} '),
                     ],
                   ),
                   SizedBox(
@@ -283,8 +378,10 @@ class DecreeScreen extends StatelessWidget {
             builder: (BuildContext context) {
               return AlertDialog(
                 content: Container(
-                  height: 800,
-                  width: 520,
+                  height: 400,
+                  width: 300,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -298,87 +395,53 @@ class DecreeScreen extends StatelessWidget {
                               child: Container(
                                 child: Icon(Icons.close),
                               ),
-                            )
+                            ),
                           ],
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'VISI',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              width: 520,
-                              child: TextFormField(
-                                minLines: 4,
-                                maxLines: 10,
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.blue),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  hintText: 'Visi',
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              'MISI',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              width: 520,
-                              child: TextFormField(
-                                minLines: 8,
-                                maxLines: 10,
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.blue),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  hintText: 'Misi',
-                                ),
-                              ),
-                            ),
-                          ],
+                        Text(
+                          'Update File  ',
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 20,
+                        ),
+                        Container(
+                            height: 200,
+                            width: 200,
+                            child: Image(
+                                image: AssetImage(
+                              'assets/upload.png',
+                            ))),
+                        SizedBox(
+                          height: 30,
                         ),
                         InkWell(
                           onTap: () {},
                           child: Container(
-                            padding: EdgeInsets.only(
-                                right: 20, left: 20, bottom: 10, top: 10),
-                            decoration: BoxDecoration(
-                              color: AppColors.bilu,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Text('Save',
-                                style: TextStyle(color: Colors.white)),
-                          ),
-                        ),
+                              width: 200,
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: AppColors.bilu,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.upload,
+                                    size: 30,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Update file',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              )),
+                        )
                       ],
                     ),
                   ),
@@ -474,8 +537,10 @@ class DecreeScreen extends StatelessWidget {
             builder: (BuildContext context) {
               return AlertDialog(
                 content: Container(
-                  height: 800,
-                  width: 700,
+                  height: 400,
+                  width: 300,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -493,135 +558,43 @@ class DecreeScreen extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          'Struktur Organisasi',
+                          'File ',
                           style: TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                            height: 200,
+                            width: 200,
+                            child: Image(image: AssetImage('assets/pdf.jpg'))),
+                        SizedBox(
                           height: 30,
                         ),
                         Container(
-                          padding: EdgeInsets.all(5),
-                          width: 170,
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: Colors.black, width: 1.0),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Container(
-                            child: Column(
+                            width: 200,
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: AppColors.bilu,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('DOSEN PEMBIMBING'),
-                                Container(
-                                  height: 1,
-                                  width: 100,
-                                  color: Colors.black,
-                                ),
-                                Text('Suparjan. Spd. S.Kom'),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              width: 170,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.black, width: 1.0),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Container(
-                                child: Column(
-                                  children: [
-                                    Text('KETUA'),
-                                    Container(
-                                      height: 1,
-                                      width: 100,
-                                      color: Colors.black,
-                                    ),
-                                    Text('Reyhan Sabian'),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              width: 170,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.black, width: 1.0),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Container(
-                                child: Column(
-                                  children: [
-                                    Text('WAKIL KETUA'),
-                                    Container(
-                                      height: 1,
-                                      width: 100,
-                                      color: Colors.black,
-                                    ),
-                                    Text('Rifqi nur'),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(5),
-                          width: 500,
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: Colors.black, width: 1.0),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Text(
-                                  'ANGGOTA',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
-                                Container(
-                                  height: 1,
-                                  width: 100,
-                                  color: Colors.black,
+                                Icon(
+                                  Icons.download,
+                                  size: 30,
+                                  color: Colors.white,
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  width: 10,
                                 ),
                                 Text(
-                                  'SEKERTARIS',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  'Download',
+                                  style: TextStyle(color: Colors.white),
                                 ),
-                                Text('Saniati'),
-                                Text('M. Taufik Munawar'),
-                                Text(
-                                  'BENDAHARA',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text('Diva Rachman'),
-                                Text('Salma Siti F'),
-                                Text(
-                                  'HUSMAS',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text('Anggia Putri'),
                               ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                            ))
                       ],
                     ),
                   ),

@@ -17,13 +17,13 @@ class ListukmScreen extends StatelessWidget {
             child: Center(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 233, 232, 232),
+                  color: Color(0xFFE9E8E8),
                 ),
                 child: Column(
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 233, 232, 232),
+                        color: Color(0xFFE9E8E8),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

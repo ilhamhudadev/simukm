@@ -12,7 +12,7 @@ class ProfileukmScreen extends StatelessWidget {
         init: ProfileukmController(),
         builder: (ProfileukmController controller) {
           return Scaffold(
-            backgroundColor: Color(0x6BE9E7E7),
+            backgroundColor: Color(0xFFE9E8E8),
             body: SingleChildScrollView(
                 child: Column(
               children: [

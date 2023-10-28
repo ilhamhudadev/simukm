@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:standard_project/module/ev/event/data/model/userevent.dart';
-
 import 'package:standard_project/module/ev/event/data/repo/event_repo.dart';
 
 class EventController extends GetxController with EventRepo {
@@ -73,7 +72,7 @@ class EventController extends GetxController with EventRepo {
             "https://akcdn.detik.net.id/visual/2019/07/31/f21f3789-9569-48a2-82e7-b80a60f843a0_169.jpeg?w=650"),
     EventOrganization(
         no: "Kegiatan 7",
-        nama: "Dies Natalies Starting Broadcast",
+        nama: "Dies Natalies Starting B",
         jenis: "Pendidikan",
         waktu: "18 Mei 2023",
         tempat: "Bandung",
