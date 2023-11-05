@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:standard_project/core/assets/app_assets.dart';
+import 'package:standard_project/module/ab/profileukm/screen/organizationalStructure_screen.dart';
+import 'package:standard_project/module/ab/profileukm/screen/report_screen.dart';
+import 'package:standard_project/module/ac/achievement/screen/achievement_screen.dart';
+import 'package:standard_project/module/ev/event/screen/event_screen.dart';
 import 'package:standard_project/module/me/profile/screen/profile_screen.dart';
+import 'package:standard_project/module/me/usermanagement/screen/usermanagement_screen.dart';
+import 'package:standard_project/module/mr/listukm/data/repo/listukm_repo.dart';
+import 'package:standard_project/module/mr/listukm/screen/listukm_screen.dart';
+import 'package:standard_project/module/pr/proposal/screen/proposal_screen.dart';
 
 class SideBarScreen extends StatelessWidget {
   SideBarScreen({Key? key}) : super(key: key);
@@ -153,10 +161,6 @@ class ExampleSidebarX extends StatelessWidget {
         ),
         const SidebarXItem(
           icon: Icons.file_present,
-          label: 'Sejarah',
-        ),
-        const SidebarXItem(
-          icon: Icons.file_present,
           label: 'Struktur Organisasi',
         ),
         const SidebarXItem(
@@ -229,19 +233,28 @@ class _ScreensExample extends StatelessWidget {
             return ProfileScreen();
           // dashboard
           case 2:
-            return Container();
+            return UsermanagementScreen();
           // KHS Kelas
           case 3:
-            return TeacherScreen();
+            return OrganizationalStruktureScreen();
           // KHS NPM
           case 4:
-            return TranskripScreen();
+            return Container();
           //Transkrip NPM
           case 5:
-            return StudyScreen();
+            return ReportScreen();
           // Data Dosen
           case 6:
-            return ProfileScreen();
+            return EventScreen();
+          //  Profile
+          case 7:
+            return AchievementScreen();
+          //  Profile
+          case 8:
+            return ProposalScreen();
+          //  Profile
+          case 9:
+            return ListukmScreen();
           //  Profile
           default:
             return Text(

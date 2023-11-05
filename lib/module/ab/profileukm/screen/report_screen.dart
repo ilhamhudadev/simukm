@@ -12,7 +12,7 @@ class ReportScreen extends StatelessWidget {
         init: ReportController(),
         builder: (ReportController controller) {
           return Scaffold(
-            backgroundColor: Color(0xFFE9E8E8),
+            backgroundColor: AppColors.greywhite,
             body: SingleChildScrollView(
                 child: Center(
               child: Column(children: [
@@ -56,7 +56,7 @@ class ReportScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 Container(
-                                  width: AppSize.screenWidth * 2.3,
+                                  width: AppSize.screenWidth * 0.5,
                                   child: TextField(
                                     decoration: InputDecoration(
                                         contentPadding:
@@ -87,7 +87,7 @@ class ReportScreen extends StatelessWidget {
                       itemCount: 17,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 4,
-                        childAspectRatio: 1.5,
+                        childAspectRatio: 1,
                       ),
                       itemBuilder: (BuildContext context, int index) {
                         return Center(child: item(context));
@@ -296,7 +296,7 @@ class ReportScreen extends StatelessWidget {
               SizedBox(
                 width: 5,
               ),
-             Edit(context),
+              Edit(context),
               SizedBox(
                 width: 5,
               ),

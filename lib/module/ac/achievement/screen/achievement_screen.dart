@@ -14,7 +14,7 @@ class AchievementScreen extends StatelessWidget {
       init: AchievementController(),
       builder: (AchievementController controller) {
         return Scaffold(
-          backgroundColor: Colors.grey.shade400,
+          backgroundColor: AppColors.greywhite,
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
@@ -48,7 +48,7 @@ class AchievementScreen extends StatelessWidget {
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(5),
                               bottomLeft: Radius.circular(5))),
-                      width: 1220,
+                      width: AppSize.screenWidth * 0.5,
                       height: 40,
                       child: TextField(
                           decoration: InputDecoration(
@@ -81,7 +81,6 @@ class AchievementScreen extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                
                 FutureBuilder<List<AchievemenModel>>(
                     future: controller.futureWilayah(),
                     builder: (context, snapshot) {
@@ -97,8 +96,7 @@ class AchievementScreen extends StatelessWidget {
                                 shrinkWrap: true,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 4,
-                                        childAspectRatio: 1.5),
+                                        crossAxisCount: 4, childAspectRatio: 1),
                                 itemCount: value!.length,
                                 itemBuilder: (context, index) {
                                   return Column(

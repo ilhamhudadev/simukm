@@ -15,7 +15,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
         init: OrganizationStrukturController(),
         builder: (OrganizationStrukturController controller) {
           return Scaffold(
-            backgroundColor: Color(0xFFE9E8E8),
+            backgroundColor: AppColors.greywhite,
             body: SingleChildScrollView(
               child: Center(
                 child: Column(children: [
@@ -33,7 +33,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               margin: EdgeInsets.only(
                                   top: 20, left: 20, right: 20, bottom: 20),
                               child: Text(
-                                'Organizational struktur',
+                                'Struktur Organisasi ',
                                 style: TextStyle(
                                     fontSize: 30, fontWeight: FontWeight.bold),
                               ),
@@ -59,7 +59,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Container(
-                                    width: AppSize.screenWidth * 2.3,
+                                    width: AppSize.screenWidth * 0.5,
                                     child: TextField(
                                       decoration: InputDecoration(
                                           contentPadding:
@@ -100,16 +100,14 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 4,
-                                  childAspectRatio: 0.9,
+                                  childAspectRatio: 1,
                                 ),
                                 itemBuilder: (context, index) {
                                   return item(value, index, context);
                                 },
                               ));
                         } else {
-                          return Center(
-                            child: Text("GAK ADA DATA BROWW"),
-                          );
+                          return Center(child: CircularProgressIndicator());
                         }
                       })
                 ]),

@@ -6,6 +6,8 @@ import 'package:standard_project/module/pr/proposal/data/model/user_management.d
 import 'package:standard_project/core/style/app_color.dart';
 
 class ProposalScreen extends StatelessWidget {
+  const ProposalScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     AppSize().init(context);
@@ -13,7 +15,7 @@ class ProposalScreen extends StatelessWidget {
         init: ProposalController(),
         builder: (ProposalController controller) {
           return Scaffold(
-              backgroundColor: Colors.grey.shade400,
+              backgroundColor: AppColors.greywhite,
               body: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
@@ -45,13 +47,13 @@ class ProposalScreen extends StatelessWidget {
                         children: [
                           Container(
                             margin:
-                                EdgeInsets.only(left: 30, top: 20, bottom: 20),
+                                EdgeInsets.only(left: 10, top: 20, bottom: 20),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(5),
                                     bottomLeft: Radius.circular(5))),
-                            width: 1220,
+                            width: AppSize.screenWidth * 0.5,
                             height: 40,
                             child: TextField(
                                 decoration: InputDecoration(
@@ -101,7 +103,7 @@ class ProposalScreen extends StatelessWidget {
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 4,
-                                              childAspectRatio: 1.5),
+                                              childAspectRatio: 1),
                                       itemCount: value!.length,
                                       itemBuilder: (context, index) {
                                         return Column(children: [
@@ -109,9 +111,7 @@ class ProposalScreen extends StatelessWidget {
                                         ]);
                                       })); //
                             } else {
-                              return Center(
-                                child: Text('Gak Ada Data broww'),
-                              );
+                              return Center(child: CircularProgressIndicator());
                             }
                           })
                     ], //children
@@ -153,7 +153,6 @@ class ProposalScreen extends StatelessWidget {
 
   Widget search() {
     return Container(
-      width: AppSize.screenWidth * 0.8,
       height: AppSize.screenHeight * 0.04,
       decoration: BoxDecoration(),
       child: TextFormField(
@@ -373,7 +372,7 @@ class ProposalScreen extends StatelessWidget {
           //height: AppSize.screenHeight * 0.27,
           //width: AppSize.screenWidth * 0.6,
           padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
-          margin: EdgeInsets.only(bottom: 10, right: 15, left: 15),
+          margin: EdgeInsets.only(bottom: 20, right: 15, left: 15),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(10)),
           child: Column(

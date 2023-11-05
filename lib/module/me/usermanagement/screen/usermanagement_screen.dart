@@ -9,110 +9,152 @@ import 'package:standard_project/module/me/usermanagement/data/model/user_meneje
 class UsermanagementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext contextUser) {
+    final ScrollController scrollControllerV = ScrollController();
+    final ScrollController scrollControllerH = ScrollController();
     AppSize().init(contextUser);
     return GetBuilder<UsermanagementController>(
       init: UsermanagementController(),
       builder: (UsermanagementController controller) {
         return Scaffold(
-          backgroundColor: Color(0x6BDEDDDD),
-          body: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                children: [
-                  Container(
-                    height: 150,
-                    width: AppSize.screenWidth * 3,
-                    decoration: BoxDecoration(color: Color(0xFFDADADA)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
+            backgroundColor: AppColors.greywhite,
+            body: SingleChildScrollView(
+              controller: scrollControllerH,
+              scrollDirection: Axis.horizontal,
+              child: SingleChildScrollView(
+                controller: scrollControllerV,
+                child: Center(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: AppColors.greywhite,
+                        ),
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                  top: 20, left: 20, right: 20, bottom: 20),
-                              child: Text(
-                                'Developer Management',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 30),
-                              ),
-                            ),
-                            buttonAdd()
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey,
-                                        blurRadius: 1.0,
-                                        offset: Offset(0, 1))
-                                  ]),
-                              margin: EdgeInsets.only(
-                                  bottom: 5, left: 20, right: 20),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: AppSize.screenWidth * 2.25,
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                          contentPadding:
-                                              EdgeInsets.only(left: 10),
-                                          hintText: "Search a listing",
-                                          border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(5),
-                                                  bottomLeft:
-                                                      Radius.circular(5)),
-                                              borderSide: BorderSide())),
-                                    ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: 20, left: 20, right: 20, bottom: 20),
+                                  child: Text(
+                                    'User Management',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 30),
                                   ),
-                                  buttonsearch(),
-                                ],
-                              ),
+                                ),
+                                buttonAdd()
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  margin: EdgeInsets.only(
+                                      bottom: 5, left: 10, right: 20),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: AppSize.screenWidth,
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 10),
+                                              hintText: "Search a listing",
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft: Radius
+                                                              .circular(5),
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  5)),
+                                                  borderSide: BorderSide())),
+                                        ),
+                                      ),
+                                      buttonsearch(),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Container(
+                          constraints: BoxConstraints(minHeight: 0),
+                          width: AppSize.screenWidth * 3,
+                          decoration: BoxDecoration(
+                            color: AppColors.greywhite,
+                          ),
+                          child: GridView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: controller.usermenejemenList.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                              childAspectRatio: 1,
+                            ),
+                            itemBuilder: (BuildContext context, int index) {
+                              return Center(
+                                  child: item(
+                                      controller.usermenejemenList[index],
+                                      context));
+                            },
+                          )),
+                    ],
                   ),
-                  Container(
-                      constraints: BoxConstraints(minHeight: 0),
-                      width: AppSize.screenWidth * 3,
-                      decoration: BoxDecoration(color: Color(0xFFDADADA)),
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: controller.usermenejemenList.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4,
-                          childAspectRatio: 0.87,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Center(
-                              child: item(controller.usermenejemenList[index],
-                                  context));
-                        },
-                      )),
-                ],
+                ),
               ),
-            ),
-          ),
-        );
+            ));
       },
     );
   }
 
-  InkWell buttonDelete() {
+  InkWell buttonDelete(context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Row(
+                  children: [
+                    Icon(
+                      Icons.warning,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('Are you sure to delete '),
+                  ],
+                ),
+                actions: [
+                  MaterialButton(
+                    onPressed: () {},
+                    color: Colors.grey[200],
+                    child: Text('Yes'),
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    color: Colors.grey[200],
+                    child: Text('No'),
+                  )
+                ],
+              );
+            });
+      },
       child: Container(
         margin: EdgeInsets.only(left: 5, top: 10),
         padding: EdgeInsets.only(bottom: 5, top: 5, left: 10, right: 10),
@@ -128,7 +170,7 @@ class UsermanagementScreen extends StatelessWidget {
           ),
           Text(
             'Delete',
-            style: TextStyle(fontSize: 12, color: Colors.white),
+            style: TextStyle(fontSize: 15, color: Colors.white),
           )
         ]),
       ),
@@ -415,7 +457,7 @@ class UsermanagementScreen extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
         decoration: BoxDecoration(
           color: AppColors.bilu,
-          borderRadius: BorderRadius.circular(2),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Row(children: [
           Icon(
@@ -443,10 +485,15 @@ class UsermanagementScreen extends StatelessWidget {
         padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
         decoration: BoxDecoration(
             color: AppColors.bilu,
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
-                  color: Colors.grey, blurRadius: 5.0, offset: Offset(0, 1,))
+                  color: Colors.grey,
+                  blurRadius: 5.0,
+                  offset: Offset(
+                    0,
+                    1,
+                  ))
             ]),
         child: Row(
           children: [
@@ -500,6 +547,7 @@ class UsermanagementScreen extends StatelessWidget {
     return Stack(
       children: [
         Container(
+          width: 300,
           margin: EdgeInsets.all(10),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(10)),
@@ -670,7 +718,7 @@ class UsermanagementScreen extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        buttondelete()
+                        buttonDelete(context)
                       ],
                     )
                   ],
@@ -682,8 +730,6 @@ class UsermanagementScreen extends StatelessWidget {
       ],
     );
   }
-
- 
 }
 
 class buttondelete extends StatelessWidget {
@@ -693,55 +739,69 @@ class buttondelete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-      minWidth: 30,
-      height: 42,
-      color: AppColors.bilu,
-      onPressed: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: Row(
-                  children: [
-                    Icon(
-                      Icons.warning,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('Are you sure to delete '),
-                  ],
-                ),
-                actions: [
-                  MaterialButton(
-                    onPressed: () {},
-                    color: Colors.grey[200],
-                    child: Text('Yes'),
+    return InkWell(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  content: Row(
+                    children: [
+                      Icon(
+                        Icons.warning,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text('Are you sure to delete '),
+                    ],
                   ),
-                  MaterialButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    color: Colors.grey[200],
-                    child: Text('No'),
-                  )
-                ],
-              );
-            });
-      },
-      child: Row(children: [
-        Icon(
-          Icons.delete,
-          size: 15,
-          color: Colors.white,
-        ),
-        SizedBox(width: 5,),
-        Text(
-          'Delete',
-          style: TextStyle(fontSize: 15, color: Colors.white),
-        )
-      ]),
-    );
+                  actions: [
+                    MaterialButton(
+                      onPressed: () {},
+                      color: Colors.grey[200],
+                      child: Text('Yes'),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      color: Colors.grey[200],
+                      child: Text('No'),
+                    )
+                  ],
+                );
+              });
+        },
+        child: Container(
+          margin: EdgeInsets.only(right: 20),
+          padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
+          decoration: BoxDecoration(
+              color: AppColors.bilu,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 5.0,
+                    offset: Offset(
+                      0,
+                      1,
+                    ))
+              ]),
+          child: Row(children: [
+            Icon(
+              Icons.delete,
+              size: 15,
+              color: Colors.white,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              'Delete',
+              style: TextStyle(fontSize: 15, color: Colors.white),
+            )
+          ]),
+        ));
   }
 }
