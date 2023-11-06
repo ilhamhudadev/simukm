@@ -46,7 +46,7 @@ class EventScreen extends StatelessWidget {
                           children: [
                             Container(
                               margin: EdgeInsets.only(left: 6, bottom: 10),
-                              width: AppSize.screenWidth * 2.425,
+                              width: AppSize.screenWidth * 0.5,
                               height: AppSize.screenHeight * 0.06,
                               decoration: BoxDecoration(
                                   color: Colors.white,
@@ -98,7 +98,7 @@ class EventScreen extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: controller.organizationList.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4, childAspectRatio: 1.4),
+                            crossAxisCount: 4, childAspectRatio: 1.0),
                         itemBuilder: (BuildContext context, int index) {
                           return Column(children: [
                             Center(

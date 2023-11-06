@@ -1,9 +1,6 @@
- import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:standard_project/module/mr/listukm/data/model/userlistukm.dart';
 import 'package:standard_project/module/mr/listukm/data/repo/listukm_repo.dart';
-
- 
-
 
 class ListukmController extends GetxController with ListukmRepo {
   List<ListukmOrganization> organizationList = [

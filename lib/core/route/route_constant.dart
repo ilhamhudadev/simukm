@@ -1,5 +1,3 @@
-import 'package:standard_project/module/ab/profileukm/data/model/organizationStruktur.dart';
-
 class RouteConstant {
   static const signIn = '/signIn';
   static const profile = '/profile';
@@ -14,8 +12,5 @@ class RouteConstant {
   static const listukm = '/listukm';
   static const report = '/report';
   static const organizationStruktur = '/organizationStruktur';
-
- 
-
-
+  static const sidebar = '/sidebar';
 }

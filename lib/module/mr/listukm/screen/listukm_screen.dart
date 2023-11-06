@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
 //import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/module/mr/listukm/data/model/userlistukm.dart';
@@ -17,13 +18,13 @@ class ListukmScreen extends StatelessWidget {
             child: Center(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFFE9E8E8),
+                  color: AppColors.greywhite,
                 ),
                 child: Column(
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFFE9E8E8),
+                        color: AppColors.greywhite,
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,7 +51,7 @@ class ListukmScreen extends StatelessWidget {
                             children: [
                               Container(
                                 margin: EdgeInsets.only(left: 6, bottom: 10),
-                                width: AppSize.screenWidth * 2.425,
+                                width: AppSize.screenWidth * 0.5,
                                 height: AppSize.screenHeight * 0.06,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
