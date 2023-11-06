@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,7 +40,7 @@ class UsermanagementScreen extends StatelessWidget {
                                     fontSize: 30),
                               ),
                             ),
-                            buttonAdd(context)
+                            buttonAdd()
                           ],
                         ),
                         Row(
@@ -437,282 +435,9 @@ class UsermanagementScreen extends StatelessWidget {
     );
   }
 
-  Widget buttonAdd(contextUser) {
+  Widget buttonAdd() {
     return InkWell(
-      onTap: () {
-        showDialog<void>(
-            context: contextUser,
-            barrierDismissible: true,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                content: Container(
-                  height: 800,
-                  width: 520,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: Container(
-                                child: Icon(Icons.close),
-                              ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Full name'),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              width: 520,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    hintText: 'First name',
-                                    labelText: 'First name'),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                              width: 520,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    hintText: 'Second name',
-                                    labelText: 'Second name'),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Email address'),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              width: 520,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.blue),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  hintText: 'Email address',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 250,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    hintText: 'Username',
-                                    labelText: 'Username'),
-                              ),
-                            ),
-                            Container(
-                              width: 250,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    hintText: 'Password',
-                                    labelText: 'Password'),
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Sosial media'),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: 250,
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.blue),
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        hintText: 'Instagram',
-                                        labelText: 'Instagram'),
-                                  ),
-                                ),
-                                Container(
-                                  width: 250,
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.blue),
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        hintText: 'Youtube',
-                                        labelText: 'Youtube'),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 250,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    hintText: 'Twitter',
-                                    labelText: 'Twitter'),
-                              ),
-                            ),
-                            Container(
-                              width: 250,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    hintText: 'phone',
-                                    labelText: 'Phone'),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            padding: EdgeInsets.only(
-                                right: 20, left: 20, bottom: 10, top: 10),
-                            decoration: BoxDecoration(
-                              color: AppColors.bilu,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Text('Save',
-                                style: TextStyle(color: Colors.white)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            });
-      },
+      onTap: () {},
       child: Container(
         margin: EdgeInsets.only(right: 20),
         padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
@@ -721,12 +446,7 @@ class UsermanagementScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
             boxShadow: [
               BoxShadow(
-                  color: Colors.grey,
-                  blurRadius: 5.0,
-                  offset: Offset(
-                    0,
-                    1,
-                  ))
+                  color: Colors.grey, blurRadius: 5.0, offset: Offset(0, 1,))
             ]),
         child: Row(
           children: [
@@ -962,6 +682,8 @@ class UsermanagementScreen extends StatelessWidget {
       ],
     );
   }
+
+ 
 }
 
 class buttondelete extends StatelessWidget {
@@ -1014,9 +736,7 @@ class buttondelete extends StatelessWidget {
           size: 15,
           color: Colors.white,
         ),
-        SizedBox(
-          width: 5,
-        ),
+        SizedBox(width: 5,),
         Text(
           'Delete',
           style: TextStyle(fontSize: 15, color: Colors.white),
