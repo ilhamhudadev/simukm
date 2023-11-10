@@ -94,11 +94,9 @@ class EventScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Color.fromARGB(255, 233, 232, 232),
                       ),
-                      child: GridView.builder(
+                      child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: controller.organizationList.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4, childAspectRatio: 1.0),
                         itemBuilder: (BuildContext context, int index) {
                           return Column(children: [
                             Center(
@@ -398,68 +396,79 @@ Widget create(context, title) {
 
 Widget item(EventOrganization model, context) {
   return Container(
-    padding: EdgeInsets.all(33),
+    padding: EdgeInsets.only(top: 10, bottom: 10),
     margin: EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(3),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey,
-          spreadRadius: 1,
-        )
-      ],
     ),
-    child: Column(
+    child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("${model.nama}",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold)),
-            Divider(endIndent: 0, color: Colors.grey, indent: 0, height: 20),
-            SizedBox(height: 5),
-            Text("${model.waktu}",
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 12.0,
-                )),
-            SizedBox(height: 5),
-            Row(
-              children: [
-                Icon(Icons.class_sharp, color: Colors.black, size: 13),
-                SizedBox(width: 5),
-                Text("${model.jenis}",
-                    style: TextStyle(color: Colors.black, fontSize: 13.0)),
-              ],
+            Container(
+              width: 250,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("${model.nama}",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold)),
+                  Text("${model.waktu}",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 15,
+                      )),
+                ],
+              ),
             ),
-            SizedBox(height: 5),
-            Row(
-              children: [
-                Icon(Icons.location_on, color: Colors.black, size: 13.0),
-                SizedBox(width: 5),
-                Text("${model.tempat}",
-                    style: TextStyle(color: Colors.black, fontSize: 13.0)),
-              ],
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              width: 300,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.class_sharp, color: Colors.black, size: 20),
+                  SizedBox(width: 5),
+                  Text("${model.jenis}",
+                      style: TextStyle(color: Colors.black, fontSize: 20)),
+                ],
+              ),
             ),
-            SizedBox(height: 5),
-            Row(
-              children: [
-                Icon(Icons.people, color: Colors.black, size: 13),
-                SizedBox(width: 5),
-                Text("${model.jumlah}",
-                    style: TextStyle(color: Colors.black, fontSize: 13.0)),
-              ],
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              width: 300,
+              child: Row(
+                children: [
+                  Icon(Icons.location_on, color: Colors.black, size: 20),
+                  SizedBox(width: 5),
+                  Text("${model.tempat}",
+                      style: TextStyle(color: Colors.black, fontSize: 20)),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              width: 150,
+              child: Row(
+                children: [
+                  Icon(Icons.people, color: Colors.black, size: 20),
+                  SizedBox(width: 5),
+                  Text("${model.jumlah}",
+                      style: TextStyle(color: Colors.black, fontSize: 20)),
+                ],
+              ),
             )
           ],
         ),
-        SizedBox(height: 10),
         Column(
           children: [
             Row(
@@ -477,116 +486,108 @@ Widget item(EventOrganization model, context) {
                   ),
                   SizedBox(width: 10),
                   Row(children: [
-                    InkWell(
-                      onTap: () {
-                        showDialog<void>(
-                            context: context,
-                            barrierDismissible: true,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                content: Container(
-                                  height: 500,
-                                  width: 415,
-                                  child: Column(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          InkWell(
-                                              onTap: () {
-                                                Get.back();
-                                              },
-                                              child: Icon(Icons.close)),
-                                        ],
-                                      ),
-                                      SizedBox(height: 20),
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(Icons.camera_alt_rounded),
-                                              SizedBox(width: 5),
-                                              Text(
-                                                'Documentation',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 24.0,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(height: 10),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Row(children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                image: NetworkImage(
-                                                    "${model.gambar1}"),
-                                                fit: BoxFit.cover,
-                                              )),
-                                              width: AppSize.screenWidth * 0.4,
-                                              height:
-                                                  AppSize.screenHeight * 0.2,
-                                            ),
-                                          ]),
-                                          SizedBox(width: 15),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                  image: NetworkImage(
-                                                      "${model.gambar2}"),
-                                                  fit: BoxFit.cover,
-                                                )),
-                                                width:
-                                                    AppSize.screenWidth * 0.4,
-                                                height:
-                                                    AppSize.screenHeight * 0.2,
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            });
-                      },
-                      child: Container(
-                        height: AppSize.screenHeight * 0.035,
-                        width: AppSize.screenWidth * 0.12,
-                        decoration: BoxDecoration(
-                          color: Colors.blueAccent.shade700,
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                        child: Center(
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.photo_camera,
-                                color: Colors.white, size: 11),
-                            Text('Photos',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 11)),
-                          ],
-                        )),
-                      ),
-                    ),
+                    photos(context, model),
                   ])
                 ]),
           ],
         ),
       ],
+    ),
+  );
+}
+
+Widget photos(BuildContext context, model) {
+  return InkWell(
+    onTap: () {
+      showDialog<void>(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Container(
+                height: 500,
+                width: 415,
+                child: Column(
+                  children: [
+                    Column(
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Icon(Icons.close)),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.camera_alt_rounded),
+                            SizedBox(width: 5),
+                            Text(
+                              'Documentation',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                              image: NetworkImage("${model.gambar1}"),
+                              fit: BoxFit.cover,
+                            )),
+                            width: AppSize.screenWidth * 0.4,
+                            height: AppSize.screenHeight * 0.2,
+                          ),
+                        ]),
+                        SizedBox(width: 15),
+                        Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                image: NetworkImage("${model.gambar2}"),
+                                fit: BoxFit.cover,
+                              )),
+                              width: AppSize.screenWidth * 0.4,
+                              height: AppSize.screenHeight * 0.2,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
+    },
+    child: Container(
+      padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+      decoration: BoxDecoration(
+        color: Colors.blueAccent.shade700,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Center(
+          child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.photo_camera, color: Colors.white, size: 15),
+          Text('Photos', style: TextStyle(color: Colors.white, fontSize: 15)),
+        ],
+      )),
     ),
   );
 }
@@ -858,22 +859,20 @@ Widget edit(context, title) {
             );
           });
     },
-    borderRadius: BorderRadius.circular(20),
     child: Container(
-      height: AppSize.screenHeight * 0.035,
-      width: AppSize.screenWidth * 0.085,
+      padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
       decoration: BoxDecoration(
         color: Colors.blueAccent.shade700,
-        borderRadius: BorderRadius.circular(3),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.edit_document, color: Colors.white, size: 11),
+          Icon(Icons.edit_document, color: Colors.white, size: 15),
           Text(
             'Edit',
-            style: TextStyle(color: Colors.white, fontSize: 11),
+            style: TextStyle(color: Colors.white, fontSize: 15),
           ),
         ],
       )),
@@ -963,20 +962,18 @@ Widget hapus(context, title) {
             );
           });
     },
-    borderRadius: BorderRadius.circular(20),
     child: Container(
-      height: AppSize.screenHeight * 0.035,
-      width: AppSize.screenWidth * 0.098,
+      padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
       decoration: BoxDecoration(
         color: Colors.blueAccent.shade700,
-        borderRadius: BorderRadius.circular(2),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.delete_sweep, color: Colors.white, size: 11),
-          Text('Delete', style: TextStyle(color: Colors.white, fontSize: 11)),
+          Icon(Icons.delete_sweep, color: Colors.white, size: 15),
+          Text('Delete', style: TextStyle(color: Colors.white, fontSize: 15)),
         ],
       )),
     ),

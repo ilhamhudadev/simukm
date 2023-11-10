@@ -92,16 +92,11 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               width: AppSize.screenWidth * 3,
                               decoration:
                                   BoxDecoration(color: Color(0xFFE9E8E8)),
-                              child: GridView.builder(
+                              child: ListView.builder(
                                 scrollDirection: Axis.vertical,
                                 controller: controller.scrollController,
                                 shrinkWrap: true,
                                 itemCount: value!.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4,
-                                  childAspectRatio: 1,
-                                ),
                                 itemBuilder: (context, index) {
                                   return item(value, index, context);
                                 },
@@ -120,98 +115,89 @@ class OrganizationalStruktureScreen extends StatelessWidget {
   Widget item(List<WilayahModel> value, int index, BuildContext context) {
     return Container(
       width: 350,
-      height: 380,
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Pengurus Hamisi',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Icon(Icons.calendar_month),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                '2020/2021 ',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Container(
+        child: Row(
+          children: [
+            Row(
               children: [
-                Text(
-                  'Supervisor',
-                  style: TextStyle(fontSize: 15),
-                ),
-                Text(
-                  ' ${value[index].id}',
-                  style: TextStyle(color: Colors.grey),
-                ),
+                Icon(Icons.calendar_month),
                 SizedBox(
-                  height: 10,
+                  width: 5,
                 ),
                 Text(
-                  'Chairman',
-                  style: TextStyle(fontSize: 15),
-                ),
-                Text(
-                  '${value[index].kecamatan}',
-                  style: TextStyle(color: Colors.grey),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Vice chairman',
-                  style: TextStyle(fontSize: 15),
-                ),
-                Text(
-                  ' ${value[index].kota}',
-                  style: TextStyle(color: Colors.grey),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      seemore(context),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      buttonEdit(context),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      buttondelete(context)
-                    ],
+                  '2020/2021 ',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
-                )
+                ),
               ],
             ),
-          ),
-        ],
+            Container(
+              width: 300,
+              child: Column(
+                children: [
+                  Text(
+                    'Supervisor',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Text(
+                    ' ${value[index].id}',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: 300,
+              child: Column(
+                children: [
+                  Text(
+                    'Chairman',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Text(
+                    '${value[index].kecamatan}',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: 300,
+              child: Column(
+                children: [
+                  Text(
+                    'Vice chairman',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Text(
+                    ' ${value[index].kota}',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              child: Row(
+                children: [
+                  seemore(context),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  buttonEdit(context),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  bottonDelete(context)
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -411,7 +397,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
         padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
         decoration: BoxDecoration(
           color: AppColors.bilu,
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Row(
           children: [
@@ -602,7 +588,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
-          borderRadius: BorderRadius.circular(2),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Row(children: [
           Icon(
@@ -622,58 +608,86 @@ class OrganizationalStruktureScreen extends StatelessWidget {
     );
   }
 
-  Widget buttondelete(context) {
-    return MaterialButton(
-      minWidth: 30,
-      height: 42,
-      color: AppColors.bilu,
-      onPressed: () {
-        showDialog(
+  Widget bottonDelete(context) {
+    return InkWell(
+      onTap: () {
+        showDialog<void>(
             context: context,
-            builder: (context) {
+            barrierDismissible: true,
+            builder: (BuildContext context) {
               return AlertDialog(
-                content: Row(
-                  children: [
-                    Icon(
-                      Icons.warning,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('Are you sure to delete '),
-                  ],
-                ),
-                actions: [
-                  MaterialButton(
-                    onPressed: () {},
-                    color: Colors.grey[200],
-                    child: Text('Yes'),
+                content: Container(
+                  height: 70,
+                  width: 220,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.warning),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Are you sure to delete"),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom: 5, top: 5, left: 30, right: 30),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Text("Yes"),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom: 5, top: 5, left: 30, right: 30),
+                              child: Text("No"),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                  MaterialButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    color: Colors.grey[200],
-                    child: Text('No'),
-                  )
-                ],
+                ),
               );
             });
       },
-      child: Row(children: [
-        Icon(
-          Icons.delete,
-          size: 13,
-          color: Colors.white,
+      child: Container(
+        padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+        decoration: BoxDecoration(
+          color: AppColors.bilu,
+          borderRadius: BorderRadius.circular(15),
         ),
-        SizedBox(
-          width: 5,
-        ),
-        Text(
-          'Delete',
-          style: TextStyle(fontSize: 13, color: Colors.white),
-        )
-      ]),
+        child: Row(children: [
+          Icon(
+            Icons.delete,
+            size: 15,
+            color: Colors.white,
+          ),
+          SizedBox(
+            width: 2,
+          ),
+          Text(
+            'delete',
+            style: TextStyle(color: Colors.white, fontSize: 13),
+          )
+        ]),
+      ),
     );
   }
 
@@ -857,7 +871,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
-          borderRadius: BorderRadius.circular(2),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Row(children: [
           Icon(

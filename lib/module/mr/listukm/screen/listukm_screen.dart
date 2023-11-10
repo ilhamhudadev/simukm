@@ -41,7 +41,7 @@ class ListukmScreen extends StatelessWidget {
                                         fontWeight: FontWeight.bold)),
                               ),
                               Container(
-                                child: create(context, 'title'),
+                                child: create(context),
                               ),
                             ],
                           ),
@@ -50,44 +50,38 @@ class ListukmScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                margin: EdgeInsets.only(left: 6, bottom: 10),
-                                width: AppSize.screenWidth * 0.5,
-                                height: AppSize.screenHeight * 0.06,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(3)),
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.only(left: 10),
-                                      hintText: "Search a listing",
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(5),
-                                              bottomLeft: Radius.circular(5)),
-                                          borderSide: BorderSide())),
+                                    borderRadius: BorderRadius.circular(5),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey,
+                                          blurRadius: 2.0,
+                                          offset: Offset(0, 1))
+                                    ]),
+                                margin: EdgeInsets.only(
+                                    bottom: 5, left: 20, right: 20),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: AppSize.screenWidth * 0.5,
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.only(left: 10),
+                                            hintText: "Search a listing",
+                                            border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(5),
+                                                    bottomLeft:
+                                                        Radius.circular(5)),
+                                                borderSide: BorderSide())),
+                                      ),
+                                    ),
+                                    buttonsearch()
+                                  ],
                                 ),
                               ),
-                              Container(
-                                child: InkWell(
-                                  onTap: () {},
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    height: AppSize.screenHeight * 0.06,
-                                    width: AppSize.screenWidth * 0.15,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blueAccent.shade700,
-                                      borderRadius: BorderRadius.circular(3),
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      'Search',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 15),
-                                    )),
-                                  ),
-                                ),
-                              )
                             ],
                           ),
                         ],
@@ -120,7 +114,29 @@ class ListukmScreen extends StatelessWidget {
   }
 }
 
-Widget create(context, title) {
+Widget buttonsearch() {
+  return InkWell(
+    onTap: () {},
+    child: Container(
+      padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
+      decoration: BoxDecoration(
+        color: AppColors.bilu,
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
+      ),
+      child: Row(
+        children: [
+          Text(
+            'Search',
+            style: TextStyle(color: Colors.white, fontSize: 15),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget create(context) {
   return InkWell(
     onTap: () {
       showDialog<void>(
@@ -140,7 +156,13 @@ Widget create(context, title) {
                               onTap: () {
                                 Get.back();
                               },
-                              child: Icon(Icons.close)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Icon(Icons.close),
+                                ],
+                              )),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -291,17 +313,17 @@ Widget create(context, title) {
                               onTap: () {},
                               child: Container(
                                 margin: EdgeInsets.only(top: 10),
-                                height: AppSize.screenHeight * 0.04,
-                                width: AppSize.screenWidth * 0.1,
+                                padding: EdgeInsets.only(
+                                    bottom: 9.5, top: 9.5, left: 12, right: 12),
                                 decoration: BoxDecoration(
-                                  color: Colors.blueAccent.shade700,
-                                  borderRadius: BorderRadius.circular(3),
+                                  color: AppColors.bilu,
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: Center(
                                     child: Text(
                                   'Create',
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 11.5),
+                                      color: Colors.white, fontSize: 13),
                                 )),
                               ),
                             ),
@@ -315,20 +337,18 @@ Widget create(context, title) {
             );
           });
     },
-    borderRadius: BorderRadius.circular(20),
     child: Container(
-      margin: EdgeInsets.only(top: 10, right: 33),
-      height: AppSize.screenHeight * 0.06,
-      width: AppSize.screenWidth * 0.15,
+      margin: EdgeInsets.only(right: 20, top: 20),
+      padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
       decoration: BoxDecoration(
         color: Colors.blueAccent.shade700,
-        borderRadius: BorderRadius.circular(3),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.add, color: Colors.white, size: 13),
+          Icon(Icons.add, color: Colors.white, size: 15),
           Text(
             'Create',
             style: TextStyle(color: Colors.white, fontSize: 15),
@@ -345,12 +365,6 @@ Widget item(ListukmOrganization model, context) {
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(3),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey,
-          spreadRadius: 1,
-        )
-      ],
     ),
     child: ListTile(
         title: Row(
@@ -381,9 +395,9 @@ Widget item(ListukmOrganization model, context) {
           margin: EdgeInsets.only(right: 20),
           child: Row(
             children: [
-              edit(context, 'title'),
-              SizedBox(height: 20),
-              hapus(context, 'title'),
+              edit(context),
+              SizedBox(width: 10),
+              bottonDelete(context),
             ],
           ),
         ),
@@ -392,77 +406,55 @@ Widget item(ListukmOrganization model, context) {
   ));
 }
 
-Widget hapus(context, title) {
+Widget bottonDelete(context) {
   return InkWell(
     onTap: () {
       showDialog<void>(
           context: context,
-          barrierDismissible: true, // user must tap button!
+          barrierDismissible: true,
           builder: (BuildContext context) {
             return AlertDialog(
               content: Container(
-                height: 100,
-                width: 100,
+                height: 70,
+                width: 220,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Icon(Icons.close)),
-                    SizedBox(height: 10),
-                    Text(
-                      'Apakah yakin hapus data?',
-                      style: TextStyle(color: Colors.black, fontSize: 15),
-                    ),
-                    SizedBox(height: 10),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.warning),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Are you sure to delete"),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         InkWell(
                           onTap: () {},
-                          borderRadius: BorderRadius.circular(20),
                           child: Container(
-                            height: AppSize.screenHeight * 0.04,
-                            width: AppSize.screenWidth * 0.06,
-                            padding: EdgeInsets.only(left: 4.5),
+                            padding: EdgeInsets.only(
+                                bottom: 5, top: 5, left: 30, right: 30),
                             decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                            child: Row(
-                              children: [
-                                Center(
-                                    child: Text('Yes',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 11.5))),
-                              ],
-                            ),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Text("Yes"),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(
+                          width: 10,
+                        ),
                         InkWell(
-                          onTap: () {},
-                          borderRadius: BorderRadius.circular(20),
+                          onTap: () {
+                            Get.back();
+                          },
                           child: Container(
-                            height: AppSize.screenHeight * 0.04,
-                            width: AppSize.screenWidth * 0.06,
-                            padding: EdgeInsets.only(left: 2.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.blue,
-                                  spreadRadius: 1,
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                            child: Center(
-                                child: Text('No',
-                                    style: TextStyle(
-                                        color: Colors.blue, fontSize: 11.5))),
+                            padding: EdgeInsets.only(
+                                bottom: 5, top: 5, left: 30, right: 30),
+                            child: Text("No"),
                           ),
                         ),
                       ],
@@ -473,20 +465,31 @@ Widget hapus(context, title) {
             );
           });
     },
-    borderRadius: BorderRadius.circular(20),
     child: Container(
-      height: AppSize.screenHeight * 0.05,
-      width: AppSize.screenWidth * 0.1,
+      padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        color: AppColors.bilu,
+        borderRadius: BorderRadius.circular(15),
       ),
-      child: Center(child: Icon(Icons.delete)),
+      child: Row(children: [
+        Icon(
+          Icons.delete,
+          size: 15,
+          color: Colors.white,
+        ),
+        SizedBox(
+          width: 2,
+        ),
+        Text(
+          'delete',
+          style: TextStyle(color: Colors.white, fontSize: 13),
+        )
+      ]),
     ),
   );
 }
 
-Widget edit(context, title) {
+Widget edit(context) {
   return InkWell(
     onTap: () {
       showDialog<void>(
@@ -505,7 +508,13 @@ Widget edit(context, title) {
                             onTap: () {
                               Get.back();
                             },
-                            child: Icon(Icons.close)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Icon(Icons.close),
+                              ],
+                            )),
                       ],
                     ),
                     SizedBox(height: 10),
@@ -656,7 +665,7 @@ Widget edit(context, title) {
                               height: AppSize.screenHeight * 0.04,
                               width: AppSize.screenWidth * 0.15,
                               decoration: BoxDecoration(
-                                color: Colors.blue,
+                                color: AppColors.bilu,
                                 borderRadius: BorderRadius.circular(3),
                               ),
                               child: Center(
@@ -676,15 +685,25 @@ Widget edit(context, title) {
             );
           });
     },
-    borderRadius: BorderRadius.circular(20),
     child: Container(
-        margin: EdgeInsets.all(20),
-        height: AppSize.screenHeight * 0.05,
-        width: AppSize.screenWidth * 0.1,
+        padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          color: AppColors.bilu,
+          borderRadius: BorderRadius.circular(15),
         ),
-        child: Center(child: Icon(Icons.edit))),
+        child: Row(children: [
+          Icon(
+            Icons.edit,
+            size: 15,
+            color: Colors.white,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            'Edit',
+            style: TextStyle(color: Colors.white, fontSize: 15),
+          )
+        ])),
   );
 }

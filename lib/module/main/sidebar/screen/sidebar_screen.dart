@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:standard_project/core/assets/app_assets.dart';
+import 'package:standard_project/module/ab/profileukm/screen/Decree_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/organizationalStructure_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/report_screen.dart';
 import 'package:standard_project/module/ac/achievement/screen/achievement_screen.dart';
@@ -239,7 +240,7 @@ class _ScreensExample extends StatelessWidget {
             return OrganizationalStruktureScreen();
           // KHS NPM
           case 4:
-            return Container();
+            return DecreeScreen();
           //Transkrip NPM
           case 5:
             return ReportScreen();

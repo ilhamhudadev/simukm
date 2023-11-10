@@ -53,15 +53,15 @@ class DecreeScreen extends StatelessWidget {
                                   boxShadow: [
                                     BoxShadow(
                                         color: Colors.grey,
-                                        blurRadius: 0.1,
-                                        offset: Offset(0, 0.1))
+                                        blurRadius: 2.0,
+                                        offset: Offset(0, 1))
                                   ]),
                               margin: EdgeInsets.only(
                                   bottom: 5, left: 20, right: 20),
                               child: Row(
                                 children: [
                                   Container(
-                                    width: AppSize.screenWidth * 2.25,
+                                    width: AppSize.screenWidth * 0.5,
                                     child: TextField(
                                       decoration: InputDecoration(
                                           contentPadding:
@@ -75,7 +75,7 @@ class DecreeScreen extends StatelessWidget {
                                               borderSide: BorderSide())),
                                     ),
                                   ),
-                                  buttonsearch(),
+                                  buttonsearch()
                                 ],
                               ),
                             ),
@@ -94,16 +94,11 @@ class DecreeScreen extends StatelessWidget {
                               width: AppSize.screenWidth * 4,
                               decoration:
                                   BoxDecoration(color: Color(0xFFE9E8E8)),
-                              child: GridView.builder(
+                              child: ListView.builder(
                                 scrollDirection: Axis.vertical,
                                 controller: controller.scrollController,
                                 shrinkWrap: true,
                                 itemCount: value!.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  childAspectRatio: 2,
-                                ),
                                 itemBuilder: (context, index) {
                                   return item(value, index, context);
                                 },
@@ -271,11 +266,10 @@ class DecreeScreen extends StatelessWidget {
       color: Colors.white,
       child: Container(
         padding: EdgeInsets.only(right: 10),
-        child: Column(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   width: 50,
@@ -284,66 +278,59 @@ class DecreeScreen extends StatelessWidget {
                       image: DecorationImage(
                           image: AssetImage('assets/documen.png'))),
                 ),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
-                  padding:
-                      EdgeInsets.only(top: 3, bottom: 3, right: 5, left: 5),
-                  decoration: BoxDecoration(
-                      color: AppColors.bilu,
-                      borderRadius: BorderRadius.circular(8)),
+                  width: 200,
                   child: Text(
-                    '2021',
-                    style: TextStyle(color: Colors.white),
+                    '2021/2022',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 )
               ],
             ),
-            SizedBox(
-              height: 20,
-            ),
             Container(
               padding: EdgeInsets.only(left: 15),
-              child: Column(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Container(width: 70, child: Text('No SK ')),
-                      Text(':'),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text('${value[index].id}')
-                    ],
+                  Container(
+                    width: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'No SK ',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text('${value[index].id}')
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    height: 5,
+                  Container(
+                    width: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Tentang ', style: TextStyle(fontSize: 18)),
+                        Text('${value[index].kecamatan}')
+                      ],
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Container(width: 70, child: Text('Tentang ')),
-                      Text(':'),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text('${value[index].kecamatan}')
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Container(width: 70, child: Text('Kategori ')),
-                      Text(':'),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text('${value[index].kota} '),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 15,
+                  Container(
+                    width: 250,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Kategori ', style: TextStyle(fontSize: 18)),
+                        Text('${value[index].kota} '),
+                      ],
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -357,7 +344,7 @@ class DecreeScreen extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      buttondelete(context)
+                      bottonDelete(context)
                     ],
                   )
                 ],
@@ -453,7 +440,7 @@ class DecreeScreen extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
-          borderRadius: BorderRadius.circular(2),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Row(children: [
           Icon(
@@ -473,58 +460,86 @@ class DecreeScreen extends StatelessWidget {
     );
   }
 
-  Widget buttondelete(context) {
-    return MaterialButton(
-      minWidth: 30,
-      height: 42,
-      color: AppColors.bilu,
-      onPressed: () {
-        showDialog(
+  Widget bottonDelete(context) {
+    return InkWell(
+      onTap: () {
+        showDialog<void>(
             context: context,
-            builder: (context) {
+            barrierDismissible: true,
+            builder: (BuildContext context) {
               return AlertDialog(
-                content: Row(
-                  children: [
-                    Icon(
-                      Icons.warning,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('Are you sure to delete '),
-                  ],
-                ),
-                actions: [
-                  MaterialButton(
-                    onPressed: () {},
-                    color: Colors.grey[200],
-                    child: Text('Yes'),
+                content: Container(
+                  height: 70,
+                  width: 220,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.warning),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Are you sure to delete"),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom: 5, top: 5, left: 30, right: 30),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Text("Yes"),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom: 5, top: 5, left: 30, right: 30),
+                              child: Text("No"),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                  MaterialButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    color: Colors.grey[200],
-                    child: Text('No'),
-                  )
-                ],
+                ),
               );
             });
       },
-      child: Row(children: [
-        Icon(
-          Icons.delete,
-          size: 13,
-          color: Colors.white,
+      child: Container(
+        padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+        decoration: BoxDecoration(
+          color: AppColors.bilu,
+          borderRadius: BorderRadius.circular(15),
         ),
-        SizedBox(
-          width: 5,
-        ),
-        Text(
-          'Delete',
-          style: TextStyle(fontSize: 13, color: Colors.white),
-        )
-      ]),
+        child: Row(children: [
+          Icon(
+            Icons.delete,
+            size: 15,
+            color: Colors.white,
+          ),
+          SizedBox(
+            width: 2,
+          ),
+          Text(
+            'delete',
+            style: TextStyle(color: Colors.white, fontSize: 13),
+          )
+        ]),
+      ),
     );
   }
 
@@ -606,7 +621,7 @@ class DecreeScreen extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
-          borderRadius: BorderRadius.circular(2),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Row(children: [
           Icon(

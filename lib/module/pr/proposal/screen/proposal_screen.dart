@@ -46,40 +46,35 @@ class ProposalScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 2.0,
+                                      offset: Offset(0, 1))
+                                ]),
                             margin:
-                                EdgeInsets.only(left: 10, top: 20, bottom: 20),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(5),
-                                    bottomLeft: Radius.circular(5))),
-                            width: AppSize.screenWidth * 0.5,
-                            height: 40,
-                            child: TextField(
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'Search Proposal')),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: AppColors.bilu,
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(5),
-                                  bottomRight: Radius.circular(5),
-                                )),
-                            height: 37,
-                            child: TextButton.icon(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.search,
-                                size: 15,
-                                color: Colors.white,
-                              ),
-                              label: Text(
-                                'Search',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 15),
-                              ),
+                                EdgeInsets.only(bottom: 5, left: 20, right: 20),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: AppSize.screenWidth * 0.5,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        contentPadding:
+                                            EdgeInsets.only(left: 10),
+                                        hintText: "Search a listing",
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(5),
+                                                bottomLeft: Radius.circular(5)),
+                                            borderSide: BorderSide())),
+                                  ),
+                                ),
+                                buttonsearch()
+                              ],
                             ),
                           ),
                         ],
@@ -94,16 +89,13 @@ class ProposalScreen extends StatelessWidget {
                             if (snapshot.hasData) {
                               var value = snapshot.data;
                               return Container(
-                                  width: AppSize.screenWidth * 3.3,
-                                  height: AppSize.screenHeight * 0.8,
-                                  child: GridView.builder(
+                                  width: AppSize.screenWidth * 3,
+                                  decoration:
+                                      BoxDecoration(color: Color(0xFFE9E8E8)),
+                                  child: ListView.builder(
                                       scrollDirection: Axis.vertical,
                                       controller: controller.scrollController,
                                       shrinkWrap: true,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 4,
-                                              childAspectRatio: 1),
                                       itemCount: value!.length,
                                       itemBuilder: (context, index) {
                                         return Column(children: [
@@ -205,97 +197,210 @@ class ProposalScreen extends StatelessWidget {
                         Column(
                           children: [
                             Container(
-                              margin: EdgeInsets.all(15),
+                              margin: EdgeInsets.all(10),
                               child: Text(
                                 'Form Proposal UKM',
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 24.0,
+                                    fontSize: 28.0,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 2),
                               ),
                             )
                           ],
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 20),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: 'Judul Proposal',
-                                  border: OutlineInputBorder(),
-                                  prefixIcon: Icon(Icons.source)),
+                            Text('Judul Proposal'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 600,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.title),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Judul Proposal',
+                                ),
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: 10),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: 'Deskripsi Proposal',
-                                  border: OutlineInputBorder(),
-                                  prefixIcon: Icon(Icons.description)),
+                            Text('Deskripsi Proposal'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 600,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.description),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Deskripsi Proposal',
+                                ),
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: 10),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: 'Tanggal',
-                                  border: OutlineInputBorder(),
-                                  prefixIcon: Icon(Icons.calendar_month)),
+                            Text('Tanggal'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 600,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.calendar_today),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Tanggal',
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Waktu'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 600,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.lock_clock),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Waktu',
+                                ),
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: 10),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: 'Waktu',
-                                  border: OutlineInputBorder(),
-                                  prefixIcon: Icon(Icons.lock_clock)),
+                            Text('Tempat Pelaksanaan'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 600,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.location_city),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Tempat Pelaksanaan',
+                                ),
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: 10),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: 'Tempat Pelaksanaan',
-                                  border: OutlineInputBorder(),
-                                  prefixIcon: Icon(Icons.location_city)),
+                            Text('Anggaran'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 600,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.attach_money),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Anggaran',
+                                ),
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: 10),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: 'Anggaran',
-                                  border: OutlineInputBorder(),
-                                  prefixIcon: Icon(Icons.money)),
+                            Text('Dokumen Proposal'),
+                            SizedBox(
+                              height: 10,
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Column(
-                          children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: 'Dokumen Proposal',
-                                  border: OutlineInputBorder(),
-                                  prefixIcon: Icon(Icons.document_scanner)),
+                            Container(
+                              width: 600,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.document_scanner),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Dokumen Proposal',
+                                ),
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(width: 10),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -308,12 +413,12 @@ class ProposalScreen extends StatelessWidget {
                                     height: AppSize.screenHeight * 0.04,
                                     width: AppSize.screenWidth * 0.17,
                                     decoration: BoxDecoration(
-                                      color: Colors.blue,
+                                      color: AppColors.bilu,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Center(
                                         child: Text(
-                                      'Save',
+                                      'Save Changes',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 11.5),
                                     )),
@@ -330,15 +435,11 @@ class ProposalScreen extends StatelessWidget {
               );
             });
       },
-      borderRadius: BorderRadius.circular(20),
       child: Container(
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(5),
-          height: AppSize.screenHeight * 0.04,
-          width: AppSize.screenWidth * 0.12,
+          padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
           decoration: BoxDecoration(
               color: AppColors.bilu,
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
                     color: Colors.grey.shade400,
@@ -348,17 +449,17 @@ class ProposalScreen extends StatelessWidget {
               ]),
           child: Row(
             children: [
-              Text(
-                'Add',
-                style: TextStyle(color: Colors.white, fontSize: 15),
-              ),
-              SizedBox(
-                width: 5,
-              ),
               Icon(
                 Icons.add,
                 size: 14,
                 color: Colors.white,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                'Add',
+                style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ],
           )),
@@ -369,13 +470,12 @@ class ProposalScreen extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          //height: AppSize.screenHeight * 0.27,
-          //width: AppSize.screenWidth * 0.6,
-          padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
-          margin: EdgeInsets.only(bottom: 20, right: 15, left: 15),
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.all(10),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(10)),
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 child: Row(
@@ -389,6 +489,7 @@ class ProposalScreen extends StatelessWidget {
                       width: 10,
                     ),
                     Container(
+                      width: 150,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -401,7 +502,7 @@ class ProposalScreen extends StatelessWidget {
                           Text(
                             '${value[index].kecamatan}',
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 15,
                             ),
                           ),
                         ],
@@ -410,34 +511,30 @@ class ProposalScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 15,
-              ),
               Container(
+                  width: 250,
                   child: Row(
-                children: [
-                  Icon(
-                    Icons.location_pin,
-                    size: 15,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    '${value[index].kota}',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ],
-              )),
-              SizedBox(
-                height: 5,
-              ),
+                    children: [
+                      Icon(
+                        Icons.location_pin,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        '${value[index].kota}',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  )),
               Container(
+                width: 100,
                 child: Row(
                   children: [
                     Icon(
                       Icons.calendar_month,
-                      size: 15,
+                      size: 20,
                     ),
                     SizedBox(
                       width: 5,
@@ -449,15 +546,13 @@ class ProposalScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 5,
-              ),
               Container(
+                width: 200,
                 child: Row(
                   children: [
                     Icon(
                       Icons.lock_clock,
-                      size: 15,
+                      size: 20,
                     ),
                     SizedBox(
                       width: 5,
@@ -469,15 +564,13 @@ class ProposalScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 5,
-              ),
               Container(
+                width: 100,
                 child: Row(
                   children: [
                     Icon(
-                      Icons.money,
-                      size: 15,
+                      Icons.attach_money,
+                      size: 20,
                     ),
                     SizedBox(
                       width: 5,
@@ -489,12 +582,6 @@ class ProposalScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(
-                endIndent: 0,
-                color: Colors.black,
-                indent: 0,
-                height: 15,
-              ),
               Container(
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -502,15 +589,15 @@ class ProposalScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
+                      Container(child: seemore(context, 'title')),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Container(child: edit(context, 'title')),
                       SizedBox(
                         width: 10,
                       ),
                       Container(child: hapus(context, 'title')),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(child: seemore(context, 'title')),
                     ],
                   ),
                 ],
@@ -528,13 +615,16 @@ Widget hapus(context, title) {
     onTap: () {
       showDialog<void>(
           context: context,
-          barrierDismissible: true, // user must tap button!
+          barrierDismissible: true,
           builder: (BuildContext context) {
             return AlertDialog(
               content: Container(
-                height: 250,
-                width: 150,
+                height: 140,
+                width: 230,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
                       padding: EdgeInsets.only(left: 325),
@@ -604,14 +694,11 @@ Widget hapus(context, title) {
             );
           });
     },
-    borderRadius: BorderRadius.circular(20),
     child: Container(
-        padding: EdgeInsets.only(left: 5),
-        height: AppSize.screenHeight * 0.035,
-        width: AppSize.screenWidth * 0.13,
+        padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
         decoration: BoxDecoration(
             color: AppColors.bilu,
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
                   color: Colors.grey.shade400,
@@ -621,18 +708,18 @@ Widget hapus(context, title) {
             ]),
         child: Row(
           children: [
-            Text(
-              'Delete',
-              style: TextStyle(fontSize: 15, color: Colors.white),
-            ),
-            SizedBox(
-              width: 5,
-            ),
             Icon(
               Icons.delete,
               size: 10,
               color: Colors.white,
-            )
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              'Delete',
+              style: TextStyle(fontSize: 15, color: Colors.white),
+            ),
           ],
         )),
   );
@@ -678,92 +765,198 @@ Widget edit(context, title) {
                               'Form Proposal UKM',
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 24.0,
+                                  fontSize: 28.0,
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 2),
                             ),
                           )
                         ],
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 20),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: 'Judul Proposal',
-                                border: OutlineInputBorder(),
-                                prefixIcon: Icon(Icons.source)),
+                          Text('Judul Proposal'),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: 600,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.title),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Judul Proposal',
+                              ),
+                            ),
                           ),
                         ],
                       ),
                       SizedBox(height: 10),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: 'Deskripsi Proposal',
-                                border: OutlineInputBorder(),
-                                prefixIcon: Icon(Icons.description)),
+                          Text('Deskripsi Proposal'),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: 600,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.description),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Deskripsi Proposal',
+                              ),
+                            ),
                           ),
                         ],
                       ),
                       SizedBox(height: 10),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: 'Tanggal',
-                                border: OutlineInputBorder(),
-                                prefixIcon: Icon(Icons.calendar_month)),
+                          Text('Tanggal'),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: 600,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.calendar_today),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Tanggal',
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Waktu'),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: 600,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.lock_clock),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Waktu',
+                              ),
+                            ),
                           ),
                         ],
                       ),
                       SizedBox(height: 10),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: 'Waktu',
-                                border: OutlineInputBorder(),
-                                prefixIcon: Icon(Icons.lock_clock)),
+                          Text('Tempat Pelaksanaan'),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: 600,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.location_city),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Tempat Pelaksanaan',
+                              ),
+                            ),
                           ),
                         ],
                       ),
                       SizedBox(height: 10),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: 'Tempat Pelaksanaan',
-                                border: OutlineInputBorder(),
-                                prefixIcon: Icon(Icons.location_city)),
+                          Text('Anggaran'),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: 600,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.attach_money),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Anggaran',
+                              ),
+                            ),
                           ),
                         ],
                       ),
                       SizedBox(height: 10),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: 'Anggaran',
-                                border: OutlineInputBorder(),
-                                prefixIcon: Icon(Icons.money)),
+                          Text('Dokumen Proposal'),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: 600,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.document_scanner),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Dokumen Proposal',
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(width: 10),
                       Column(
-                        children: [
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: 'Dokumen Proposal',
-                                border: OutlineInputBorder(),
-                                prefixIcon: Icon(Icons.document_scanner)),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -798,16 +991,11 @@ Widget edit(context, title) {
             );
           });
     },
-    borderRadius: BorderRadius.circular(20),
     child: Container(
-      padding: EdgeInsets.only(
-        left: 5,
-      ),
-      height: AppSize.screenHeight * 0.035,
-      width: AppSize.screenWidth * 0.12,
+      padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
       decoration: BoxDecoration(
           color: AppColors.bilu,
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
                 color: Colors.grey.shade400,
@@ -817,17 +1005,47 @@ Widget edit(context, title) {
           ]),
       child: Row(
         children: [
-          Text(
-            'Edit',
-            style: TextStyle(fontSize: 15, color: Colors.white),
+          Icon(
+            Icons.edit,
+            size: 15,
+            color: Colors.white,
           ),
           SizedBox(
             width: 5,
           ),
+          Text(
+            'Edit',
+            style: TextStyle(fontSize: 15, color: Colors.white),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget buttonsearch() {
+  return InkWell(
+    onTap: () {},
+    child: Container(
+      padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
+      decoration: BoxDecoration(
+        color: AppColors.bilu,
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
+      ),
+      child: Row(
+        children: [
           Icon(
-            Icons.edit,
-            size: 10,
+            Icons.search,
+            size: 20,
             color: Colors.white,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            'Search',
+            style: TextStyle(color: Colors.white, fontSize: 15),
           ),
         ],
       ),
@@ -940,14 +1158,11 @@ Widget seemore(context, title) {
                     ]))));
           });
     },
-    borderRadius: BorderRadius.circular(20),
     child: Container(
-        padding: EdgeInsets.only(left: 5, right: 5),
-        height: AppSize.screenHeight * 0.035,
-        width: AppSize.screenWidth * 0.18,
+        padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
         decoration: BoxDecoration(
             color: AppColors.bilu,
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
                   color: Colors.grey.shade400,
@@ -957,18 +1172,18 @@ Widget seemore(context, title) {
             ]),
         child: Row(
           children: [
-            Text(
-              'See more',
-              style: TextStyle(fontSize: 15, color: Colors.white),
+            Icon(
+              Icons.remove_red_eye,
+              size: 10,
+              color: Colors.white,
             ),
             SizedBox(
               width: 5,
             ),
-            Icon(
-              Icons.more,
-              size: 10,
-              color: Colors.white,
-            )
+            Text(
+              'See more',
+              style: TextStyle(fontSize: 15, color: Colors.white),
+            ),
           ],
         )),
   );
