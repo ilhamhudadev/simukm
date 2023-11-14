@@ -32,6 +32,7 @@ class ProfileScreen extends StatelessWidget {
                           children: [
                             sosialMedia(contextProfile),
                             Accounts(contextProfile),
+                            Sejarahukm(contextProfile)
                           ],
                         )
                       ],
@@ -44,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Container Sosialmedia(BuildContext contextProfile) {
+  Widget Sosialmedia(BuildContext contextProfile) {
     return Container(
       margin: EdgeInsets.only(left: 40, right: 20, top: 20, bottom: 40),
       padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
@@ -275,11 +276,11 @@ class ProfileScreen extends StatelessWidget {
     });
   }
 
-  Container Accounts(context) {
+  Widget Accounts(context) {
     return Container(
-      margin: EdgeInsets.only(left: 40, right: 20),
+      margin: EdgeInsets.only(left: 20, right: 20),
       width: 650,
-      height: 250,
+      height: 210,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -290,7 +291,7 @@ class ProfileScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -366,6 +367,178 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget Sejarahukm(context) {
+    return Container(
+      margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+      width: 650,
+      height: 200,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(color: Colors.grey, blurRadius: 5.0, offset: Offset(0, 1))
+          ]),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Sejarah",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                editsejarah(context),
+              ],
+            ),
+          ),
+          Divider(
+            endIndent: 0,
+            color: Colors.grey,
+            indent: 0,
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 10, left: 20),
+            child: Text(
+                "Berdirinya Himpunan Mahasiswa Islam (HMI) diprakasai oleh Lafran Pane, seorang mahasiswa STI (Sekolah Tinggi Islam), kini UII (Universitas Islam Indonesia) yang masih duduk ditingkat I yang ketika itu genap berusia 25 tahun. Tentang sosok Lafran Pane, dapat diceritakan secara garis besarnya antara lain bahwa Pemuda Lafran Pane lahir di Sipirok-Tapanuli Selatan, Sumatera Utara. Beliau adalah anak seorang Sutan Pangurabaan Pane –tokoh pergerakan nasional “serba komplit” dari Sipirok, Tapanuli Selatan Lafaran Pane adalah sosok yang tidak mengenal lelah."),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 10, left: 20),
+            child: InkWell(
+                onTap: () {
+                  showDialog<void>(
+                      context: context,
+                      barrierDismissible: true, // user must tap button!
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Container(
+                            height: 500,
+                            width: 800,
+                            child: Column(children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: Container(
+                                      child: Icon(Icons.close),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Text(
+                                'SEJARAH UKM',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Container(
+                                  width: 750,
+                                  child: Text(
+                                      'Berdirinya Himpunan Mahasiswa Islam (HMI) diprakasai oleh Lafran Pane, seorang mahasiswa STI (Sekolah Tinggi Islam), kini UII (Universitas Islam Indonesia) yang masih duduk ditingkat I yang ketika itu genap berusia 25 tahun. Tentang sosok Lafran Pane, dapat diceritakan secara garis besarnya antara lain bahwa Pemuda Lafran Pane lahir di Sipirok-Tapanuli Selatan, Sumatera Utara. Beliau adalah anak seorang Sutan Pangurabaan Pane –tokoh pergerakan nasional “serba komplit” dari Sipirok, Tapanuli Selatan.')),
+                            ]),
+                          ),
+                        );
+                      });
+                },
+                child: Text(
+                  "See more.......",
+                  style: TextStyle(color: Colors.blue),
+                )),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget editsejarah(context) {
+    return InkWell(
+      onTap: () {
+        showDialog<void>(
+            context: context,
+            barrierDismissible: true, // user must tap button!
+            builder: (BuildContext context) {
+              return AlertDialog(
+                content: Container(
+                  height: 350,
+                  width: 500,
+                  child: Column(children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: Container(
+                            child: Icon(Icons.close),
+                          ),
+                        )
+                      ],
+                    ),
+                    Text(
+                      'Edit sejarah',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      width: 520,
+                      child: TextFormField(
+                        minLines: 9,
+                        maxLines: 10,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            right: 20, left: 20, bottom: 10, top: 10),
+                        decoration: BoxDecoration(
+                          color: AppColors.bilu,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child:
+                            Text('Save', style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
+                  ]),
+                ),
+              );
+            });
+      },
+      child: Container(
+        padding: EdgeInsets.only(right: 20, left: 20, bottom: 10, top: 10),
+        decoration: BoxDecoration(
+          color: AppColors.bilu,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Text('Edit', style: TextStyle(color: Colors.white)),
       ),
     );
   }
@@ -502,10 +675,10 @@ class ProfileScreen extends StatelessWidget {
 
   Widget sosialMedia(context) {
     return Container(
-      margin: EdgeInsets.only(left: 40, right: 20, top: 20, bottom: 40),
-      padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+      margin: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
+      padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
       width: 650,
-      height: 270,
+      height: 250,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -784,7 +957,7 @@ class ProfileScreen extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          margin: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+          margin: EdgeInsets.only(left: 10, top: 20, bottom: 20),
           width: 600,
           height: AppSize.screenHeight,
           decoration: BoxDecoration(
