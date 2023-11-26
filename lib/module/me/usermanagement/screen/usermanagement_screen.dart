@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:standard_project/core/style/app_size.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/module/me/usermanagement/controller/usermanagement_controller.dart';
-import 'package:standard_project/module/me/usermanagement/data/model/user_menejemen.dart';
+import 'package:standard_project/module/me/usermanagement/data/model/users_model.dart';
 
 class UsermanagementScreen extends StatelessWidget {
   @override
@@ -17,6 +17,7 @@ class UsermanagementScreen extends StatelessWidget {
     return GetBuilder<UsermanagementController>(
       init: UsermanagementController(),
       builder: (UsermanagementController controller) {
+        controller.getUsersManagementData();
         return Scaffold(
             backgroundColor: AppColors.greywhite,
             body: SingleChildScrollView(
@@ -67,6 +68,8 @@ class UsermanagementScreen extends StatelessWidget {
                                       Container(
                                         width: AppSize.screenWidth,
                                         child: TextField(
+                                          controller:
+                                              controller.searchController,
                                           decoration: InputDecoration(
                                               contentPadding:
                                                   EdgeInsets.only(left: 10),
@@ -82,7 +85,7 @@ class UsermanagementScreen extends StatelessWidget {
                                                   borderSide: BorderSide())),
                                         ),
                                       ),
-                                      buttonsearch(),
+                                      buttonsearch(controller),
                                     ],
                                   ),
                                 ),
@@ -91,23 +94,27 @@ class UsermanagementScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Container(
+                      Obx(() => Container(
                           constraints: BoxConstraints(minHeight: 0),
                           width: AppSize.screenWidth * 3,
                           decoration: BoxDecoration(
                             color: AppColors.greywhite,
                           ),
-                          child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: controller.usermenejemenList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Center(
-                                  child: item(
-                                      controller.usermenejemenList[index],
-                                      context));
-                            },
-                          )),
+                          child: controller.userListData.isNotEmpty
+                              ? ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemCount: controller.userListData.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Center(
+                                        child: item(
+                                            controller.userListData[index],
+                                            context,
+                                            controller));
+                                  },
+                                )
+                              : Container())),
                     ],
                   ),
                 ),
@@ -200,7 +207,7 @@ class UsermanagementScreen extends StatelessWidget {
     );
   }
 
-  Widget buttonEdit(context) {
+  Widget buttonEdit(context, UsermanagementController controller) {
     return InkWell(
       onTap: () {
         showDialog<void>(
@@ -237,6 +244,7 @@ class UsermanagementScreen extends StatelessWidget {
                             Container(
                               width: 520,
                               child: TextField(
+                                controller: controller.nameTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
@@ -262,6 +270,7 @@ class UsermanagementScreen extends StatelessWidget {
                             Container(
                               width: 520,
                               child: TextField(
+                                controller: controller.shortNameTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
@@ -273,8 +282,8 @@ class UsermanagementScreen extends StatelessWidget {
                                             BorderSide(color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    hintText: 'Second name',
-                                    labelText: 'Second name'),
+                                    hintText: 'Short name',
+                                    labelText: 'Short name'),
                               ),
                             ),
                           ],
@@ -292,6 +301,7 @@ class UsermanagementScreen extends StatelessWidget {
                             Container(
                               width: 520,
                               child: TextField(
+                                controller: controller.emailTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey),
@@ -316,6 +326,7 @@ class UsermanagementScreen extends StatelessWidget {
                             Container(
                               width: 250,
                               child: TextField(
+                                controller: controller.usernameTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
@@ -334,6 +345,7 @@ class UsermanagementScreen extends StatelessWidget {
                             Container(
                               width: 250,
                               child: TextField(
+                                controller: controller.passwordTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
@@ -367,6 +379,7 @@ class UsermanagementScreen extends StatelessWidget {
                                 Container(
                                   width: 250,
                                   child: TextField(
+                                    controller: controller.igTextController,
                                     decoration: InputDecoration(
                                         enabledBorder: OutlineInputBorder(
                                           borderSide:
@@ -386,6 +399,8 @@ class UsermanagementScreen extends StatelessWidget {
                                 Container(
                                   width: 250,
                                   child: TextField(
+                                    controller:
+                                        controller.youtubeTextController,
                                     decoration: InputDecoration(
                                         enabledBorder: OutlineInputBorder(
                                           borderSide:
@@ -418,6 +433,7 @@ class UsermanagementScreen extends StatelessWidget {
                             Container(
                               width: 250,
                               child: TextField(
+                                controller: controller.twitterTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
@@ -436,6 +452,8 @@ class UsermanagementScreen extends StatelessWidget {
                             Container(
                               width: 250,
                               child: TextField(
+                                controller:
+                                    controller.phoneNumberTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
@@ -809,9 +827,11 @@ class UsermanagementScreen extends StatelessWidget {
     );
   }
 
-  Widget buttonsearch() {
+  Widget buttonsearch(UsermanagementController controller) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        controller.getUsersManagementData();
+      },
       child: Container(
         padding: EdgeInsets.only(right: 20, left: 20, bottom: 14, top: 14),
         decoration: BoxDecoration(
@@ -839,7 +859,7 @@ class UsermanagementScreen extends StatelessWidget {
     );
   }
 
-  Widget item(usermajemenModel model, context) {
+  Widget item(Data model, context, controller) {
     return Stack(
       children: [
         Container(
@@ -859,16 +879,16 @@ class UsermanagementScreen extends StatelessWidget {
                       margin: EdgeInsets.only(left: 10, right: 10),
                       child: Row(
                         children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 20, right: 20),
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage("${model.urlAvatar}"),
-                                    fit: BoxFit.contain),
-                                borderRadius: BorderRadius.circular(0)),
-                          ),
+                          // Container(
+                          //   margin: EdgeInsets.only(left: 20, right: 20),
+                          //   height: 60,
+                          //   width: 60,
+                          //   decoration: BoxDecoration(
+                          //       image: DecorationImage(
+                          //           image: NetworkImage("${model.urlAvatar}"),
+                          //           fit: BoxFit.contain),
+                          //       borderRadius: BorderRadius.circular(0)),
+                          // ),
                           Container(
                             width: 300,
                             child: Column(
@@ -876,7 +896,7 @@ class UsermanagementScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${model.name}",
+                                  "${model.organizationName}",
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
@@ -923,12 +943,12 @@ class UsermanagementScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Number phone',
+                            'Email',
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            '${model.phone}',
+                            '${model.email}',
                             style: TextStyle(color: Color(0xFF6C6B6B)),
                           ),
                         ],
@@ -942,7 +962,7 @@ class UsermanagementScreen extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        buttonEdit(context),
+                        buttonEdit(context, controller),
                         SizedBox(
                           width: 10,
                         ),
@@ -959,7 +979,7 @@ class UsermanagementScreen extends StatelessWidget {
     );
   }
 
-  Widget seemore(usermajemenModel model, context) {
+  Widget seemore(Data model, context) {
     return InkWell(
       onTap: () {
         showDialog<void>(
