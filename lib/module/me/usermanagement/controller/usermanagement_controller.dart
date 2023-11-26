@@ -22,11 +22,12 @@ class UsermanagementController extends GetxController with UsermanagementRepo {
       final response =
           await _dio.get('http://localhost:3000/api/user/${searchText}');
 
-      UsersModel data = UsersModel.fromJson(response.data);
-      if (data.data!.isNotEmpty) {
-        userListData.value = data.data!;
+      UsersModel value = UsersModel.fromJson(response.data);
+
+      if (value.data!.isNotEmpty) {
+        userListData.value = value.data!;
       } else {
-        AppConstant().setSnackbar("ID Tidak Ditemukan");
+        AppConstant().setSnackbar("UKM Tidak Ditemukan");
       }
     } catch (e) {
       throw Exception(null);

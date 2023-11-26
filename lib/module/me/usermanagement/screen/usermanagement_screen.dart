@@ -111,7 +111,8 @@ class UsermanagementScreen extends StatelessWidget {
                                         child: item(
                                             controller.userListData[index],
                                             context,
-                                            controller));
+                                            controller,
+                                            index));
                                   },
                                 )
                               : Container())),
@@ -207,7 +208,17 @@ class UsermanagementScreen extends StatelessWidget {
     );
   }
 
-  Widget buttonEdit(context, UsermanagementController controller) {
+  Widget buttonEdit(
+      context, UsermanagementController controller, index, Data value) {
+    controller.nameTextController.text = value.organizationName ?? "";
+    controller.emailTextController.text = value.email ?? "";
+    controller.usernameTextController.text = value.username ?? "";
+    controller.passwordTextController.text = value.password ?? "";
+    controller.igTextController.text = value.instagram ?? "";
+    controller.twitterTextController.text = value.twitter ?? "";
+    controller.phoneNumberTextController.text = value.contactNumber ?? "";
+    controller.youtubeTextController.text = value.youtube ?? "";
+    controller.shortNameTextController.text = value.shortName ?? "";
     return InkWell(
       onTap: () {
         showDialog<void>(
@@ -859,7 +870,7 @@ class UsermanagementScreen extends StatelessWidget {
     );
   }
 
-  Widget item(Data model, context, controller) {
+  Widget item(Data model, context, UsermanagementController controller, index) {
     return Stack(
       children: [
         Container(
@@ -962,7 +973,7 @@ class UsermanagementScreen extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        buttonEdit(context, controller),
+                        buttonEdit(context, controller, index, model),
                         SizedBox(
                           width: 10,
                         ),
