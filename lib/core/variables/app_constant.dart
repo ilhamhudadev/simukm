@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:standard_project/core/style/app_color.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class AppConstant {
   static const String sessionUserData = "sessionUserData";
@@ -27,4 +28,8 @@ class AppConstant {
     );
   }
 // End Snackbar ---------------------------------------------
+}
+
+void openUrl(String url) async {
+  await launchUrlString(url, mode: LaunchMode.externalApplication);
 }

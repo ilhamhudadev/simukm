@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
 import 'package:standard_project/module/ab/profileukm/controller/organizationalStructure_controller.dart';
-import 'package:standard_project/module/ab/profileukm/data/model/organizationStruktur_model.dart';
+import 'package:standard_project/module/ab/profileukm/data/model/structure_model.dart';
 
 class OrganizationalStruktureScreen extends StatelessWidget {
   get index => null;
@@ -14,8 +14,9 @@ class OrganizationalStruktureScreen extends StatelessWidget {
     return GetBuilder<OrganizationStrukturController>(
         init: OrganizationStrukturController(),
         builder: (OrganizationStrukturController controller) {
+          controller.getStructureLetter();
           return Scaffold(
-            backgroundColor: AppColors.greywhite,
+            backgroundColor: AppColors.greybegroud,
             body: SingleChildScrollView(
               child: Center(
                 child: Column(children: [
@@ -38,7 +39,6 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                     fontSize: 30, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            buttonAdd(context)
                           ],
                         ),
                         Row(
@@ -51,11 +51,12 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                   boxShadow: [
                                     BoxShadow(
                                         color: Colors.grey,
-                                        blurRadius: 2.0,
+                                        blurRadius: 1.0,
                                         offset: Offset(0, 1))
                                   ]),
                               margin: EdgeInsets.only(
-                                  bottom: 5, left: 20, right: 20),
+                                left: 20,
+                              ),
                               child: Row(
                                 children: [
                                   Container(
@@ -64,7 +65,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                       decoration: InputDecoration(
                                           contentPadding:
                                               EdgeInsets.only(left: 10),
-                                          hintText: "Search a listing",
+                                          hintText: "Cari Struktur",
                                           border: OutlineInputBorder(
                                               borderRadius: BorderRadius.only(
                                                   topLeft: Radius.circular(5),
@@ -77,34 +78,34 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            buttonAdd(context)
                           ],
                         ),
                       ],
                     ),
                   ),
-                  FutureBuilder<List<WilayahModel>>(
-                      future: controller.futureWilayah(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          var value = snapshot.data;
-                          return Container(
-                              constraints: BoxConstraints(minHeight: 0),
-                              width: AppSize.screenWidth * 3,
-                              decoration:
-                                  BoxDecoration(color: Color(0xFFE9E8E8)),
-                              child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                controller: controller.scrollController,
-                                shrinkWrap: true,
-                                itemCount: value!.length,
-                                itemBuilder: (context, index) {
-                                  return item(value, index, context);
-                                },
-                              ));
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                      })
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Obx(() => Container(
+                      constraints: BoxConstraints(minHeight: 0),
+                      width: AppSize.screenWidth * 3,
+                      decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
+                      child: controller.structureData.isNotEmpty
+                          ? ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              controller: controller.scrollController,
+                              shrinkWrap: true,
+                              itemCount: controller.structureData.length,
+                              itemBuilder: (context, index) {
+                                return item(
+                                    controller.structureData, index, context);
+                              },
+                            )
+                          : Container()))
                 ]),
               ),
             ),
@@ -112,12 +113,14 @@ class OrganizationalStruktureScreen extends StatelessWidget {
         });
   }
 
-  Widget item(List<WilayahModel> value, int index, BuildContext context) {
+  Widget item(List<DataStructure> value, int index, BuildContext context) {
     return Container(
-      width: 350,
       padding: EdgeInsets.all(20),
+      margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+      ),
       child: Container(
         child: Row(
           children: [
@@ -137,46 +140,55 @@ class OrganizationalStruktureScreen extends StatelessWidget {
               ],
             ),
             Container(
-              width: 300,
+              width: 150,
               child: Column(
                 children: [
                   Text(
-                    'Supervisor',
+                    'Pembimbing',
                     style: TextStyle(fontSize: 15),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
-                    ' ${value[index].id}',
-                    style: TextStyle(color: Colors.grey),
+                    ' ${value[index].adviser}',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ],
               ),
             ),
             Container(
-              width: 300,
+              width: 150,
               child: Column(
                 children: [
                   Text(
                     'Chairman',
                     style: TextStyle(fontSize: 15),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
-                    '${value[index].kecamatan}',
-                    style: TextStyle(color: Colors.grey),
+                    '${value[index].president}',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ],
               ),
             ),
             Container(
-              width: 300,
+              width: 150,
               child: Column(
                 children: [
                   Text(
                     'Vice chairman',
                     style: TextStyle(fontSize: 15),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
-                    ' ${value[index].kota}',
-                    style: TextStyle(color: Colors.grey),
+                    ' ${value[index].vicePresident}',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ],
               ),
@@ -184,7 +196,11 @@ class OrganizationalStruktureScreen extends StatelessWidget {
             Container(
               child: Row(
                 children: [
-                  seemore(context),
+                  seemore(
+                    context,
+                    value,
+                    index,
+                  ),
                   SizedBox(
                     width: 10,
                   ),
@@ -214,6 +230,14 @@ class OrganizationalStruktureScreen extends StatelessWidget {
         ),
         child: Row(
           children: [
+            Icon(
+              Icons.search,
+              size: 20,
+              color: Colors.white,
+            ),
+            SizedBox(
+              width: 5,
+            ),
             Text(
               'Search',
               style: TextStyle(color: Colors.white, fontSize: 15),
@@ -691,7 +715,11 @@ class OrganizationalStruktureScreen extends StatelessWidget {
     );
   }
 
-  Widget seemore(context) {
+  Widget seemore(
+    context,
+    List<DataStructure> value,
+    index,
+  ) {
     return InkWell(
       onTap: () {
         showDialog<void>(
@@ -745,7 +773,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                   width: 100,
                                   color: Colors.black,
                                 ),
-                                Text('Suparjan. Spd. S.Kom'),
+                                Text("${value[index].adviser.toString()}"),
                               ],
                             ),
                           ),
@@ -775,7 +803,8 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                       width: 100,
                                       color: Colors.black,
                                     ),
-                                    Text('Reyhan Sabian'),
+                                    Text(
+                                        "${value[index].president.toString()}"),
                                   ],
                                 ),
                               ),
@@ -799,7 +828,8 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                       width: 100,
                                       color: Colors.black,
                                     ),
-                                    Text('Rifqi nur'),
+                                    Text(
+                                        "${value[index].vicePresident.toString()}"),
                                   ],
                                 ),
                               ),
@@ -833,29 +863,14 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  'SEKERTARIS',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text('Saniati'),
-                                Text('M. Taufik Munawar'),
                                 SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'BENDAHARA',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text('Diva Rachman'),
-                                Text('Salma Siti F'),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'HUSMAS',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text('Anggia Putri'),
+                                    width: 500,
+                                    child: Text(
+                                      "${value[index].adviser.toString()}",
+                                      maxLines: 5,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ))
                               ],
                             ),
                           ),

@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:standard_project/core/route/route_constant.dart';
-import 'package:standard_project/module/ab/profileukm/screen/profileukm_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/report_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/visimisi_screen.dart';
 import 'package:standard_project/module/ac/achievement/screen/achievement_screen.dart';
@@ -18,12 +17,12 @@ import 'package:standard_project/module/pr/proposal/screen/proposal_screen.dart'
 class AppRoute {
   static final all = [
     //Module Preview
+
     GetPage(name: RouteConstant.profile, page: () => ProfileScreen()),
 
     GetPage(name: RouteConstant.signIn, page: () => SigninScreen()),
     GetPage(
         name: RouteConstant.usermanagement, page: () => UsermanagementScreen()),
-    GetPage(name: RouteConstant.profileUkm, page: () => ProfileukmScreen()),
     GetPage(name: RouteConstant.proposal, page: () => ProposalScreen()),
 
     GetPage(name: RouteConstant.VisiMisi, page: () => VisiMisiScreen()),

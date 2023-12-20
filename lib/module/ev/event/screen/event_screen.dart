@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
+import 'package:standard_project/core/variables/app_constant.dart';
 //import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/module/ev/event/controller/event_controller.dart';
-import 'package:standard_project/module/ev/event/data/model/userevent.dart';
+import 'package:standard_project/module/ev/event/data/model/event_model.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class EventScreen extends StatelessWidget {
   @override
@@ -12,108 +15,139 @@ class EventScreen extends StatelessWidget {
     return GetBuilder<EventController>(
         init: EventController(),
         builder: (EventController controller) {
+          controller.getEvent();
           return Scaffold(
+              backgroundColor: AppColors.greybegroud,
               body: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 233, 232, 232),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
+                child: Center(
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 233, 232, 232),
+                        ),
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 10, left: 43),
-                              child: Text('Kegiatan Mahasiswa',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 30.0,
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                            Container(
-                              child: create(context, 'title'),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 30),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 6, bottom: 10),
-                              width: AppSize.screenWidth * 0.5,
-                              height: AppSize.screenHeight * 0.06,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(3)),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.only(left: 10),
-                                    hintText: "Search a listing",
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            bottomLeft: Radius.circular(5)),
-                                        borderSide: BorderSide())),
-                              ),
-                            ),
-                            Container(
-                              child: InkWell(
-                                onTap: () {},
-                                borderRadius: BorderRadius.circular(20),
-                                child: Container(
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  height: AppSize.screenHeight * 0.06,
-                                  width: AppSize.screenWidth * 0.15,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blueAccent.shade700,
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                  child: Center(
-                                      child: Text(
-                                    'Search',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 15),
-                                  )),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  margin:
+                                      const EdgeInsets.only(top: 10, left: 43),
+                                  child: const Text('Kegiatan Mahasiswa',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 30.0,
+                                          fontWeight: FontWeight.bold)),
                                 ),
-                              ),
-                            )
+                              ],
+                            ),
+                            const SizedBox(height: 30),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey,
+                                            blurRadius: 1.0,
+                                            offset: Offset(0, 1))
+                                      ]),
+                                  margin: EdgeInsets.only(
+                                    left: 20,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: AppSize.screenWidth * 0.5,
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 10),
+                                              hintText: "Cari Event",
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft: Radius
+                                                              .circular(5),
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  5)),
+                                                  borderSide: BorderSide())),
+                                        ),
+                                      ),
+                                      buttonsearch()
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                buttonAdd(context, "")
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                      constraints: BoxConstraints(minHeight: 0),
-                      width: AppSize.screenWidth * 3,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 233, 232, 232),
                       ),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: controller.organizationList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(children: [
-                            Center(
-                                child: item(controller.organizationList[index],
-                                    context))
-                          ]);
-                        },
-                      )),
-                ],
-              ),
-            ),
-          ));
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Obx(() => Container(
+                          constraints: const BoxConstraints(minHeight: 0),
+                          width: AppSize.screenWidth * 3,
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 233, 232, 232),
+                          ),
+                          child: controller.eventData.isNotEmpty
+                              ? ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: controller.eventData.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Column(children: [
+                                      Center(
+                                          child: item(
+                                              controller.eventData[index],
+                                              context))
+                                    ]);
+                                  },
+                                )
+                              : Container())),
+                    ],
+                  ),
+                ),
+              ));
         });
   }
 }
 
-Widget create(context, title) {
+Widget buttonsearch() {
+  return InkWell(
+    onTap: () {},
+    child: Container(
+      padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
+      decoration: BoxDecoration(
+        color: AppColors.bilu,
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
+      ),
+      child: Row(
+        children: [
+          Text(
+            'Search',
+            style: TextStyle(color: Colors.white, fontSize: 15),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget buttonAdd(context, title) {
   return InkWell(
     onTap: () {
       showDialog<void>(
@@ -133,14 +167,14 @@ Widget create(context, title) {
                               onTap: () {
                                 Get.back();
                               },
-                              child: Icon(Icons.close)),
+                              child: const Icon(Icons.close)),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                                 left: 35, right: 35, top: 35, bottom: 5),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -148,10 +182,10 @@ Widget create(context, title) {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(Icons.add_link,
+                                    const Icon(Icons.add_link,
                                         color: Colors.black, size: 20),
-                                    SizedBox(width: 5),
-                                    Text(
+                                    const SizedBox(width: 5),
+                                    const Text(
                                       'Form Create',
                                       style: TextStyle(
                                           color: Colors.black,
@@ -160,7 +194,7 @@ Widget create(context, title) {
                                     ),
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                     endIndent: 0,
                                     color: Colors.black,
                                     indent: 0,
@@ -171,7 +205,7 @@ Widget create(context, title) {
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             left: 40.0, right: 40.0, bottom: 10.0),
                         child: Column(
                           children: [
@@ -179,15 +213,15 @@ Widget create(context, title) {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'No',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13, horizontal: 10),
@@ -196,20 +230,20 @@ Widget create(context, title) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Nama Kegiatan',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13, horizontal: 10),
@@ -218,20 +252,20 @@ Widget create(context, title) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Jenis Kegiatan',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -242,20 +276,20 @@ Widget create(context, title) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Waktu Pelaksanaan',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -266,20 +300,20 @@ Widget create(context, title) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Tempat Kegiatan',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13, horizontal: 10),
@@ -288,20 +322,20 @@ Widget create(context, title) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Jumlah Peserta',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13, horizontal: 10),
@@ -310,20 +344,20 @@ Widget create(context, title) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Dokumentasi',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13, horizontal: 10),
@@ -335,7 +369,7 @@ Widget create(context, title) {
                           ],
                         ),
                       ),
-                      SizedBox(width: 15),
+                      const SizedBox(width: 15),
                       Padding(
                         padding: const EdgeInsets.only(left: 40.0),
                         child: Row(
@@ -345,14 +379,14 @@ Widget create(context, title) {
                             InkWell(
                               onTap: () {},
                               child: Container(
-                                margin: EdgeInsets.only(top: 10),
+                                margin: const EdgeInsets.only(top: 10),
                                 height: AppSize.screenHeight * 0.04,
                                 width: AppSize.screenWidth * 0.1,
                                 decoration: BoxDecoration(
                                   color: Colors.blueAccent.shade700,
                                   borderRadius: BorderRadius.circular(3),
                                 ),
-                                child: Center(
+                                child: const Center(
                                     child: Text(
                                   'Create',
                                   style: TextStyle(
@@ -372,19 +406,18 @@ Widget create(context, title) {
     },
     borderRadius: BorderRadius.circular(20),
     child: Container(
-      margin: EdgeInsets.only(top: 10, right: 33),
-      height: AppSize.screenHeight * 0.06,
-      width: AppSize.screenWidth * 0.15,
+      margin: EdgeInsets.only(right: 20),
+      padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
       decoration: BoxDecoration(
-        color: Colors.blueAccent.shade700,
-        borderRadius: BorderRadius.circular(3),
+        color: AppColors.bilu,
+        borderRadius: BorderRadius.circular(5),
       ),
       child: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.add, color: Colors.white, size: 13),
-          Text(
+          const Icon(Icons.add, color: Colors.white, size: 13),
+          const Text(
             'Create',
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
@@ -394,13 +427,13 @@ Widget create(context, title) {
   );
 }
 
-Widget item(EventOrganization model, context) {
+Widget item(DataEvent model, context) {
   return Container(
-    padding: EdgeInsets.only(top: 10, bottom: 10),
-    margin: EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
+    padding: EdgeInsets.all(20),
+    margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
     decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(20),
       color: Colors.white,
-      borderRadius: BorderRadius.circular(3),
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -416,13 +449,17 @@ Widget item(EventOrganization model, context) {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${model.nama}",
-                      style: TextStyle(
+                  Text("${model.eventName}",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold)),
-                  Text("${model.waktu}",
-                      style: TextStyle(
+                  Text("${model.eventDate}",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 15,
                       )),
@@ -430,44 +467,43 @@ Widget item(EventOrganization model, context) {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 10),
-              width: 300,
+              margin: const EdgeInsets.only(top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.class_sharp, color: Colors.black, size: 20),
-                  SizedBox(width: 5),
-                  Text("${model.jenis}",
-                      style: TextStyle(color: Colors.black, fontSize: 20)),
+                  const Icon(Icons.class_sharp, color: Colors.black, size: 20),
+                  const SizedBox(width: 5),
+                  Container(
+                      width: 200,
+                      child: Text("${model.eventDescription}",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 20))),
                 ],
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 10),
-              width: 300,
+              margin: const EdgeInsets.only(top: 10),
               child: Row(
                 children: [
-                  Icon(Icons.location_on, color: Colors.black, size: 20),
-                  SizedBox(width: 5),
-                  Text("${model.tempat}",
-                      style: TextStyle(color: Colors.black, fontSize: 20)),
+                  const Icon(Icons.location_on, color: Colors.black, size: 20),
+                  const SizedBox(width: 5),
+                  Container(
+                      width: 200,
+                      child: Text("${model.eventDate}",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 20))),
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              width: 150,
-              child: Row(
-                children: [
-                  Icon(Icons.people, color: Colors.black, size: 20),
-                  SizedBox(width: 5),
-                  Text("${model.jumlah}",
-                      style: TextStyle(color: Colors.black, fontSize: 20)),
-                ],
-              ),
-            )
           ],
+        ),
+        SizedBox(
+          width: 20,
         ),
         Column(
           children: [
@@ -479,14 +515,14 @@ Widget item(EventOrganization model, context) {
                     alignment: Alignment.topRight,
                     child: edit(context, 'title'),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Container(
                     alignment: Alignment.topRight,
                     child: hapus(context, 'title'),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Row(children: [
-                    photos(context, model),
+                    photos(context, model, model.eventAttachment),
                   ])
                 ]),
           ],
@@ -496,86 +532,16 @@ Widget item(EventOrganization model, context) {
   );
 }
 
-Widget photos(BuildContext context, model) {
+Widget photos(BuildContext context, model, url) {
   return InkWell(
     onTap: () {
-      showDialog<void>(
-          context: context,
-          barrierDismissible: true,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              content: Container(
-                height: 500,
-                width: 415,
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        InkWell(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Icon(Icons.close)),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Column(
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.camera_alt_rounded),
-                            SizedBox(width: 5),
-                            Text(
-                              'Documentation',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                              image: NetworkImage("${model.gambar1}"),
-                              fit: BoxFit.cover,
-                            )),
-                            width: AppSize.screenWidth * 0.4,
-                            height: AppSize.screenHeight * 0.2,
-                          ),
-                        ]),
-                        SizedBox(width: 15),
-                        Row(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                image: NetworkImage("${model.gambar2}"),
-                                fit: BoxFit.cover,
-                              )),
-                              width: AppSize.screenWidth * 0.4,
-                              height: AppSize.screenHeight * 0.2,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          });
+      openUrl(
+        url,
+      );
     },
     child: Container(
-      padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+      padding:
+          const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
       decoration: BoxDecoration(
         color: Colors.blueAccent.shade700,
         borderRadius: BorderRadius.circular(15),
@@ -584,8 +550,9 @@ Widget photos(BuildContext context, model) {
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.photo_camera, color: Colors.white, size: 15),
-          Text('Photos', style: TextStyle(color: Colors.white, fontSize: 15)),
+          const Icon(Icons.photo_camera, color: Colors.white, size: 15),
+          const Text('Photos',
+              style: TextStyle(color: Colors.white, fontSize: 15)),
         ],
       )),
     ),
@@ -612,14 +579,14 @@ Widget edit(context, title) {
                               onTap: () {
                                 Get.back();
                               },
-                              child: Icon(Icons.close)),
+                              child: const Icon(Icons.close)),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                                 left: 35, right: 35, top: 35, bottom: 5),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -627,11 +594,11 @@ Widget edit(context, title) {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(Icons.edit,
+                                    const Icon(Icons.edit,
                                         color: Colors.black, size: 20),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      'Form Edit',
+                                    const SizedBox(width: 5),
+                                    const Text(
+                                      'Event',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 22.0,
@@ -639,7 +606,7 @@ Widget edit(context, title) {
                                     ),
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                     endIndent: 0,
                                     color: Colors.black,
                                     indent: 0,
@@ -650,7 +617,7 @@ Widget edit(context, title) {
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             left: 40.0, right: 40.0, bottom: 10.0),
                         child: Column(
                           children: [
@@ -658,15 +625,15 @@ Widget edit(context, title) {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'No',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -677,20 +644,20 @@ Widget edit(context, title) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Nama Kegiatan',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -701,20 +668,20 @@ Widget edit(context, title) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Jenis Kegiatan',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -725,20 +692,20 @@ Widget edit(context, title) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Waktu Pelaksanaan',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -749,20 +716,20 @@ Widget edit(context, title) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Tempat Kegiatan',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -773,20 +740,20 @@ Widget edit(context, title) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Jumlah Peserta',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -797,20 +764,20 @@ Widget edit(context, title) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Dokumentasi',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -824,7 +791,7 @@ Widget edit(context, title) {
                           ],
                         ),
                       ),
-                      SizedBox(width: 15),
+                      const SizedBox(width: 15),
                       Padding(
                         padding: const EdgeInsets.only(left: 40.0),
                         child: Row(
@@ -834,14 +801,14 @@ Widget edit(context, title) {
                             InkWell(
                               onTap: () {},
                               child: Container(
-                                margin: EdgeInsets.only(top: 10),
+                                margin: const EdgeInsets.only(top: 10),
                                 height: AppSize.screenHeight * 0.04,
                                 width: AppSize.screenWidth * 0.15,
                                 decoration: BoxDecoration(
                                   color: Colors.blueAccent.shade700,
                                   borderRadius: BorderRadius.circular(3),
                                 ),
-                                child: Center(
+                                child: const Center(
                                     child: Text(
                                   'Update',
                                   style: TextStyle(
@@ -860,7 +827,8 @@ Widget edit(context, title) {
           });
     },
     child: Container(
-      padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+      padding:
+          const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
       decoration: BoxDecoration(
         color: Colors.blueAccent.shade700,
         borderRadius: BorderRadius.circular(15),
@@ -869,8 +837,8 @@ Widget edit(context, title) {
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.edit_document, color: Colors.white, size: 15),
-          Text(
+          const Icon(Icons.edit_document, color: Colors.white, size: 15),
+          const Text(
             'Edit',
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
@@ -897,13 +865,13 @@ Widget hapus(context, title) {
                         onTap: () {
                           Get.back();
                         },
-                        child: Icon(Icons.close)),
-                    SizedBox(height: 10),
-                    Text(
+                        child: const Icon(Icons.close)),
+                    const SizedBox(height: 10),
+                    const Text(
                       'Apakah yakin hapus data?',
                       style: TextStyle(color: Colors.black, fontSize: 15),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -913,14 +881,14 @@ Widget hapus(context, title) {
                           child: Container(
                             height: AppSize.screenHeight * 0.04,
                             width: AppSize.screenWidth * 0.06,
-                            padding: EdgeInsets.only(left: 4.5),
+                            padding: const EdgeInsets.only(left: 4.5),
                             decoration: BoxDecoration(
                               color: Colors.blueAccent.shade700,
                               borderRadius: BorderRadius.circular(3),
                             ),
                             child: Row(
                               children: [
-                                Center(
+                                const Center(
                                     child: Text('Yes',
                                         style: TextStyle(
                                             color: Colors.white,
@@ -929,14 +897,14 @@ Widget hapus(context, title) {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         InkWell(
                           onTap: () {},
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
                             height: AppSize.screenHeight * 0.04,
                             width: AppSize.screenWidth * 0.06,
-                            padding: EdgeInsets.only(left: 2.0),
+                            padding: const EdgeInsets.only(left: 2.0),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               boxShadow: [
@@ -963,7 +931,8 @@ Widget hapus(context, title) {
           });
     },
     child: Container(
-      padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+      padding:
+          const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
       decoration: BoxDecoration(
         color: Colors.blueAccent.shade700,
         borderRadius: BorderRadius.circular(15),
@@ -972,8 +941,9 @@ Widget hapus(context, title) {
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.delete_sweep, color: Colors.white, size: 15),
-          Text('Delete', style: TextStyle(color: Colors.white, fontSize: 15)),
+          const Icon(Icons.delete_sweep, color: Colors.white, size: 15),
+          const Text('Delete',
+              style: TextStyle(color: Colors.white, fontSize: 15)),
         ],
       )),
     ),

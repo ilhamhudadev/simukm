@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
-import 'package:standard_project/module/ab/profileukm/controller/VisiMisi_controller.dart';
+import 'package:standard_project/module/ab/profileukm/controller/visimisi_controller.dart';
 
 class VisiMisiScreen extends StatelessWidget {
   @override
@@ -11,8 +11,9 @@ class VisiMisiScreen extends StatelessWidget {
     return GetBuilder<VisiMisiController>(
         init: VisiMisiController(),
         builder: (VisiMisiController controller) {
+          controller.getVisi();
           return Scaffold(
-            backgroundColor: Color(0xFFE9E8E8),
+            backgroundColor: AppColors.greybegroud,
             body: SingleChildScrollView(
                 child: Center(
               child: Column(

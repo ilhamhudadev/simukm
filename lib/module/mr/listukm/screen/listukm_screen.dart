@@ -14,102 +14,107 @@ class ListukmScreen extends StatelessWidget {
         init: ListukmController(),
         builder: (ListukmController controller) {
           return Scaffold(
+              backgroundColor: AppColors.greybegroud,
               body: SingleChildScrollView(
-            child: Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.greywhite,
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.greywhite,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.greywhite,
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.greywhite,
+                          ),
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                margin: EdgeInsets.only(top: 10, left: 43),
-                                child: Text('List UKM',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 30.0,
-                                        fontWeight: FontWeight.bold)),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(top: 10, left: 43),
+                                    child: Text('List UKM',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 30.0,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  Container(
+                                    child: create(context),
+                                  ),
+                                ],
                               ),
-                              Container(
-                                child: create(context),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 30),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.grey,
-                                          blurRadius: 2.0,
-                                          offset: Offset(0, 1))
-                                    ]),
-                                margin: EdgeInsets.only(
-                                    bottom: 5, left: 20, right: 20),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: AppSize.screenWidth * 0.5,
-                                      child: TextField(
-                                        decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.only(left: 10),
-                                            hintText: "Search a listing",
-                                            border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(5),
-                                                    bottomLeft:
-                                                        Radius.circular(5)),
-                                                borderSide: BorderSide())),
-                                      ),
+                              SizedBox(height: 30),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(5),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.grey,
+                                              blurRadius: 2.0,
+                                              offset: Offset(0, 1))
+                                        ]),
+                                    margin: EdgeInsets.only(
+                                        bottom: 5, left: 20, right: 20),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: AppSize.screenWidth * 0.5,
+                                          child: TextField(
+                                            decoration: InputDecoration(
+                                                contentPadding:
+                                                    EdgeInsets.only(left: 10),
+                                                hintText: "Search a listing",
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            topLeft: Radius
+                                                                .circular(5),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    5)),
+                                                    borderSide: BorderSide())),
+                                          ),
+                                        ),
+                                        buttonsearch()
+                                      ],
                                     ),
-                                    buttonsearch()
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            top: 5,
+                            left: 10,
+                          ),
+                          height: AppSize.screenHeight,
+                          width: AppSize.screenWidth * 2.585,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 233, 232, 232),
+                          ),
+                          child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: controller.organizationList.length,
+                              itemBuilder: (context, index) {
+                                return item(controller.organizationList[index],
+                                    context);
+                              }),
+                        )
+                      ],
                     ),
-                    Container(
-                      margin: EdgeInsets.only(
-                        top: 5,
-                        left: 10,
-                      ),
-                      height: AppSize.screenHeight,
-                      width: AppSize.screenWidth * 2.585,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 233, 232, 232),
-                      ),
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: controller.organizationList.length,
-                          itemBuilder: (context, index) {
-                            return item(
-                                controller.organizationList[index], context);
-                          }),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ));
+              ));
         });
   }
 }
@@ -375,6 +380,7 @@ Widget item(ListukmOrganization model, context) {
               color: Colors.white,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   height: 60,
@@ -388,9 +394,9 @@ Widget item(ListukmOrganization model, context) {
                 SizedBox(width: 20),
               ],
             )),
-        Container(width: 200, child: Text("${model.nama}")),
-        Container(width: 200, child: Text("${model.pj}")),
-        Container(width: 200, child: Text("${model.tlp}")),
+        Container(child: Text("${model.nama}")),
+        Container(child: Text("${model.pj}")),
+        Container(child: Text("${model.tlp}")),
         Container(
           margin: EdgeInsets.only(right: 20),
           child: Row(

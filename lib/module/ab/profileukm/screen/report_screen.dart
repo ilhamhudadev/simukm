@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
+import 'package:standard_project/core/variables/app_constant.dart';
 import 'package:standard_project/module/ab/profileukm/controller/report_controller.dart';
+import 'package:standard_project/module/ab/profileukm/data/model/report_model.dart';
 
 class ReportScreen extends StatelessWidget {
   @override
@@ -11,8 +13,9 @@ class ReportScreen extends StatelessWidget {
     return GetBuilder<ReportController>(
         init: ReportController(),
         builder: (ReportController controller) {
+          controller.getReportLetter();
           return Scaffold(
-            backgroundColor: AppColors.greywhite,
+            backgroundColor: AppColors.greybegroud,
             body: SingleChildScrollView(
                 child: Center(
               child: Column(children: [
@@ -30,12 +33,11 @@ class ReportScreen extends StatelessWidget {
                             margin: EdgeInsets.only(
                                 top: 20, left: 20, right: 20, bottom: 20),
                             child: Text(
-                              'Laporan Penanggung jawaban  ',
+                              'Laporan Pertanggung jawaban ',
                               style: TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.bold),
                             ),
                           ),
-                          buttonAdd(context)
                         ],
                       ),
                       Row(
@@ -51,8 +53,9 @@ class ReportScreen extends StatelessWidget {
                                       blurRadius: 1.0,
                                       offset: Offset(0, 1))
                                 ]),
-                            margin:
-                                EdgeInsets.only(bottom: 5, left: 20, right: 20),
+                            margin: EdgeInsets.only(
+                              left: 20,
+                            ),
                             child: Row(
                               children: [
                                 Container(
@@ -61,7 +64,7 @@ class ReportScreen extends StatelessWidget {
                                     decoration: InputDecoration(
                                         contentPadding:
                                             EdgeInsets.only(left: 10),
-                                        hintText: "Search a listing",
+                                        hintText: "Cari Laporan",
                                         border: OutlineInputBorder(
                                             borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(5),
@@ -73,22 +76,33 @@ class ReportScreen extends StatelessWidget {
                               ],
                             ),
                           ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          buttonAdd(context)
                         ],
                       ),
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(
+                  height: 20,
+                ),
+                Obx(() => Container(
                     width: AppSize.screenWidth * 3,
                     decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: 17,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Center(child: item(context));
-                      },
-                    )),
+                    child: controller.reportData.isNotEmpty
+                        ? ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: controller.reportData.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Center(
+                                  child: item(
+                                      controller.reportData, index, context));
+                            },
+                          )
+                        : Container())),
               ]),
             )),
           );
@@ -104,7 +118,7 @@ class ReportScreen extends StatelessWidget {
             builder: (BuildContext context) {
               return AlertDialog(
                 content: Container(
-                  height: 400,
+                  height: 500,
                   width: 300,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(20)),
@@ -124,21 +138,151 @@ class ReportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Text(
-                          'File ',
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Tanggal LPJ'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 520,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.blue),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    hintText: 'Tanggal LPJ',
+                                    labelText: 'Tanggal LPJ'),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Judul'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 520,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.blue),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    hintText: 'Judul',
+                                    labelText: 'Judul'),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 20,
                         ),
-                        Container(
-                            height: 200,
-                            width: 200,
-                            child: Image(
-                                image: AssetImage(
-                              'assets/upload.png',
-                            ))),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Penanggung Jawab'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 520,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Penanggung Jawab',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Deskripsi'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 520,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Deskripsi',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Link Dokumen'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 520,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Link Dokumen',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         SizedBox(
                           height: 30,
                         ),
@@ -154,7 +298,7 @@ class ReportScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    Icons.upload,
+                                    Icons.add,
                                     size: 30,
                                     color: Colors.white,
                                   ),
@@ -162,7 +306,7 @@ class ReportScreen extends StatelessWidget {
                                     width: 10,
                                   ),
                                   Text(
-                                    'Uploud file',
+                                    'Add',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ],
@@ -221,13 +365,14 @@ class ReportScreen extends StatelessWidget {
     );
   }
 
-  Widget item(BuildContext context) {
+  Widget item(List<DataReport> value, int index, BuildContext context) {
     return Container(
-      width: AppSize.screenWidth * 3,
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(20),
+      margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -244,7 +389,7 @@ class ReportScreen extends StatelessWidget {
                 width: 15,
               ),
               Text(
-                'Hut Kemerdekaan 78',
+                '${value[index].reportTitle}',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -262,7 +407,7 @@ class ReportScreen extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                '27 juli 2023',
+                '${value[index].reportDate}',
                 style: TextStyle(color: Colors.grey, fontSize: 15),
               ),
             ],
@@ -277,7 +422,7 @@ class ReportScreen extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                'Politeknik piksi ganesha',
+                '${value[index].responsibleParty}',
                 style: TextStyle(fontSize: 15),
               )
             ],
@@ -285,7 +430,7 @@ class ReportScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              seemore(context),
+              seemore(context, value[index].attachment ?? ""),
               SizedBox(
                 width: 5,
               ),
@@ -301,7 +446,7 @@ class ReportScreen extends StatelessWidget {
     );
   }
 
-  Widget seemore(context) {
+  Widget seemore(context, url) {
     return InkWell(
       onTap: () {
         showDialog<void>(
@@ -345,29 +490,37 @@ class ReportScreen extends StatelessWidget {
                         SizedBox(
                           height: 30,
                         ),
-                        Container(
-                            width: 200,
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: AppColors.bilu,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.download,
-                                  size: 30,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Download',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ))
+                        url != ""
+                            ? InkWell(
+                                onTap: () {
+                                  openUrl(url);
+                                },
+                                child: Container(
+                                    width: 200,
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: AppColors.bilu,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.download,
+                                          size: 30,
+                                          color: Colors.white,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          'Download',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ],
+                                    )))
+                            : Container()
                       ],
                     ),
                   ),
@@ -408,7 +561,7 @@ class ReportScreen extends StatelessWidget {
             builder: (BuildContext context) {
               return AlertDialog(
                 content: Container(
-                  height: 400,
+                  height: 500,
                   width: 300,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(20)),
@@ -428,21 +581,151 @@ class ReportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Text(
-                          'Update File  ',
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Tanggal LPJ'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 520,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.blue),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    hintText: 'Tanggal LPJ',
+                                    labelText: 'Tanggal LPJ'),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Judul'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 520,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.blue),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    hintText: 'Judul',
+                                    labelText: 'Judul'),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 20,
                         ),
-                        Container(
-                            height: 200,
-                            width: 200,
-                            child: Image(
-                                image: AssetImage(
-                              'assets/upload.png',
-                            ))),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Penanggung Jawab'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 520,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Penanggung Jawab',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Deskripsi'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 520,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Deskripsi',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Link Dokumen'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: 520,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Link Dokumen',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         SizedBox(
                           height: 30,
                         ),
@@ -458,7 +741,7 @@ class ReportScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    Icons.upload,
+                                    Icons.edit,
                                     size: 30,
                                     color: Colors.white,
                                   ),
@@ -466,7 +749,7 @@ class ReportScreen extends StatelessWidget {
                                     width: 10,
                                   ),
                                   Text(
-                                    'Update file',
+                                    'Update',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ],

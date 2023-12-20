@@ -31,10 +31,10 @@ class UsersModel {
 }
 
 class Data {
-  int? id;
+  String? id;
   String? organizationName;
-  int? userId;
   String? shortName;
+  String? history;
   String? contactNumber;
   String? email;
   String? instagram;
@@ -42,29 +42,25 @@ class Data {
   String? twitter;
   String? username;
   String? password;
-  String? history;
-  String? imageUrl;
 
   Data(
       {this.id,
       this.organizationName,
-      this.userId,
       this.shortName,
+      this.history,
       this.contactNumber,
       this.email,
       this.instagram,
       this.youtube,
       this.twitter,
       this.username,
-      this.password,
-      this.history,
-      this.imageUrl});
+      this.password});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     organizationName = json['organization_name'];
-    userId = json['user_id'];
     shortName = json['short_name'];
+    history = json['history'];
     contactNumber = json['contact_number'];
     email = json['email'];
     instagram = json['instagram'];
@@ -72,16 +68,14 @@ class Data {
     twitter = json['twitter'];
     username = json['username'];
     password = json['password'];
-    history = json['history'];
-    imageUrl = json['image_url'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['organization_name'] = this.organizationName;
-    data['user_id'] = this.userId;
     data['short_name'] = this.shortName;
+    data['history'] = this.history;
     data['contact_number'] = this.contactNumber;
     data['email'] = this.email;
     data['instagram'] = this.instagram;
@@ -89,8 +83,6 @@ class Data {
     data['twitter'] = this.twitter;
     data['username'] = this.username;
     data['password'] = this.password;
-    data['history'] = this.history;
-    data['image_url'] = this.imageUrl;
     return data;
   }
 }

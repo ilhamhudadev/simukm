@@ -4,6 +4,7 @@ import 'package:standard_project/core/assets/app_assets.dart';
 import 'package:standard_project/module/ab/profileukm/screen/Decree_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/organizationalStructure_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/report_screen.dart';
+import 'package:standard_project/module/ab/profileukm/screen/visimisi_screen.dart';
 import 'package:standard_project/module/ac/achievement/screen/achievement_screen.dart';
 import 'package:standard_project/module/ev/event/screen/event_screen.dart';
 import 'package:standard_project/module/me/profile/screen/profile_screen.dart';
@@ -134,15 +135,29 @@ class ExampleSidebarX extends StatelessWidget {
       ),
       footerDivider: divider,
       headerBuilder: (context, extended) {
-        return SizedBox(
+        return
+            //  Text("SIM Nilai")
+            Center(
+                child: Container(
+          margin: EdgeInsets.all(50),
+          width: 100,
           height: 100,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child:
-                //  Text("SIM Nilai")
-                Image.asset(AppAssets.logoPiksi),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(
+                    'https://tse4.mm.bing.net/th?id=OIP.v2EJ6yhWzDCJ_v6qIXWlrgHaHa&pid=Api&P=0&h=180'),
+                fit: BoxFit.cover),
+            borderRadius: BorderRadius.circular(100),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
           ),
-        );
+        ));
       },
       items: [
         SidebarXItem(
@@ -153,15 +168,15 @@ class ExampleSidebarX extends StatelessWidget {
           },
         ),
         const SidebarXItem(
-          icon: Icons.file_present,
+          icon: Icons.person_pin_outlined,
           label: 'Profile',
         ),
         const SidebarXItem(
-          icon: Icons.file_present,
-          label: 'User Management',
+          icon: Icons.info_outline_sharp,
+          label: 'List UKM',
         ),
         const SidebarXItem(
-          icon: Icons.file_present,
+          icon: Icons.file_open_sharp,
           label: 'Struktur Organisasi',
         ),
         const SidebarXItem(
@@ -169,25 +184,25 @@ class ExampleSidebarX extends StatelessWidget {
           label: 'SK Kepengurusan',
         ),
         const SidebarXItem(
-          icon: Icons.person_3,
+          icon: Icons.person_pin,
           label: 'Laporan Penanggung Jawab',
         ),
         const SidebarXItem(
-          icon: Icons.person_3,
+          icon: Icons.nature_people,
           label: 'Kegiatan Mahasiswa',
         ),
         const SidebarXItem(
-          icon: Icons.person_3,
+          icon: Icons.data_array_outlined,
           label: 'Prestasi UKM',
         ),
         const SidebarXItem(
-          icon: Icons.person_3,
+          icon: Icons.pages_sharp,
           label: 'Proposal',
         ),
-        const SidebarXItem(
-          icon: Icons.person_3,
-          label: 'List UKM',
-        ),
+        // const SidebarXItem(
+        //   icon: Icons.person_3,
+        //   label: 'Visi Misi',
+        // ),
         SidebarXItem(
           onTap: () {},
           icon: Icons.logout_outlined,
@@ -207,6 +222,45 @@ class _ScreensExample extends StatelessWidget {
 
   final SidebarXController controller;
 
+  Widget buildItem(String title, int value) {
+    return GestureDetector(
+      onTap: () {
+        // Tambahkan aksi yang diinginkan ketika item diklik
+        print('$title di-klik!');
+      },
+      child: Card(
+        color: Colors.white, // Set warna latar belakang card menjadi putih
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            width: 200,
+            height: 150,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                    width: 150,
+                    child: Center(
+                        child: Text(title, style: TextStyle(fontSize: 20)))),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  value.toString(),
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -216,17 +270,16 @@ class _ScreensExample extends StatelessWidget {
         final pageTitle = _getTitleByIndex(controller.selectedIndex);
         switch (controller.selectedIndex) {
           case 0:
-            return ListView.builder(
-              padding: const EdgeInsets.only(top: 10),
-              itemBuilder: (context, index) => Container(
-                height: 100,
-                width: double.infinity,
-                margin: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Theme.of(context).canvasColor,
-                  boxShadow: const [BoxShadow()],
-                ),
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildItem('Total Proposal', 2),
+                  buildItem('Total Surat Keputusan', 2),
+                  buildItem('Total Event', 2),
+                  buildItem('Total Laporan Pertanggung Jawaban', 3),
+                ],
               ),
             );
           //dashboard
@@ -254,9 +307,9 @@ class _ScreensExample extends StatelessWidget {
           case 8:
             return ProposalScreen();
           //  Profile
-          case 9:
-            return ListukmScreen();
-          //  Profile
+          // case 9:
+          //   return VisiMisiScreen();
+          // //  Profile
           default:
             return Text(
               pageTitle,

@@ -15,8 +15,9 @@ class AchievementScreen extends StatelessWidget {
     return GetBuilder<AchievementController>(
       init: AchievementController(),
       builder: (AchievementController controller) {
+        controller.getAchievementLetter();
         return Scaffold(
-          backgroundColor: AppColors.greywhite,
+          backgroundColor: AppColors.greybegroud,
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
@@ -33,9 +34,6 @@ class AchievementScreen extends StatelessWidget {
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                         ),
-                      ),
-                      Container(
-                        child: pop1(context, 'title'),
                       ),
                     ],
                   ),
@@ -73,36 +71,33 @@ class AchievementScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    buttonAdd(context, "")
                   ],
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                FutureBuilder<List<AchievemenModel>>(
-                    future: controller.futureWilayah(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        var value = snapshot.data;
-
-                        return Container(
-                            width: AppSize.screenWidth * 3,
-                            decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
-                            child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                controller: controller.scrollController,
-                                shrinkWrap: true,
-                                itemCount: value!.length,
-                                itemBuilder: (context, index) {
-                                  return Column(
-                                    children: [item(value, index, context)],
-                                  );
-                                }));
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    })
+                Obx(() => Container(
+                    width: AppSize.screenWidth * 3,
+                    decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
+                    child: controller.achievementData.isNotEmpty
+                        ? ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            controller: controller.scrollController,
+                            shrinkWrap: true,
+                            itemCount: controller.achievementData.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  item(controller.achievementData, index,
+                                      context)
+                                ],
+                              );
+                            })
+                        : Container()))
               ],
             ),
           ),
@@ -141,14 +136,16 @@ class AchievementScreen extends StatelessWidget {
     );
   }
 
-  Widget item(List<AchievemenModel> value, index, BuildContext context) {
+  Widget item(List<DataAchievement> value, index, BuildContext context) {
     return Stack(
       children: [
         Container(
-            padding: EdgeInsets.all(10),
-            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.all(20),
+            margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+            ),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -160,6 +157,7 @@ class AchievementScreen extends StatelessWidget {
                         children: [
                           Container(
                               child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
                                   child: Image(
@@ -177,13 +175,17 @@ class AchievementScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '${value[index].id}',
+                                      '${value[index].achievementTitle}',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      '${value[index].kecamatan}',
+                                      '${value[index].achievementDetails}',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         fontSize: 15,
                                       ),
@@ -193,8 +195,10 @@ class AchievementScreen extends StatelessWidget {
                               ),
                             ],
                           )),
+                          SizedBox(
+                            width: 20,
+                          ),
                           Container(
-                            width: 300,
                             child: Row(
                               children: [
                                 Icon(
@@ -205,14 +209,16 @@ class AchievementScreen extends StatelessWidget {
                                   width: 5,
                                 ),
                                 Text(
-                                  '${value[index].kota}',
+                                  '${value[index].achievementLocation}',
                                   style: TextStyle(fontSize: 18),
                                 ),
                               ],
                             ),
                           ),
+                          SizedBox(
+                            width: 20,
+                          ),
                           Container(
-                            width: 200,
                             child: Row(
                               children: [
                                 Icon(
@@ -223,14 +229,16 @@ class AchievementScreen extends StatelessWidget {
                                   width: 5,
                                 ),
                                 Text(
-                                  '${value[index].lat}',
+                                  '${value[index].achievementDate}',
                                   style: TextStyle(fontSize: 18),
                                 ),
                               ],
                             ),
                           ),
+                          SizedBox(
+                            width: 20,
+                          ),
                           Container(
-                            width: 200,
                             child: Row(
                               children: [
                                 Icon(
@@ -241,11 +249,14 @@ class AchievementScreen extends StatelessWidget {
                                   width: 5,
                                 ),
                                 Text(
-                                  '${value[index].lon}',
+                                  '${value[index].achievementDate}',
                                   style: TextStyle(fontSize: 18),
                                 ),
                               ],
                             ),
+                          ),
+                          SizedBox(
+                            width: 20,
                           ),
                           Divider(
                             endIndent: 0,
@@ -807,7 +818,7 @@ class AchievementScreen extends StatelessWidget {
     );
   }
 
-  Widget pop1(context, title) {
+  Widget buttonAdd(context, title) {
     return InkWell(
       onTap: () {
         showDialog<void>(
@@ -1048,17 +1059,12 @@ class AchievementScreen extends StatelessWidget {
       },
       borderRadius: BorderRadius.circular(20),
       child: Container(
-          padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
+          margin: EdgeInsets.only(right: 20),
+          padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
           decoration: BoxDecoration(
-              color: AppColors.bilu,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.shade400,
-                    blurRadius: 10,
-                    spreadRadius: 3,
-                    offset: Offset(5, 5))
-              ]),
+            color: AppColors.bilu,
+            borderRadius: BorderRadius.circular(5),
+          ),
           child: Row(
             children: [
               Icon(

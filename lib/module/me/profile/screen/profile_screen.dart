@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
       init: ProfileController(),
       builder: (ProfileController controller) {
         return Scaffold(
-            backgroundColor: Color(0xFFE9E8E8),
+            backgroundColor: AppColors.greybegroud,
             body: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Center(

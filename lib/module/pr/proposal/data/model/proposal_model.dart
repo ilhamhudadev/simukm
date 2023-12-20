@@ -1,20 +1,19 @@
-class AchievementModel {
+class ProposalModel {
   int? statusCode;
   String? statusMessage;
   String? message;
-  List<DataAchievement>? data;
+  List<DataProposal>? data;
 
-  AchievementModel(
-      {this.statusCode, this.statusMessage, this.message, this.data});
+  ProposalModel({this.statusCode, this.statusMessage, this.message, this.data});
 
-  AchievementModel.fromJson(Map<String, dynamic> json) {
+  ProposalModel.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];
     statusMessage = json['statusMessage'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <DataAchievement>[];
+      data = <DataProposal>[];
       json['data'].forEach((v) {
-        data!.add(new DataAchievement.fromJson(v));
+        data!.add(new DataProposal.fromJson(v));
       });
     }
   }
@@ -31,31 +30,31 @@ class AchievementModel {
   }
 }
 
-class DataAchievement {
+class DataProposal {
   String? id;
   String? userId;
-  String? achievementDate;
-  String? achievementTitle;
-  String? achievementDetails;
-  String? achievementLocation;
+  String? date;
+  String? title;
+  String? location;
+  String? description;
   String? documentation;
 
-  DataAchievement(
+  DataProposal(
       {this.id,
       this.userId,
-      this.achievementDate,
-      this.achievementTitle,
-      this.achievementDetails,
-      this.achievementLocation,
+      this.date,
+      this.title,
+      this.location,
+      this.description,
       this.documentation});
 
-  DataAchievement.fromJson(Map<String, dynamic> json) {
+  DataProposal.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
-    achievementDate = json['achievement_date'];
-    achievementTitle = json['achievement_title'];
-    achievementDetails = json['achievement_details'];
-    achievementLocation = json['achievement_location'];
+    date = json['date'];
+    title = json['title'];
+    location = json['location'];
+    description = json['description'];
     documentation = json['documentation'];
   }
 
@@ -63,10 +62,10 @@ class DataAchievement {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['user_id'] = this.userId;
-    data['achievement_date'] = this.achievementDate;
-    data['achievement_title'] = this.achievementTitle;
-    data['achievement_details'] = this.achievementDetails;
-    data['achievement_location'] = this.achievementLocation;
+    data['date'] = this.date;
+    data['title'] = this.title;
+    data['location'] = this.location;
+    data['description'] = this.description;
     data['documentation'] = this.documentation;
     return data;
   }

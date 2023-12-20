@@ -14,13 +14,24 @@ class UsermanagementController extends GetxController with UsermanagementRepo {
   // Variabel Search
   TextEditingController searchController = TextEditingController();
 
+  // Edit Text Editor Controller
+  TextEditingController nameTextController = TextEditingController();
+  TextEditingController emailTextController = TextEditingController();
+  TextEditingController usernameTextController = TextEditingController();
+  TextEditingController passwordTextController = TextEditingController();
+  TextEditingController igTextController = TextEditingController();
+  TextEditingController twitterTextController = TextEditingController();
+  TextEditingController phoneNumberTextController = TextEditingController();
+  TextEditingController youtubeTextController = TextEditingController();
+  TextEditingController shortNameTextController = TextEditingController();
+
   // Function Hit API
   Future<void> getUsersManagementData() async {
     var searchText = searchController.value.text;
     try {
       final Dio _dio = Dio();
-      final response =
-          await _dio.get('http://localhost:3000/api/user/${searchText}');
+      final response = await _dio
+          .get('http://localhost:3000/api/organization/${searchText}');
 
       UsersModel value = UsersModel.fromJson(response.data);
 
@@ -34,16 +45,69 @@ class UsermanagementController extends GetxController with UsermanagementRepo {
     }
   }
 
-  // Edit Text Editor Controller
-  TextEditingController nameTextController = TextEditingController();
-  TextEditingController emailTextController = TextEditingController();
-  TextEditingController usernameTextController = TextEditingController();
-  TextEditingController passwordTextController = TextEditingController();
-  TextEditingController igTextController = TextEditingController();
-  TextEditingController twitterTextController = TextEditingController();
-  TextEditingController phoneNumberTextController = TextEditingController();
-  TextEditingController youtubeTextController = TextEditingController();
-  TextEditingController shortNameTextController = TextEditingController();
+  Future<void> insertUsersManagementData() async {
+    var data = {
+      "organizationName": nameTextController.text,
+      "password": passwordTextController.text,
+      "shortName": shortNameTextController.text,
+      "history": "Sejarah",
+      "contactNumber": phoneNumberTextController.text,
+      "email": emailTextController.text,
+      "ig": igTextController.text,
+      "youtube": youtubeTextController.text,
+      "twitter": twitterTextController.text,
+      "username": usernameTextController.text,
+    };
+    try {
+      final Dio _dio = Dio();
+      final response = await _dio
+          .post('http://localhost:3000/api/organization/new', data: data);
+
+      Get.back();
+      getUsersManagementData();
+    } catch (e) {
+      throw Exception(null);
+    }
+  }
+
+  Future<void> updateUsersManagementData(id) async {
+    var data = {
+      "id": id,
+      "organizationName": nameTextController.text,
+      "password": passwordTextController.text,
+      "shortName": shortNameTextController.text,
+      "history": "Sejarah",
+      "contactNumber": phoneNumberTextController.text,
+      "email": emailTextController.text,
+      "ig": igTextController.text,
+      "youtube": youtubeTextController.text,
+      "twitter": twitterTextController.text,
+      "username": usernameTextController.text,
+    };
+    try {
+      final Dio _dio = Dio();
+      final response = await _dio
+          .post('http://localhost:3000/api/organization/update', data: data);
+
+      Get.back();
+      getUsersManagementData();
+    } catch (e) {
+      throw Exception(null);
+    }
+  }
+
+  Future<void> deleteUsersManagementData(id) async {
+    var data = {"id": "$id"};
+    try {
+      final Dio _dio = Dio();
+      final response = await _dio
+          .post('http://localhost:3000/api/organization/delete', data: data);
+      Get.back();
+      getUsersManagementData();
+    } catch (e) {
+      throw Exception(null);
+    }
+  }
 
   @override
   void onInit() {

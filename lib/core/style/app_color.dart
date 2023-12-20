@@ -2,7 +2,7 @@ import 'dart:ui';
 
 class AppColors {
   //Primary Color
-  static const greybegroud = Color(0xFFDFDFDE);
+  static const greybegroud = Color(0xFFE9E8E8);
   static const piksi = Color(0xFF8A2BE2);
   static const bluese = Color(0xff1E90FF);
   static const bg = Color(0xFFEBEAEA);

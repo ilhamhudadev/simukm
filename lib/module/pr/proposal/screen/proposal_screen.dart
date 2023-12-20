@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:standard_project/core/style/app_size.dart';
+import 'package:standard_project/core/variables/app_constant.dart';
 import 'package:standard_project/module/pr/proposal/controller/proposal_controller.dart';
-import 'package:standard_project/module/pr/proposal/data/model/user_management.dart';
 import 'package:standard_project/core/style/app_color.dart';
+import 'package:standard_project/module/pr/proposal/data/model/proposal_model.dart';
 
 class ProposalScreen extends StatelessWidget {
   const ProposalScreen({super.key});
@@ -14,8 +15,9 @@ class ProposalScreen extends StatelessWidget {
     return GetBuilder<ProposalController>(
         init: ProposalController(),
         builder: (ProposalController controller) {
+          controller.getProposalLetter();
           return Scaffold(
-              backgroundColor: AppColors.greywhite,
+              backgroundColor: AppColors.greybegroud,
               body: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
@@ -35,9 +37,6 @@ class ProposalScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Container(
-                              child: pop1(context, 'title'),
-                            ),
                           ],
                         ),
                       ),
@@ -52,11 +51,12 @@ class ProposalScreen extends StatelessWidget {
                                 boxShadow: [
                                   BoxShadow(
                                       color: Colors.grey,
-                                      blurRadius: 2.0,
+                                      blurRadius: 1.0,
                                       offset: Offset(0, 1))
                                 ]),
-                            margin:
-                                EdgeInsets.only(bottom: 5, left: 20, right: 20),
+                            margin: EdgeInsets.only(
+                              left: 20,
+                            ),
                             child: Row(
                               children: [
                                 Container(
@@ -65,7 +65,7 @@ class ProposalScreen extends StatelessWidget {
                                     decoration: InputDecoration(
                                         contentPadding:
                                             EdgeInsets.only(left: 10),
-                                        hintText: "Search a listing",
+                                        hintText: "Cari Laporan",
                                         border: OutlineInputBorder(
                                             borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(5),
@@ -77,35 +77,34 @@ class ProposalScreen extends StatelessWidget {
                               ],
                             ),
                           ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            child: buttonAdd(context, 'title'),
+                          ),
                         ],
                       ),
 
                       SizedBox(
                         height: 20,
                       ),
-                      FutureBuilder<List<ProposalModel>>(
-                          future: controller.futureWilayah(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              var value = snapshot.data;
-                              return Container(
-                                  width: AppSize.screenWidth * 3,
-                                  decoration:
-                                      BoxDecoration(color: Color(0xFFE9E8E8)),
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      controller: controller.scrollController,
-                                      shrinkWrap: true,
-                                      itemCount: value!.length,
-                                      itemBuilder: (context, index) {
-                                        return Column(children: [
-                                          item(value, index, context)
-                                        ]);
-                                      })); //
-                            } else {
-                              return Center(child: CircularProgressIndicator());
-                            }
-                          })
+                      Obx(() => Container(
+                          width: AppSize.screenWidth * 3,
+                          decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
+                          child: controller.proposalData.isNotEmpty
+                              ? ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  controller: controller.scrollController,
+                                  shrinkWrap: true,
+                                  itemCount: controller.proposalData.length,
+                                  itemBuilder: (context, index) {
+                                    return Column(children: [
+                                      item(controller.proposalData, index,
+                                          context)
+                                    ]);
+                                  })
+                              : Container()))
                     ], //children
                   ) //Column
                   ) //SinglechildScrollView
@@ -161,7 +160,7 @@ class ProposalScreen extends StatelessWidget {
     );
   }
 
-  Widget pop1(context, title) {
+  Widget buttonAdd(context, title) {
     return InkWell(
       onTap: () {
         showDialog<void>(
@@ -436,17 +435,12 @@ class ProposalScreen extends StatelessWidget {
             });
       },
       child: Container(
-          padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
+          margin: EdgeInsets.only(right: 20),
+          padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
           decoration: BoxDecoration(
-              color: AppColors.bilu,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.shade400,
-                    blurRadius: 10,
-                    spreadRadius: 3,
-                    offset: Offset(5, 5))
-              ]),
+            color: AppColors.bilu,
+            borderRadius: BorderRadius.circular(5),
+          ),
           child: Row(
             children: [
               Icon(
@@ -458,7 +452,7 @@ class ProposalScreen extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                'Add',
+                'Create',
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ],
@@ -466,14 +460,16 @@ class ProposalScreen extends StatelessWidget {
     );
   }
 
-  Widget item(List<ProposalModel> value, index, BuildContext context) {
+  Widget item(List<DataProposal> value, index, BuildContext context) {
     return Stack(
       children: [
         Container(
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.all(10),
+          padding: EdgeInsets.all(20),
+          margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -495,12 +491,16 @@ class ProposalScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${value[index].id}',
+                            '${value[index].title}',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            '${value[index].kecamatan}',
+                            '${value[index].description}',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 15,
                             ),
@@ -511,25 +511,29 @@ class ProposalScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(
+                width: 20,
+              ),
               Container(
-                  width: 250,
                   child: Row(
-                    children: [
-                      Icon(
-                        Icons.location_pin,
-                        size: 20,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '${value[index].kota}',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ],
-                  )),
+                children: [
+                  Icon(
+                    Icons.location_pin,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    '${value[index].location}',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
+              )),
+              SizedBox(
+                width: 20,
+              ),
               Container(
-                width: 100,
                 child: Row(
                   children: [
                     Icon(
@@ -540,14 +544,16 @@ class ProposalScreen extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      '${value[index].propinsi}',
+                      '${value[index].userId}',
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
                 ),
               ),
+              SizedBox(
+                width: 20,
+              ),
               Container(
-                width: 200,
                 child: Row(
                   children: [
                     Icon(
@@ -558,30 +564,30 @@ class ProposalScreen extends StatelessWidget {
                       width: 5,
                     ),
                     Text(
-                      '${value[index].kota}',
+                      '${value[index].date}',
                       style: TextStyle(fontSize: 15),
                     ),
                   ],
                 ),
               ),
-              Container(
-                width: 100,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.attach_money,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '${value[index].lon}',
-                      style: TextStyle(fontSize: 13),
-                    ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   width: 100,
+              //   child: Row(
+              //     children: [
+              //       Icon(
+              //         Icons.attach_money,
+              //         size: 20,
+              //       ),
+              //       SizedBox(
+              //         width: 5,
+              //       ),
+              //       Text(
+              //         '${value[index].}',
+              //         style: TextStyle(fontSize: 13),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Container(
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -589,7 +595,9 @@ class ProposalScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Container(child: seemore(context, 'title')),
+                      Container(
+                          child: seemore(
+                              context, 'title', value[index].documentation)),
                       SizedBox(
                         width: 10,
                       ),
@@ -1053,7 +1061,7 @@ Widget buttonsearch() {
   );
 }
 
-Widget seemore(context, title) {
+Widget seemore(context, title, url) {
   return InkWell(
     onTap: () {
       showDialog<void>(
@@ -1061,101 +1069,76 @@ Widget seemore(context, title) {
           barrierDismissible: true,
           builder: (BuildContext context) {
             return AlertDialog(
-                content: Container(
-                    height: 550,
-                    width: 750,
-                    child: SingleChildScrollView(
-                        child: Column(children: [
-                      Column(
+              content: Container(
+                height: 400,
+                width: 300,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 725),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                    onTap: () {
-                                      Get.back();
-                                    },
-                                    child: Icon(Icons.close)),
-                              ],
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              child: Icon(Icons.close),
                             ),
                           ),
                         ],
                       ),
+                      Text(
+                        'File ',
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Container(
-                        margin: EdgeInsets.only(top: 10, bottom: 10),
-                        child: Column(
-                          children: [
-                            Container(
-                              child: Text(
-                                '“Peningkatan Infrastruktur dan Pengolahan Energi Baru Terbarukan untuk Ketahanan Energi Nasional”',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 3),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            pic1_tweety(),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Deskripsi Kegiatan:',
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              'Sesuai dengan Peraturan Pemerintah Nomor 79 Tahun 2014 tentang Kebijakan Energi Nasional, Ketahanan Energi adalah suatu kondisi terjaminnya ketersediaan energi dan akses masyarakat terhadap energi pada harga yang terjangkau dalam jangka panjang dengan tetap memperhatikan perlindungan terhadap lingkungan hidup.',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  //fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'Maksud diadakannya kegiatan Seminar Nasional ini adalah untuk memberikan pengetahuan dan kesiapan mental bagi mahasiswa teknik setelah lulus kuliah serta menjadi pelopor inovasi dalam pengembangan energi terbarukan.',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  //fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                                child: Row(
-                              children: [
-                                Text(
-                                  'Dokumen : ',
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                TextButton(
-                                    onPressed: () {},
-                                    child: Text('Ketahanan_Energi_Nasional.pdf',
-                                        style: TextStyle(
-                                            color: Colors.blue, fontSize: 15)))
-                              ],
-                            )),
-                          ],
-                        ),
-                      )
-                    ]))));
+                          height: 200,
+                          width: 200,
+                          child: Image(image: AssetImage('assets/pdf.jpg'))),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      url != ""
+                          ? InkWell(
+                              onTap: () {
+                                openUrl(url);
+                              },
+                              child: Container(
+                                  width: 200,
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.bilu,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.download,
+                                        size: 30,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Download',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ],
+                                  )))
+                          : Container()
+                    ],
+                  ),
+                ),
+              ),
+            );
           });
     },
     child: Container(
