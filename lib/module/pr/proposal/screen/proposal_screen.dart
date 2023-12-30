@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:standard_project/core/globalcontroller/app_function.dart';
 import 'package:standard_project/core/style/app_size.dart';
 import 'package:standard_project/core/variables/app_constant.dart';
 import 'package:standard_project/module/pr/proposal/controller/proposal_controller.dart';
@@ -26,10 +27,10 @@ class ProposalScreen extends StatelessWidget {
 
                       Container(
                         //padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.all(10),
+                        margin: const EdgeInsets.all(10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                          children: const [
                             Text(
                               'Proposal UKM',
                               style: TextStyle(
@@ -48,20 +49,20 @@ class ProposalScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(5),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                       color: Colors.grey,
                                       blurRadius: 1.0,
                                       offset: Offset(0, 1))
                                 ]),
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                               left: 20,
                             ),
                             child: Row(
                               children: [
-                                Container(
+                                SizedBox(
                                   width: AppSize.screenWidth * 0.5,
-                                  child: TextField(
+                                  child: const TextField(
                                     decoration: InputDecoration(
                                         contentPadding:
                                             EdgeInsets.only(left: 10),
@@ -77,21 +78,22 @@ class ProposalScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Container(
-                            child: buttonAdd(context, 'title'),
+                            child: buttonAdd(context, 'title', controller),
                           ),
                         ],
                       ),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Obx(() => Container(
                           width: AppSize.screenWidth * 3,
-                          decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
+                          decoration:
+                              const BoxDecoration(color: Color(0xFFE9E8E8)),
                           child: controller.proposalData.isNotEmpty
                               ? ListView.builder(
                                   scrollDirection: Axis.vertical,
@@ -101,7 +103,7 @@ class ProposalScreen extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     return Column(children: [
                                       item(controller.proposalData, index,
-                                          context)
+                                          context, controller)
                                     ]);
                                   })
                               : Container()))
@@ -125,12 +127,12 @@ class ProposalScreen extends StatelessWidget {
                 color: Colors.grey.shade400,
                 blurRadius: 10,
                 spreadRadius: 3,
-                offset: Offset(5, 5))
+                offset: const Offset(5, 5))
           ]),
       child: Padding(
-        padding: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         child: Row(
-          children: [
+          children: const [
             Text('Sort', style: TextStyle(color: Colors.white)),
             SizedBox(
               width: 10,
@@ -145,11 +147,11 @@ class ProposalScreen extends StatelessWidget {
   Widget search() {
     return Container(
       height: AppSize.screenHeight * 0.04,
-      decoration: BoxDecoration(),
+      decoration: const BoxDecoration(),
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Search Proposal',
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           prefixIcon: Icon(
             Icons.search,
             color: Colors.blue.withOpacity(0.5),
@@ -160,15 +162,25 @@ class ProposalScreen extends StatelessWidget {
     );
   }
 
-  Widget buttonAdd(context, title) {
+  Widget buttonAdd(
+    context,
+    title,
+    ProposalController controller,
+  ) {
     return InkWell(
       onTap: () {
+        controller.dateTextController.text = "";
+        controller.titleTextController.text = "";
+        controller.locationTextController.text = "";
+        controller.descriptionTextController.text = "";
+        controller.documentationTextController.text = "";
+
         showDialog<void>(
             context: context,
             barrierDismissible: true,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Container(
+                content: SizedBox(
                   height: 550,
                   width: 550,
                   child: SingleChildScrollView(
@@ -177,7 +189,7 @@ class ProposalScreen extends StatelessWidget {
                         Column(
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left: 525),
+                              padding: const EdgeInsets.only(left: 525),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -187,7 +199,7 @@ class ProposalScreen extends StatelessWidget {
                                       onTap: () {
                                         Get.back();
                                       },
-                                      child: Icon(Icons.close)),
+                                      child: const Icon(Icons.close)),
                                 ],
                               ),
                             ),
@@ -196,8 +208,8 @@ class ProposalScreen extends StatelessWidget {
                         Column(
                           children: [
                             Container(
-                              margin: EdgeInsets.all(10),
-                              child: Text(
+                              margin: const EdgeInsets.all(10),
+                              child: const Text(
                                 'Form Proposal UKM',
                                 style: TextStyle(
                                     color: Colors.black,
@@ -208,26 +220,28 @@ class ProposalScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Judul Proposal'),
-                            SizedBox(
+                            const Text('Judul Proposal'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 600,
                               child: TextField(
+                                controller: controller.titleTextController,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.title),
+                                  prefixIcon: const Icon(Icons.title),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Judul Proposal',
                                 ),
@@ -235,26 +249,29 @@ class ProposalScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Deskripsi Proposal'),
-                            SizedBox(
+                            const Text('Deskripsi Proposal'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 600,
                               child: TextField(
+                                controller:
+                                    controller.descriptionTextController,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.description),
+                                  prefixIcon: const Icon(Icons.description),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Deskripsi Proposal',
                                 ),
@@ -262,26 +279,34 @@ class ProposalScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Tanggal'),
-                            SizedBox(
+                            const Text('Tanggal'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 600,
                               child: TextField(
+                                onTap: () async {
+                                  String selectedDate =
+                                      await selectDate(context);
+                                  controller.dateTextController.text =
+                                      selectedDate;
+                                },
+                                controller: controller.dateTextController,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.calendar_today),
+                                  prefixIcon: const Icon(Icons.calendar_today),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Tanggal',
                                 ),
@@ -289,53 +314,28 @@ class ProposalScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Waktu'),
-                            SizedBox(
+                            const Text('Tempat Pelaksanaan'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 600,
                               child: TextField(
+                                controller: controller.locationTextController,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.lock_clock),
+                                  prefixIcon: const Icon(Icons.location_city),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  hintText: 'Waktu',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Tempat Pelaksanaan'),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              width: 600,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.location_city),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Tempat Pelaksanaan',
                                 ),
@@ -343,53 +343,30 @@ class ProposalScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Anggaran'),
-                            SizedBox(
+                            const Text('Dokumen Proposal'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 600,
                               child: TextField(
+                                controller:
+                                    controller.documentationTextController,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.attach_money),
+                                  prefixIcon:
+                                      const Icon(Icons.document_scanner),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  hintText: 'Anggaran',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Dokumen Proposal'),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              width: 600,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.document_scanner),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Dokumen Proposal',
                                 ),
@@ -397,7 +374,7 @@ class ProposalScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -406,18 +383,20 @@ class ProposalScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    controller.insertProposalData();
+                                  },
                                   child: Container(
-                                    margin: EdgeInsets.only(top: 10),
+                                    margin: const EdgeInsets.only(top: 10),
                                     height: AppSize.screenHeight * 0.04,
                                     width: AppSize.screenWidth * 0.17,
                                     decoration: BoxDecoration(
                                       color: AppColors.bilu,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
-                                    child: Center(
+                                    child: const Center(
                                         child: Text(
-                                      'Save Changes',
+                                      'Submit',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 11.5),
                                     )),
@@ -435,14 +414,15 @@ class ProposalScreen extends StatelessWidget {
             });
       },
       child: Container(
-          margin: EdgeInsets.only(right: 20),
-          padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
+          margin: const EdgeInsets.only(right: 20),
+          padding:
+              const EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
           decoration: BoxDecoration(
             color: AppColors.bilu,
             borderRadius: BorderRadius.circular(5),
           ),
           child: Row(
-            children: [
+            children: const [
               Icon(
                 Icons.add,
                 size: 14,
@@ -460,12 +440,14 @@ class ProposalScreen extends StatelessWidget {
     );
   }
 
-  Widget item(List<DataProposal> value, index, BuildContext context) {
+  Widget item(List<DataProposal> value, index, BuildContext context,
+      ProposalController controller) {
     return Stack(
       children: [
         Container(
-          padding: EdgeInsets.all(20),
-          margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+          padding: const EdgeInsets.all(20),
+          margin:
+              const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: Colors.white,
@@ -473,103 +455,102 @@ class ProposalScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                child: Row(
-                  children: [
-                    Image(
-                        height: 50,
-                        width: 50,
-                        image: NetworkImage(
-                            'https://cdn-icons-png.flaticon.com/128/9693/9693609.png')),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      width: 150,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${value[index].title}',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            '${value[index].description}',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Container(
-                  child: Row(
+              Row(
                 children: [
-                  Icon(
-                    Icons.location_pin,
-                    size: 20,
+                  const SizedBox(
+                    width: 10,
                   ),
                   SizedBox(
+                    width: 150,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${value[index].title}',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${value[index].description}',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(
+                    Icons.verified_user,
+                    size: 20,
+                  ),
+                  const SizedBox(
                     width: 5,
                   ),
                   Text(
-                    '${value[index].location}',
-                    style: TextStyle(fontSize: 15),
+                    '${value[index].organizationName}',
+                    style: const TextStyle(fontSize: 15),
                   ),
                 ],
-              )),
-              SizedBox(
+              ),
+              const SizedBox(
                 width: 20,
               ),
-              Container(
-                child: Row(
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.calendar_month,
-                      size: 20,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.location_pin,
+                          size: 20,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '${value[index].location}',
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      width: 5,
+                    const SizedBox(
+                      height: 10,
                     ),
-                    Text(
-                      '${value[index].userId}',
-                      style: TextStyle(fontSize: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.lock_clock,
+                          size: 20,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '${value[index].date}',
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Container(
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.lock_clock,
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '${value[index].date}',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
-                ),
-              ),
+                  ]),
               // Container(
               //   width: 100,
               //   child: Row(
@@ -588,8 +569,7 @@ class ProposalScreen extends StatelessWidget {
               //     ],
               //   ),
               // ),
-              Container(
-                  child: Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -598,18 +578,22 @@ class ProposalScreen extends StatelessWidget {
                       Container(
                           child: seemore(
                               context, 'title', value[index].documentation)),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      Container(child: edit(context, 'title')),
-                      SizedBox(
+                      Container(
+                          child:
+                              edit(context, 'title', controller, value[index])),
+                      const SizedBox(
                         width: 10,
                       ),
-                      Container(child: hapus(context, 'title')),
+                      Container(
+                          child: hapus(
+                              context, 'title', value[index].id, controller)),
                     ],
                   ),
                 ],
-              )),
+              ),
             ],
           ),
         )
@@ -618,7 +602,7 @@ class ProposalScreen extends StatelessWidget {
   }
 }
 
-Widget hapus(context, title) {
+Widget hapus(context, title, id, ProposalController controller) {
   return InkWell(
     onTap: () {
       showDialog<void>(
@@ -635,7 +619,7 @@ Widget hapus(context, title) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 325),
+                      padding: const EdgeInsets.only(left: 325),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -644,12 +628,12 @@ Widget hapus(context, title) {
                               onTap: () {
                                 Get.back();
                               },
-                              child: Icon(Icons.close)),
+                              child: const Icon(Icons.close)),
                         ],
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text(
+                    const SizedBox(height: 10),
+                    const Text(
                       'Do you want to delete this Proposal?',
                       style: TextStyle(
                           color: Colors.black,
@@ -657,12 +641,14 @@ Widget hapus(context, title) {
                           fontWeight: FontWeight.w600,
                           letterSpacing: 2),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            controller.deleteProposalData(id);
+                          },
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
                             height: AppSize.screenHeight * 0.04,
@@ -671,15 +657,17 @@ Widget hapus(context, title) {
                               color: AppColors.bilu,
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            child: Center(
+                            child: const Center(
                                 child: Text('Yes',
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 11.5))),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Get.back();
+                          },
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
                             height: AppSize.screenHeight * 0.04,
@@ -688,7 +676,7 @@ Widget hapus(context, title) {
                               color: AppColors.bilu,
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            child: Center(
+                            child: const Center(
                                 child: Text('No',
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 11.5))),
@@ -703,7 +691,7 @@ Widget hapus(context, title) {
           });
     },
     child: Container(
-        padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
+        padding: const EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
         decoration: BoxDecoration(
             color: AppColors.bilu,
             borderRadius: BorderRadius.circular(15),
@@ -712,10 +700,10 @@ Widget hapus(context, title) {
                   color: Colors.grey.shade400,
                   blurRadius: 10,
                   spreadRadius: 1,
-                  offset: Offset(5, 5))
+                  offset: const Offset(5, 5))
             ]),
         child: Row(
-          children: [
+          children: const [
             Icon(
               Icons.delete,
               size: 10,
@@ -733,15 +721,21 @@ Widget hapus(context, title) {
   );
 }
 
-Widget edit(context, title) {
+Widget edit(context, title, ProposalController controller, DataProposal value) {
   return InkWell(
     onTap: () {
+      controller.dateTextController.text = value.date ?? "";
+      controller.titleTextController.text = value.title ?? "";
+      controller.locationTextController.text = value.location ?? "";
+      controller.descriptionTextController.text = value.description ?? "";
+      controller.documentationTextController.text = value.documentation ?? "";
+
       showDialog<void>(
           context: context,
           barrierDismissible: true,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: Container(
+              content: SizedBox(
                 height: 550,
                 width: 550,
                 child: SingleChildScrollView(
@@ -750,7 +744,7 @@ Widget edit(context, title) {
                       Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(left: 525),
+                            padding: const EdgeInsets.only(left: 525),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -759,7 +753,7 @@ Widget edit(context, title) {
                                     onTap: () {
                                       Get.back();
                                     },
-                                    child: Icon(Icons.close)),
+                                    child: const Icon(Icons.close)),
                               ],
                             ),
                           ),
@@ -768,8 +762,8 @@ Widget edit(context, title) {
                       Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.all(10),
-                            child: Text(
+                            margin: const EdgeInsets.all(10),
+                            child: const Text(
                               'Form Proposal UKM',
                               style: TextStyle(
                                   color: Colors.black,
@@ -780,25 +774,28 @@ Widget edit(context, title) {
                           )
                         ],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Judul Proposal'),
-                          SizedBox(
+                          const Text('Judul Proposal'),
+                          const SizedBox(
                             height: 10,
                           ),
-                          Container(
+                          SizedBox(
                             width: 600,
                             child: TextField(
+                              controller: controller.titleTextController,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.title),
+                                prefixIcon: const Icon(Icons.title),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderSide:
+                                        const BorderSide(color: Colors.blue),
                                     borderRadius: BorderRadius.circular(10)),
                                 hintText: 'Judul Proposal',
                               ),
@@ -806,25 +803,28 @@ Widget edit(context, title) {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Deskripsi Proposal'),
-                          SizedBox(
+                          const Text('Deskripsi Proposal'),
+                          const SizedBox(
                             height: 10,
                           ),
-                          Container(
+                          SizedBox(
                             width: 600,
                             child: TextField(
+                              controller: controller.descriptionTextController,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.description),
+                                prefixIcon: const Icon(Icons.description),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderSide:
+                                        const BorderSide(color: Colors.blue),
                                     borderRadius: BorderRadius.circular(10)),
                                 hintText: 'Deskripsi Proposal',
                               ),
@@ -832,25 +832,33 @@ Widget edit(context, title) {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Tanggal'),
-                          SizedBox(
+                          const Text('Tanggal'),
+                          const SizedBox(
                             height: 10,
                           ),
-                          Container(
+                          SizedBox(
                             width: 600,
                             child: TextField(
+                              onTap: () async {
+                                String selectedDate = await selectDate(context);
+                                controller.dateTextController.text =
+                                    selectedDate;
+                              },
+                              controller: controller.dateTextController,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.calendar_today),
+                                prefixIcon: const Icon(Icons.calendar_today),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderSide:
+                                        const BorderSide(color: Colors.blue),
                                     borderRadius: BorderRadius.circular(10)),
                                 hintText: 'Tanggal',
                               ),
@@ -858,51 +866,28 @@ Widget edit(context, title) {
                           )
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Waktu'),
-                          SizedBox(
+                          const Text('Tempat Pelaksanaan'),
+                          const SizedBox(
                             height: 10,
                           ),
-                          Container(
+                          SizedBox(
                             width: 600,
                             child: TextField(
+                              controller: controller.locationTextController,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.lock_clock),
+                                prefixIcon: const Icon(Icons.location_city),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(10)),
-                                hintText: 'Waktu',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Tempat Pelaksanaan'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.location_city),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderSide:
+                                        const BorderSide(color: Colors.blue),
                                     borderRadius: BorderRadius.circular(10)),
                                 hintText: 'Tempat Pelaksanaan',
                               ),
@@ -910,51 +895,29 @@ Widget edit(context, title) {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Anggaran'),
-                          SizedBox(
+                          const Text('Dokumen Proposal'),
+                          const SizedBox(
                             height: 10,
                           ),
-                          Container(
+                          SizedBox(
                             width: 600,
                             child: TextField(
+                              controller:
+                                  controller.documentationTextController,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.attach_money),
+                                prefixIcon: const Icon(Icons.document_scanner),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(10)),
-                                hintText: 'Anggaran',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Dokumen Proposal'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.document_scanner),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
+                                    borderSide:
+                                        const BorderSide(color: Colors.blue),
                                     borderRadius: BorderRadius.circular(10)),
                                 hintText: 'Dokumen Proposal',
                               ),
@@ -962,7 +925,7 @@ Widget edit(context, title) {
                           ),
                         ],
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -971,18 +934,20 @@ Widget edit(context, title) {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  controller.updateProposalData(value.id);
+                                },
                                 child: Container(
-                                  margin: EdgeInsets.only(top: 10),
+                                  margin: const EdgeInsets.only(top: 10),
                                   height: AppSize.screenHeight * 0.04,
                                   width: AppSize.screenWidth * 0.17,
                                   decoration: BoxDecoration(
                                     color: AppColors.bilu,
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  child: Center(
+                                  child: const Center(
                                       child: Text(
-                                    'Save Changes',
+                                    'Submit',
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 11.5),
                                   )),
@@ -1000,7 +965,7 @@ Widget edit(context, title) {
           });
     },
     child: Container(
-      padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
+      padding: const EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
       decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(15),
@@ -1009,10 +974,10 @@ Widget edit(context, title) {
                 color: Colors.grey.shade400,
                 blurRadius: 10,
                 spreadRadius: 1,
-                offset: Offset(5, 5))
+                offset: const Offset(5, 5))
           ]),
       child: Row(
-        children: [
+        children: const [
           Icon(
             Icons.edit,
             size: 15,
@@ -1035,14 +1000,14 @@ Widget buttonsearch() {
   return InkWell(
     onTap: () {},
     child: Container(
-      padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
+      decoration: const BoxDecoration(
         color: AppColors.bilu,
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
       ),
       child: Row(
-        children: [
+        children: const [
           Icon(
             Icons.search,
             size: 20,
@@ -1085,24 +1050,24 @@ Widget seemore(context, title, url) {
                               Get.back();
                             },
                             child: Container(
-                              child: Icon(Icons.close),
+                              child: const Icon(Icons.close),
                             ),
                           ),
                         ],
                       ),
-                      Text(
+                      const Text(
                         'File ',
                         style: TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Container(
+                      const SizedBox(
                           height: 200,
                           width: 200,
                           child: Image(image: AssetImage('assets/pdf.jpg'))),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       url != ""
@@ -1112,13 +1077,13 @@ Widget seemore(context, title, url) {
                               },
                               child: Container(
                                   width: 200,
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       color: AppColors.bilu,
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
+                                    children: const [
                                       Icon(
                                         Icons.download,
                                         size: 30,
@@ -1142,7 +1107,7 @@ Widget seemore(context, title, url) {
           });
     },
     child: Container(
-        padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
+        padding: const EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
         decoration: BoxDecoration(
             color: AppColors.bilu,
             borderRadius: BorderRadius.circular(15),
@@ -1151,10 +1116,10 @@ Widget seemore(context, title, url) {
                   color: Colors.grey.shade400,
                   blurRadius: 10,
                   spreadRadius: 1,
-                  offset: Offset(5, 5))
+                  offset: const Offset(5, 5))
             ]),
         child: Row(
-          children: [
+          children: const [
             Icon(
               Icons.remove_red_eye,
               size: 10,
@@ -1180,7 +1145,7 @@ class pic1_tweety extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Image(
+      child: const Image(
           height: 300,
           width: 500,
           fit: BoxFit.cover,

@@ -23,7 +23,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                   Container(
                     height: 150,
                     width: AppSize.screenWidth * 3,
-                    decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
+                    decoration: const BoxDecoration(color: Color(0xFFE9E8E8)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -31,9 +31,9 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(
+                              margin: const EdgeInsets.only(
                                   top: 20, left: 20, right: 20, bottom: 20),
-                              child: Text(
+                              child: const Text(
                                 'Struktur Organisasi ',
                                 style: TextStyle(
                                     fontSize: 30, fontWeight: FontWeight.bold),
@@ -48,20 +48,20 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(5),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                         color: Colors.grey,
                                         blurRadius: 1.0,
                                         offset: Offset(0, 1))
                                   ]),
-                              margin: EdgeInsets.only(
+                              margin: const EdgeInsets.only(
                                 left: 20,
                               ),
                               child: Row(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: AppSize.screenWidth * 0.5,
-                                    child: TextField(
+                                    child: const TextField(
                                       decoration: InputDecoration(
                                           contentPadding:
                                               EdgeInsets.only(left: 10),
@@ -78,22 +78,22 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            buttonAdd(context)
+                            buttonAdd(context, controller)
                           ],
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Obx(() => Container(
-                      constraints: BoxConstraints(minHeight: 0),
+                      constraints: const BoxConstraints(minHeight: 0),
                       width: AppSize.screenWidth * 3,
-                      decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
+                      decoration: const BoxDecoration(color: Color(0xFFE9E8E8)),
                       child: controller.structureData.isNotEmpty
                           ? ListView.builder(
                               scrollDirection: Axis.vertical,
@@ -101,8 +101,8 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               shrinkWrap: true,
                               itemCount: controller.structureData.length,
                               itemBuilder: (context, index) {
-                                return item(
-                                    controller.structureData, index, context);
+                                return item(controller.structureData, index,
+                                    context, controller);
                               },
                             )
                           : Container()))
@@ -113,10 +113,11 @@ class OrganizationalStruktureScreen extends StatelessWidget {
         });
   }
 
-  Widget item(List<DataStructure> value, int index, BuildContext context) {
+  Widget item(
+      List<DataStructure> value, int index, BuildContext context, controller) {
     return Container(
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Colors.white,
@@ -131,7 +132,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                   width: 5,
                 ),
                 Text(
-                  '2020/2021 ',
+                  '${value[index].managementYear}',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -139,56 +140,78 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
+            SizedBox(
               width: 150,
               child: Column(
                 children: [
+                  const Text(
+                    'UKM',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Text(
+                    ' ${value[index].shortName}',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 14),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 150,
+              child: Column(
+                children: [
+                  const Text(
                     'Pembimbing',
                     style: TextStyle(fontSize: 15),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
                     ' ${value[index].adviser}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               width: 150,
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Chairman',
                     style: TextStyle(fontSize: 15),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
                     '${value[index].president}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               width: 150,
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Vice chairman',
                     style: TextStyle(fontSize: 15),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
                     ' ${value[index].vicePresident}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ],
               ),
@@ -201,14 +224,14 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                     value,
                     index,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
-                  buttonEdit(context),
-                  SizedBox(
+                  buttonEdit(context, controller, value[index]),
+                  const SizedBox(
                     width: 10,
                   ),
-                  bottonDelete(context)
+                  bottonDelete(context, controller, value[index])
                 ],
               ),
             )
@@ -222,14 +245,15 @@ class OrganizationalStruktureScreen extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Container(
-        padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
-        decoration: BoxDecoration(
+        padding:
+            const EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
+        decoration: const BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
         ),
         child: Row(
-          children: [
+          children: const [
             Icon(
               Icons.search,
               size: 20,
@@ -248,17 +272,24 @@ class OrganizationalStruktureScreen extends StatelessWidget {
     );
   }
 
-  Widget buttonAdd(context) {
+  Widget buttonAdd(context, OrganizationStrukturController controller) {
     return InkWell(
       onTap: () {
+        controller.userIdTextController.text = "";
+        controller.managementYearTextController.text = "";
+        controller.adviserTextController.text = "";
+        controller.presidentTextController.text = "";
+        controller.vicePresidentTextController.text = "";
+        controller.membersTextController.text = "";
+
         showDialog<void>(
             context: context,
             barrierDismissible: true,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Container(
-                  height: 500,
-                  width: 500,
+                content: SizedBox(
+                  height: 600,
+                  width: 520,
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -269,31 +300,30 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               onTap: () {
                                 Get.back();
                               },
-                              child: Container(
-                                child: Icon(Icons.close),
-                              ),
+                              child: const Icon(Icons.close),
                             )
                           ],
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Dosen pembimbing'),
-                            SizedBox(
+                            const Text('Dosen pembimbing'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller: controller.adviserTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     hintText: 'Dosen pembimbing',
@@ -302,29 +332,30 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Ketua'),
-                            SizedBox(
+                            const Text('Ketua'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller: controller.presidentTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     hintText: 'Ketua',
@@ -333,28 +364,31 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Wakil Ketua'),
-                            SizedBox(
+                            const Text('Wakil Ketua'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.vicePresidentTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Wakil Ketua',
                                 ),
@@ -362,30 +396,32 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Anggota'),
-                            SizedBox(
+                            const Text('Anggota'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextFormField(
-                                minLines: 4,
+                                controller: controller.membersTextController,
+                                minLines: 9,
                                 maxLines: 10,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Anggota',
                                 ),
@@ -393,19 +429,21 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            controller.insertStructureData();
+                          },
                           child: Container(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                 right: 20, left: 20, bottom: 10, top: 10),
                             decoration: BoxDecoration(
                               color: AppColors.bilu,
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Text('Save',
+                            child: const Text('Submit',
                                 style: TextStyle(color: Colors.white)),
                           ),
                         ),
@@ -417,14 +455,15 @@ class OrganizationalStruktureScreen extends StatelessWidget {
             });
       },
       child: Container(
-        margin: EdgeInsets.only(right: 20),
-        padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
+        margin: const EdgeInsets.only(right: 20),
+        padding:
+            const EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Row(
-          children: [
+          children: const [
             Icon(
               Icons.add,
               size: 15,
@@ -440,15 +479,24 @@ class OrganizationalStruktureScreen extends StatelessWidget {
     );
   }
 
-  Widget buttonEdit(context) {
+  Widget buttonEdit(
+      context, OrganizationStrukturController controller, DataStructure value) {
     return InkWell(
       onTap: () {
+        controller.userIdTextController.text = value.userId ?? "";
+        controller.managementYearTextController.text =
+            value.managementYear ?? "";
+        controller.adviserTextController.text = value.adviser ?? "";
+        controller.presidentTextController.text = value.president ?? "";
+        controller.vicePresidentTextController.text = value.vicePresident ?? "";
+        controller.membersTextController.text = value.member ?? "";
+
         showDialog<void>(
             context: context,
             barrierDismissible: true,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Container(
+                content: SizedBox(
                   height: 600,
                   width: 520,
                   child: SingleChildScrollView(
@@ -461,31 +509,30 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               onTap: () {
                                 Get.back();
                               },
-                              child: Container(
-                                child: Icon(Icons.close),
-                              ),
+                              child: const Icon(Icons.close),
                             )
                           ],
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Dosen pembimbing'),
-                            SizedBox(
+                            const Text('Dosen pembimbing'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller: controller.adviserTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     hintText: 'Dosen pembimbing',
@@ -494,29 +541,30 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Ketua'),
-                            SizedBox(
+                            const Text('Ketua'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller: controller.presidentTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     hintText: 'Ketua',
@@ -525,28 +573,31 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Wakil Ketua'),
-                            SizedBox(
+                            const Text('Wakil Ketua'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.vicePresidentTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Wakil Ketua',
                                 ),
@@ -554,30 +605,32 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Anggota'),
-                            SizedBox(
+                            const Text('Anggota'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextFormField(
+                                controller: controller.membersTextController,
                                 minLines: 9,
                                 maxLines: 10,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Anggota',
                                 ),
@@ -585,19 +638,21 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            controller.updateStructureData(value.id);
+                          },
                           child: Container(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                 right: 20, left: 20, bottom: 10, top: 10),
                             decoration: BoxDecoration(
                               color: AppColors.bilu,
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Text('Save',
+                            child: const Text('Submit',
                                 style: TextStyle(color: Colors.white)),
                           ),
                         ),
@@ -609,12 +664,13 @@ class OrganizationalStruktureScreen extends StatelessWidget {
             });
       },
       child: Container(
-        padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+        padding:
+            const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Row(children: [
+        child: Row(children: const [
           Icon(
             Icons.edit,
             size: 13,
@@ -632,7 +688,8 @@ class OrganizationalStruktureScreen extends StatelessWidget {
     );
   }
 
-  Widget bottonDelete(context) {
+  Widget bottonDelete(
+      context, OrganizationStrukturController controller, DataStructure value) {
     return InkWell(
       onTap: () {
         showDialog<void>(
@@ -649,7 +706,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        children: [
+                        children: const [
                           Icon(Icons.warning),
                           SizedBox(
                             width: 10,
@@ -661,16 +718,18 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              controller.deleteStructureData(value.id);
+                            },
                             child: Container(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   bottom: 5, top: 5, left: 30, right: 30),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5)),
-                              child: Text("Yes"),
+                              child: const Text("Yes"),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           InkWell(
@@ -678,9 +737,9 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               Get.back();
                             },
                             child: Container(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   bottom: 5, top: 5, left: 30, right: 30),
-                              child: Text("No"),
+                              child: const Text("No"),
                             ),
                           ),
                         ],
@@ -692,12 +751,13 @@ class OrganizationalStruktureScreen extends StatelessWidget {
             });
       },
       child: Container(
-        padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+        padding:
+            const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Row(children: [
+        child: Row(children: const [
           Icon(
             Icons.delete,
             size: 15,
@@ -727,7 +787,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
             barrierDismissible: true,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Container(
+                content: SizedBox(
                   height: 500,
                   width: 500,
                   child: SingleChildScrollView(
@@ -741,21 +801,21 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                 Get.back();
                               },
                               child: Container(
-                                child: Icon(Icons.close),
+                                child: const Icon(Icons.close),
                               ),
                             ),
                           ],
                         ),
-                        Text(
+                        const Text(
                           'Struktur Organisasi',
                           style: TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         Container(
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           width: 170,
                           decoration: BoxDecoration(
                               border:
@@ -764,7 +824,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                           child: Container(
                             child: Column(
                               children: [
-                                Text('DOSEN PEMBIMBING',
+                                const Text('DOSEN PEMBIMBING',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     )),
@@ -773,19 +833,19 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                   width: 100,
                                   color: Colors.black,
                                 ),
-                                Text("${value[index].adviser.toString()}"),
+                                Text(value[index].adviser.toString()),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
                               width: 170,
                               decoration: BoxDecoration(
                                   border: Border.all(
@@ -794,7 +854,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               child: Container(
                                 child: Column(
                                   children: [
-                                    Text('KETUA',
+                                    const Text('KETUA',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         )),
@@ -803,14 +863,13 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                       width: 100,
                                       color: Colors.black,
                                     ),
-                                    Text(
-                                        "${value[index].president.toString()}"),
+                                    Text(value[index].president.toString()),
                                   ],
                                 ),
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
                               width: 170,
                               decoration: BoxDecoration(
                                   border: Border.all(
@@ -819,7 +878,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                               child: Container(
                                 child: Column(
                                   children: [
-                                    Text('WAKIL KETUA',
+                                    const Text('WAKIL KETUA',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         )),
@@ -828,19 +887,18 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                       width: 100,
                                       color: Colors.black,
                                     ),
-                                    Text(
-                                        "${value[index].vicePresident.toString()}"),
+                                    Text(value[index].vicePresident.toString()),
                                   ],
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Container(
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           width: 500,
                           decoration: BoxDecoration(
                               border:
@@ -849,7 +907,7 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                           child: Container(
                             child: Column(
                               children: [
-                                Text(
+                                const Text(
                                   'ANGGOTA',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -860,15 +918,15 @@ class OrganizationalStruktureScreen extends StatelessWidget {
                                   width: 100,
                                   color: Colors.black,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 SizedBox(
                                     width: 500,
                                     child: Text(
-                                      "${value[index].adviser.toString()}",
+                                      value[index].member.toString(),
                                       maxLines: 5,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ))
                               ],
@@ -883,12 +941,13 @@ class OrganizationalStruktureScreen extends StatelessWidget {
             });
       },
       child: Container(
-        padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+        padding:
+            const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Row(children: [
+        child: Row(children: const [
           Icon(
             Icons.remove_red_eye,
             size: 13,

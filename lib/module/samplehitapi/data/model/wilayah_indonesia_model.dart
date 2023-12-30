@@ -19,13 +19,13 @@ class WilayahIndonesiaModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['propinsi'] = this.propinsi;
-    data['kota'] = this.kota;
-    data['kecamatan'] = this.kecamatan;
-    data['lat'] = this.lat;
-    data['lon'] = this.lon;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['propinsi'] = propinsi;
+    data['kota'] = kota;
+    data['kecamatan'] = kecamatan;
+    data['lat'] = lat;
+    data['lon'] = lon;
     return data;
   }
 }

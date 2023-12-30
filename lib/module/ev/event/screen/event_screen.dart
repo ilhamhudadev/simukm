@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:standard_project/core/globalcontroller/app_function.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
 import 'package:standard_project/core/variables/app_constant.dart';
@@ -51,20 +52,20 @@ class EventScreen extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(5),
-                                      boxShadow: [
+                                      boxShadow: const [
                                         BoxShadow(
                                             color: Colors.grey,
                                             blurRadius: 1.0,
                                             offset: Offset(0, 1))
                                       ]),
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                     left: 20,
                                   ),
                                   child: Row(
                                     children: [
-                                      Container(
+                                      SizedBox(
                                         width: AppSize.screenWidth * 0.5,
-                                        child: TextField(
+                                        child: const TextField(
                                           decoration: InputDecoration(
                                               contentPadding:
                                                   EdgeInsets.only(left: 10),
@@ -84,16 +85,16 @@ class EventScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
-                                buttonAdd(context, "")
+                                buttonAdd(context, "", controller)
                               ],
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Obx(() => Container(
@@ -112,7 +113,8 @@ class EventScreen extends StatelessWidget {
                                       Center(
                                           child: item(
                                               controller.eventData[index],
-                                              context))
+                                              context,
+                                              controller))
                                     ]);
                                   },
                                 )
@@ -129,14 +131,14 @@ Widget buttonsearch() {
   return InkWell(
     onTap: () {},
     child: Container(
-      padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
+      decoration: const BoxDecoration(
         color: AppColors.bilu,
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
       ),
       child: Row(
-        children: [
+        children: const [
           Text(
             'Search',
             style: TextStyle(color: Colors.white, fontSize: 15),
@@ -147,15 +149,25 @@ Widget buttonsearch() {
   );
 }
 
-Widget buttonAdd(context, title) {
+Widget buttonAdd(
+  context,
+  title,
+  EventController controller,
+) {
   return InkWell(
     onTap: () {
+      controller.userIdTextController.text = "";
+      controller.eventDateTextController.text = "";
+      controller.eventNameTextController.text = "";
+      controller.eventDescriptionTextController.text = "";
+      controller.eventAttachmentTextController.text = "";
+
       showDialog<void>(
           context: context,
           barrierDismissible: true,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: Container(
+              content: SizedBox(
                 height: 550,
                 width: 500,
                 child: SingleChildScrollView(
@@ -181,12 +193,12 @@ Widget buttonAdd(context, title) {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  children: [
-                                    const Icon(Icons.add_link,
+                                  children: const [
+                                    Icon(Icons.add_link,
                                         color: Colors.black, size: 20),
-                                    const SizedBox(width: 5),
-                                    const Text(
-                                      'Form Create',
+                                    SizedBox(width: 5),
+                                    Text(
+                                      'Event',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 22.0,
@@ -209,27 +221,6 @@ Widget buttonAdd(context, title) {
                             left: 40.0, right: 40.0, bottom: 10.0),
                         child: Column(
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'No',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(height: 5),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13, horizontal: 10),
-                                    isDense: true,
-                                  ),
-                                ),
-                              ],
-                            ),
                             const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -243,34 +234,12 @@ Widget buttonAdd(context, title) {
                                 ),
                                 const SizedBox(height: 5),
                                 TextFormField(
+                                  controller:
+                                      controller.eventNameTextController,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13, horizontal: 10),
-                                    isDense: true,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 15),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Jenis Kegiatan',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(height: 5),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13,
-                                        horizontal:
-                                            10), // Ubah padding teks di dalam field
                                     isDense: true,
                                   ),
                                 ),
@@ -289,6 +258,14 @@ Widget buttonAdd(context, title) {
                                 ),
                                 const SizedBox(height: 5),
                                 TextFormField(
+                                  onTap: () async {
+                                    String selectedDate =
+                                        await selectDate(context);
+                                    controller.eventDateTextController.text =
+                                        selectedDate;
+                                  },
+                                  controller:
+                                      controller.eventDateTextController,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
@@ -306,35 +283,15 @@ Widget buttonAdd(context, title) {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  'Tempat Kegiatan',
+                                  'Description',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13, horizontal: 10),
-                                    isDense: true,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 15),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Jumlah Peserta',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(height: 5),
-                                TextFormField(
+                                  controller:
+                                      controller.eventDescriptionTextController,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
@@ -357,6 +314,8 @@ Widget buttonAdd(context, title) {
                                 ),
                                 const SizedBox(height: 5),
                                 TextFormField(
+                                  controller:
+                                      controller.eventAttachmentTextController,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
@@ -377,7 +336,9 @@ Widget buttonAdd(context, title) {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                controller.insertEventData();
+                              },
                               child: Container(
                                 margin: const EdgeInsets.only(top: 10),
                                 height: AppSize.screenHeight * 0.04,
@@ -406,8 +367,8 @@ Widget buttonAdd(context, title) {
     },
     borderRadius: BorderRadius.circular(20),
     child: Container(
-      margin: EdgeInsets.only(right: 20),
-      padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
+      margin: const EdgeInsets.only(right: 20),
+      padding: const EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
       decoration: BoxDecoration(
         color: AppColors.bilu,
         borderRadius: BorderRadius.circular(5),
@@ -415,9 +376,9 @@ Widget buttonAdd(context, title) {
       child: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.add, color: Colors.white, size: 13),
-          const Text(
+        children: const [
+          Icon(Icons.add, color: Colors.white, size: 13),
+          Text(
             'Create',
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
@@ -427,10 +388,10 @@ Widget buttonAdd(context, title) {
   );
 }
 
-Widget item(DataEvent model, context) {
+Widget item(DataEvent model, context, EventController controller) {
   return Container(
-    padding: EdgeInsets.all(20),
-    margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+    padding: const EdgeInsets.all(20),
+    margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
       color: Colors.white,
@@ -443,8 +404,8 @@ Widget item(DataEvent model, context) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 250,
+            SizedBox(
+              width: 300,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -454,55 +415,70 @@ Widget item(DataEvent model, context) {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 20.0,
+                          fontSize: 16.0,
                           fontWeight: FontWeight.bold)),
-                  Text("${model.eventDate}",
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text("${model.eventDescription}",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        color: Colors.grey,
+                        color: Colors.black,
                         fontSize: 15,
                       )),
                 ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Icon(Icons.class_sharp, color: Colors.black, size: 20),
-                  const SizedBox(width: 5),
-                  Container(
-                      width: 200,
-                      child: Text("${model.eventDescription}",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 20))),
-                ],
-              ),
+            const SizedBox(
+              width: 20,
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 10),
-              child: Row(
-                children: [
-                  const Icon(Icons.location_on, color: Colors.black, size: 20),
-                  const SizedBox(width: 5),
-                  Container(
-                      width: 200,
-                      child: Text("${model.eventDate}",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 20))),
-                ],
-              ),
-            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.date_range,
+                          color: Colors.black, size: 20),
+                      const SizedBox(width: 5),
+                      SizedBox(
+                          width: 200,
+                          child: Text("${model.eventDate}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 15))),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.verified_user,
+                      size: 20,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      '${model.shortName}',
+                      style: const TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+              ],
+            )
           ],
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
         ),
         Column(
@@ -513,12 +489,17 @@ Widget item(DataEvent model, context) {
                 children: [
                   Container(
                     alignment: Alignment.topRight,
-                    child: edit(context, 'title'),
+                    child: edit(
+                      context,
+                      'title',
+                      controller,
+                      model,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Container(
                     alignment: Alignment.topRight,
-                    child: hapus(context, 'title'),
+                    child: hapus(context, 'title', controller, model.id),
                   ),
                   const SizedBox(width: 10),
                   Row(children: [
@@ -549,26 +530,34 @@ Widget photos(BuildContext context, model, url) {
       child: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.photo_camera, color: Colors.white, size: 15),
-          const Text('Photos',
-              style: TextStyle(color: Colors.white, fontSize: 15)),
+        children: const [
+          Icon(Icons.photo_camera, color: Colors.white, size: 15),
+          Text('Photos', style: TextStyle(color: Colors.white, fontSize: 15)),
         ],
       )),
     ),
   );
 }
 
-Widget edit(context, title) {
+Widget edit(context, title, EventController controller, DataEvent value) {
+  var id = value.id;
   return InkWell(
     onTap: () {
+      controller.userIdTextController.text = value.userId ?? "";
+      controller.eventDateTextController.text = value.eventDate ?? "";
+      controller.eventNameTextController.text = value.eventName ?? "";
+      controller.eventDescriptionTextController.text =
+          value.eventDescription ?? "";
+      controller.eventAttachmentTextController.text =
+          value.eventAttachment ?? "";
+
       showDialog<void>(
           context: context,
           barrierDismissible: true,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: Container(
-                height: 600,
+              content: SizedBox(
+                height: 550,
                 width: 500,
                 child: SingleChildScrollView(
                   child: Column(
@@ -593,11 +582,11 @@ Widget edit(context, title) {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  children: [
-                                    const Icon(Icons.edit,
+                                  children: const [
+                                    Icon(Icons.add_link,
                                         color: Colors.black, size: 20),
-                                    const SizedBox(width: 5),
-                                    const Text(
+                                    SizedBox(width: 5),
+                                    Text(
                                       'Event',
                                       style: TextStyle(
                                           color: Colors.black,
@@ -621,29 +610,6 @@ Widget edit(context, title) {
                             left: 40.0, right: 40.0, bottom: 10.0),
                         child: Column(
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'No',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(height: 5),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13,
-                                        horizontal:
-                                            10), // Ubah padding teks di dalam field
-                                    isDense: true,
-                                  ),
-                                ),
-                              ],
-                            ),
                             const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -657,36 +623,12 @@ Widget edit(context, title) {
                                 ),
                                 const SizedBox(height: 5),
                                 TextFormField(
+                                  controller:
+                                      controller.eventNameTextController,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13,
-                                        horizontal:
-                                            10), // Ubah padding teks di dalam field
-                                    isDense: true,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 15),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Jenis Kegiatan',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(height: 5),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13,
-                                        horizontal:
-                                            10), // Ubah padding teks di dalam field
+                                        vertical: 13, horizontal: 10),
                                     isDense: true,
                                   ),
                                 ),
@@ -705,6 +647,14 @@ Widget edit(context, title) {
                                 ),
                                 const SizedBox(height: 5),
                                 TextFormField(
+                                  onTap: () async {
+                                    String selectedDate =
+                                        await selectDate(context);
+                                    controller.eventDateTextController.text =
+                                        selectedDate;
+                                  },
+                                  controller:
+                                      controller.eventDateTextController,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
@@ -722,43 +672,19 @@ Widget edit(context, title) {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  'Tempat Kegiatan',
+                                  'Description',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(height: 5),
                                 TextFormField(
+                                  controller:
+                                      controller.eventDescriptionTextController,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13,
-                                        horizontal:
-                                            10), // Ubah padding teks di dalam field
-                                    isDense: true,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 15),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Jumlah Peserta',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(height: 5),
-                                TextFormField(
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13,
-                                        horizontal:
-                                            10), // Ubah padding teks di dalam field
+                                        vertical: 13, horizontal: 10),
                                     isDense: true,
                                   ),
                                 ),
@@ -777,12 +703,12 @@ Widget edit(context, title) {
                                 ),
                                 const SizedBox(height: 5),
                                 TextFormField(
+                                  controller:
+                                      controller.eventAttachmentTextController,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
-                                        vertical: 13,
-                                        horizontal:
-                                            10), // Ubah padding teks di dalam field
+                                        vertical: 13, horizontal: 10),
                                     isDense: true,
                                   ),
                                 ),
@@ -799,11 +725,13 @@ Widget edit(context, title) {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                controller.updateEventData(id);
+                              },
                               child: Container(
                                 margin: const EdgeInsets.only(top: 10),
                                 height: AppSize.screenHeight * 0.04,
-                                width: AppSize.screenWidth * 0.15,
+                                width: AppSize.screenWidth * 0.1,
                                 decoration: BoxDecoration(
                                   color: Colors.blueAccent.shade700,
                                   borderRadius: BorderRadius.circular(3),
@@ -836,9 +764,9 @@ Widget edit(context, title) {
       child: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.edit_document, color: Colors.white, size: 15),
-          const Text(
+        children: const [
+          Icon(Icons.edit_document, color: Colors.white, size: 15),
+          Text(
             'Edit',
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
@@ -848,7 +776,12 @@ Widget edit(context, title) {
   );
 }
 
-Widget hapus(context, title) {
+Widget hapus(
+  context,
+  title,
+  EventController controller,
+  id,
+) {
   return InkWell(
     onTap: () {
       showDialog<void>(
@@ -856,7 +789,7 @@ Widget hapus(context, title) {
           barrierDismissible: true,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: Container(
+              content: SizedBox(
                 height: 100,
                 width: 100,
                 child: Column(
@@ -887,8 +820,8 @@ Widget hapus(context, title) {
                               borderRadius: BorderRadius.circular(3),
                             ),
                             child: Row(
-                              children: [
-                                const Center(
+                              children: const [
+                                Center(
                                     child: Text('Yes',
                                         style: TextStyle(
                                             color: Colors.white,
@@ -899,7 +832,9 @@ Widget hapus(context, title) {
                         ),
                         const SizedBox(width: 10),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            controller.deleteEventData(id);
+                          },
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
                             height: AppSize.screenHeight * 0.04,
@@ -940,10 +875,9 @@ Widget hapus(context, title) {
       child: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.delete_sweep, color: Colors.white, size: 15),
-          const Text('Delete',
-              style: TextStyle(color: Colors.white, fontSize: 15)),
+        children: const [
+          Icon(Icons.delete_sweep, color: Colors.white, size: 15),
+          Text('Delete', style: TextStyle(color: Colors.white, fontSize: 15)),
         ],
       )),
     ),

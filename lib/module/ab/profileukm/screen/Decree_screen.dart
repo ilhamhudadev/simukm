@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:standard_project/core/globalcontroller/app_function.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
+import 'package:standard_project/core/variables/app_constant.dart';
 import 'package:standard_project/module/ab/profileukm/controller/Decree_controller.dart';
 import 'package:standard_project/module/ab/profileukm/data/model/decision_letter_model.dart';
 
@@ -22,7 +24,7 @@ class DecreeScreen extends StatelessWidget {
                 children: [
                   Container(
                     height: 150,
-                    decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
+                    decoration: const BoxDecoration(color: Color(0xFFE9E8E8)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -31,9 +33,9 @@ class DecreeScreen extends StatelessWidget {
                           children: [
                             Container(
                               //    color: Color(0xFFEEEEEE),
-                              margin: EdgeInsets.only(
+                              margin: const EdgeInsets.only(
                                   top: 20, left: 20, right: 20, bottom: 20),
-                              child: Text(
+                              child: const Text(
                                 'Surat Keputusan ',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -50,20 +52,20 @@ class DecreeScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(5),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                         color: Colors.grey,
                                         blurRadius: 2.0,
                                         offset: Offset(0, 1))
                                   ]),
-                              margin: EdgeInsets.only(
+                              margin: const EdgeInsets.only(
                                 left: 20,
                               ),
                               child: Row(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: AppSize.screenWidth * 0.5,
-                                    child: TextField(
+                                    child: const TextField(
                                       decoration: InputDecoration(
                                           contentPadding:
                                               EdgeInsets.only(left: 10),
@@ -80,24 +82,24 @@ class DecreeScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            buttonAdd(context)
+                            buttonAdd(context, controller)
                           ],
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Obx(() => controller.decisionLetterData.isNotEmpty
                       ? Container(
                           // padding: EdgeInsets.all(20),
-                          constraints: BoxConstraints(minHeight: 0),
+                          constraints: const BoxConstraints(minHeight: 0),
                           width: AppSize.screenWidth * 4,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Color(0xFFE9E8E8),
                           ),
                           child: ListView.builder(
@@ -107,7 +109,7 @@ class DecreeScreen extends StatelessWidget {
                             itemCount: controller.decisionLetterData.length,
                             itemBuilder: (context, index) {
                               return item(controller.decisionLetterData, index,
-                                  context);
+                                  context, controller);
                             },
                           ))
                       : Container())
@@ -118,9 +120,15 @@ class DecreeScreen extends StatelessWidget {
         });
   }
 
-  Widget buttonAdd(context) {
+  Widget buttonAdd(context, DecreeController controller) {
     return InkWell(
       onTap: () {
+        controller.userIdTextController.text = "";
+        controller.decisionNumberTextController.text = "";
+        controller.decisionTitleTextController.text = "";
+        controller.decisionDateTextController.text = "";
+        controller.letterAttachmentTextController.text = "";
+
         showDialog<void>(
             context: context,
             barrierDismissible: true,
@@ -142,7 +150,7 @@ class DecreeScreen extends StatelessWidget {
                                 Get.back();
                               },
                               child: Container(
-                                child: Icon(Icons.close),
+                                child: const Icon(Icons.close),
                               ),
                             ),
                           ],
@@ -150,22 +158,30 @@ class DecreeScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Tanggal SK'),
-                            SizedBox(
+                            const Text('Tanggal SK'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                onTap: () async {
+                                  String selectedDate =
+                                      await selectDate(context);
+                                  controller.decisionDateTextController.text =
+                                      selectedDate;
+                                },
+                                controller:
+                                    controller.decisionDateTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     hintText: 'Tanggal SK',
@@ -174,29 +190,31 @@ class DecreeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('No SK'),
-                            SizedBox(
+                            const Text('No SK'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.decisionNumberTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     hintText: 'No SK',
@@ -205,28 +223,31 @@ class DecreeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Judul SK'),
-                            SizedBox(
+                            const Text('Judul SK'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.decisionTitleTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Judul SK',
                                 ),
@@ -234,28 +255,31 @@ class DecreeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Link Dokumen'),
-                            SizedBox(
+                            const Text('Link Dokumen'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.letterAttachmentTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Link Dokumen',
                                 ),
@@ -263,22 +287,24 @@ class DecreeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            controller.insertDecisionLetterData();
+                          },
                           child: Container(
                               width: 200,
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   color: AppColors.bilu,
                                   borderRadius: BorderRadius.circular(10)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: const [
                                   Icon(
-                                    Icons.add,
+                                    Icons.edit,
                                     size: 30,
                                     color: Colors.white,
                                   ),
@@ -286,7 +312,7 @@ class DecreeScreen extends StatelessWidget {
                                     width: 10,
                                   ),
                                   Text(
-                                    'Add',
+                                    'Submit',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ],
@@ -300,12 +326,13 @@ class DecreeScreen extends StatelessWidget {
             });
       },
       child: Container(
-        margin: EdgeInsets.only(right: 20),
-        padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
+        margin: const EdgeInsets.only(right: 20),
+        padding:
+            const EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
         decoration: BoxDecoration(
             color: AppColors.bilu,
             borderRadius: BorderRadius.circular(5),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                   color: Colors.grey,
                   blurRadius: 5.0,
@@ -315,7 +342,7 @@ class DecreeScreen extends StatelessWidget {
                   ))
             ]),
         child: Row(
-          children: [
+          children: const [
             Icon(
               Icons.add,
               size: 15,
@@ -336,14 +363,15 @@ class DecreeScreen extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Container(
-        padding: EdgeInsets.only(right: 20, left: 20, bottom: 14, top: 14),
-        decoration: BoxDecoration(
+        padding:
+            const EdgeInsets.only(right: 20, left: 20, bottom: 14, top: 14),
+        decoration: const BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
         ),
         child: Row(
-          children: [
+          children: const [
             Icon(
               Icons.search,
               size: 20,
@@ -362,16 +390,17 @@ class DecreeScreen extends StatelessWidget {
     );
   }
 
-  Widget item(List<DataDecision> value, int index, BuildContext context) {
+  Widget item(
+      List<DataDecision> value, int index, BuildContext context, controller) {
     return Container(
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Colors.white,
       ),
       child: Container(
-        padding: EdgeInsets.only(right: 10),
+        padding: const EdgeInsets.only(right: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -380,14 +409,14 @@ class DecreeScreen extends StatelessWidget {
                 Container(
                   width: 50,
                   height: 50,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage('assets/documen.png'))),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                Container(
+                const SizedBox(
                   width: 150,
                   child: Text(
                     '2021/2022',
@@ -397,63 +426,64 @@ class DecreeScreen extends StatelessWidget {
               ],
             ),
             Container(
-              padding: EdgeInsets.only(left: 15),
+              padding: const EdgeInsets.only(left: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 150,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'No SK ',
                           style: TextStyle(fontSize: 14),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
                           '${value[index].decisionNumber}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 14),
                         )
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: 150,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Judul SK', style: TextStyle(fontSize: 14)),
-                        SizedBox(
+                        const Text('Judul SK', style: TextStyle(fontSize: 14)),
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
                           '${value[index].decisionTitle}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 14),
                         )
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: 250,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Tanggal SK ', style: TextStyle(fontSize: 14)),
-                        SizedBox(
+                        const Text('Tanggal SK ',
+                            style: TextStyle(fontSize: 14)),
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
                           '${value[index].decisionDate} ',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                       ],
@@ -463,15 +493,15 @@ class DecreeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      seemore(context),
-                      SizedBox(
+                      seemore(context, controller, value[index]),
+                      const SizedBox(
                         width: 5,
                       ),
-                      buttonEdit(context),
-                      SizedBox(
+                      buttonEdit(context, controller, value[index]),
+                      const SizedBox(
                         width: 5,
                       ),
-                      bottonDelete(context)
+                      bottonDelete(context, controller, value[index])
                     ],
                   )
                 ],
@@ -483,9 +513,17 @@ class DecreeScreen extends StatelessWidget {
     );
   }
 
-  Widget buttonEdit(context) {
+  Widget buttonEdit(context, DecreeController controller, DataDecision value) {
     return InkWell(
       onTap: () {
+        controller.userIdTextController.text = value.userId ?? "";
+        controller.decisionNumberTextController.text =
+            value.decisionNumber ?? "";
+        controller.decisionTitleTextController.text = value.decisionTitle ?? "";
+        controller.decisionDateTextController.text = value.decisionDate ?? "";
+        controller.letterAttachmentTextController.text =
+            value.letterAttachment ?? "";
+
         showDialog<void>(
             context: context,
             barrierDismissible: true,
@@ -507,7 +545,7 @@ class DecreeScreen extends StatelessWidget {
                                 Get.back();
                               },
                               child: Container(
-                                child: Icon(Icons.close),
+                                child: const Icon(Icons.close),
                               ),
                             ),
                           ],
@@ -515,22 +553,30 @@ class DecreeScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Tanggal SK'),
-                            SizedBox(
+                            const Text('Tanggal SK'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                onTap: () async {
+                                  String selectedDate =
+                                      await selectDate(context);
+                                  controller.decisionDateTextController.text =
+                                      selectedDate;
+                                },
+                                controller:
+                                    controller.decisionDateTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     hintText: 'Tanggal SK',
@@ -539,29 +585,31 @@ class DecreeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('No SK'),
-                            SizedBox(
+                            const Text('No SK'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.decisionNumberTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     hintText: 'No SK',
@@ -570,28 +618,31 @@ class DecreeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Judul SK'),
-                            SizedBox(
+                            const Text('Judul SK'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.decisionTitleTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Judul SK',
                                 ),
@@ -599,28 +650,31 @@ class DecreeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Link Dokumen'),
-                            SizedBox(
+                            const Text('Link Dokumen'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.letterAttachmentTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Link Dokumen',
                                 ),
@@ -628,20 +682,22 @@ class DecreeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            controller.updateDecisionLetterData(value.id);
+                          },
                           child: Container(
                               width: 200,
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   color: AppColors.bilu,
                                   borderRadius: BorderRadius.circular(10)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: const [
                                   Icon(
                                     Icons.edit,
                                     size: 30,
@@ -665,12 +721,13 @@ class DecreeScreen extends StatelessWidget {
             });
       },
       child: Container(
-        padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+        padding:
+            const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Row(children: [
+        child: Row(children: const [
           Icon(
             Icons.edit,
             size: 13,
@@ -688,7 +745,8 @@ class DecreeScreen extends StatelessWidget {
     );
   }
 
-  Widget bottonDelete(context) {
+  Widget bottonDelete(
+      context, DecreeController controller, DataDecision value) {
     return InkWell(
       onTap: () {
         showDialog<void>(
@@ -705,7 +763,7 @@ class DecreeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        children: [
+                        children: const [
                           Icon(Icons.warning),
                           SizedBox(
                             width: 10,
@@ -717,16 +775,18 @@ class DecreeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              controller.deleteDecisionLetterData(value.id);
+                            },
                             child: Container(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   bottom: 5, top: 5, left: 30, right: 30),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5)),
-                              child: Text("Yes"),
+                              child: const Text("Yes"),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           InkWell(
@@ -734,9 +794,9 @@ class DecreeScreen extends StatelessWidget {
                               Get.back();
                             },
                             child: Container(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   bottom: 5, top: 5, left: 30, right: 30),
-                              child: Text("No"),
+                              child: const Text("No"),
                             ),
                           ),
                         ],
@@ -748,12 +808,13 @@ class DecreeScreen extends StatelessWidget {
             });
       },
       child: Container(
-        padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+        padding:
+            const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Row(children: [
+        child: Row(children: const [
           Icon(
             Icons.delete,
             size: 15,
@@ -771,7 +832,7 @@ class DecreeScreen extends StatelessWidget {
     );
   }
 
-  Widget seemore(context) {
+  Widget seemore(context, DecreeController controller, DataDecision value) {
     return InkWell(
       onTap: () {
         showDialog<void>(
@@ -795,49 +856,53 @@ class DecreeScreen extends StatelessWidget {
                                 Get.back();
                               },
                               child: Container(
-                                child: Icon(Icons.close),
+                                child: const Icon(Icons.close),
                               ),
                             ),
                           ],
                         ),
-                        Text(
+                        const Text(
                           'File ',
                           style: TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        Container(
+                        const SizedBox(
                             height: 200,
                             width: 200,
                             child: Image(image: AssetImage('assets/pdf.jpg'))),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
-                        Container(
-                            width: 200,
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: AppColors.bilu,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.download,
-                                  size: 30,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Download',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ))
+                        InkWell(
+                            onTap: () {
+                              openUrl(value.letterAttachment.toString());
+                            },
+                            child: Container(
+                                width: 200,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: AppColors.bilu,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(
+                                      Icons.download,
+                                      size: 30,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'Download',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                )))
                       ],
                     ),
                   ),
@@ -846,12 +911,13 @@ class DecreeScreen extends StatelessWidget {
             });
       },
       child: Container(
-        padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+        padding:
+            const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Row(children: [
+        child: Row(children: const [
           Icon(
             Icons.remove_red_eye,
             size: 13,

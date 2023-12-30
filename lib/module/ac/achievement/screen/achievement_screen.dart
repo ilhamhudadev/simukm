@@ -2,6 +2,7 @@ import 'dart:js_util';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:standard_project/core/globalcontroller/app_function.dart';
 import 'package:standard_project/module/ac/achievement/controller/achievement_controller.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
@@ -24,10 +25,10 @@ class AchievementScreen extends StatelessWidget {
               children: [
                 Container(
                   //padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: const [
                       Text(
                         'Achievement UKM',
                         style: TextStyle(
@@ -45,18 +46,19 @@ class AchievementScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                                 color: Colors.grey,
                                 blurRadius: 2.0,
                                 offset: Offset(0, 1))
                           ]),
-                      margin: EdgeInsets.only(bottom: 5, left: 20, right: 20),
+                      margin:
+                          const EdgeInsets.only(bottom: 5, left: 20, right: 20),
                       child: Row(
                         children: [
-                          Container(
+                          SizedBox(
                             width: AppSize.screenWidth * 0.5,
-                            child: TextField(
+                            child: const TextField(
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.only(left: 10),
                                   hintText: "Search a listing",
@@ -71,18 +73,18 @@ class AchievementScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    buttonAdd(context, "")
+                    buttonAdd(context, "", controller)
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Obx(() => Container(
                     width: AppSize.screenWidth * 3,
-                    decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
+                    decoration: const BoxDecoration(color: Color(0xFFE9E8E8)),
                     child: controller.achievementData.isNotEmpty
                         ? ListView.builder(
                             scrollDirection: Axis.vertical,
@@ -93,7 +95,7 @@ class AchievementScreen extends StatelessWidget {
                               return Column(
                                 children: [
                                   item(controller.achievementData, index,
-                                      context)
+                                      context, controller)
                                 ],
                               );
                             })
@@ -110,14 +112,15 @@ class AchievementScreen extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Container(
-        padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
-        decoration: BoxDecoration(
+        padding:
+            const EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
+        decoration: const BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
         ),
         child: Row(
-          children: [
+          children: const [
             Icon(
               Icons.search,
               size: 20,
@@ -136,12 +139,14 @@ class AchievementScreen extends StatelessWidget {
     );
   }
 
-  Widget item(List<DataAchievement> value, index, BuildContext context) {
+  Widget item(List<DataAchievement> value, index, BuildContext context,
+      AchievementController controller) {
     return Stack(
       children: [
         Container(
-            padding: EdgeInsets.all(20),
-            margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+            padding: const EdgeInsets.all(20),
+            margin:
+                const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Colors.white,
@@ -160,15 +165,15 @@ class AchievementScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                  child: Image(
+                                  child: const Image(
                                       height: 50,
                                       width: 50,
                                       image: NetworkImage(
                                           'https://cdn-icons-png.flaticon.com/128/216/216863.png'))),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              Container(
+                              SizedBox(
                                 width: 200,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -178,91 +183,103 @@ class AchievementScreen extends StatelessWidget {
                                       '${value[index].achievementTitle}',
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
                                     ),
                                     Text(
                                       '${value[index].achievementDetails}',
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 15,
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
                             ],
                           )),
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                           ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_pin,
-                                  size: 20,
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.location_pin,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      '${value[index].achievementLocation}',
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 5,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.calendar_month,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      '${value[index].achievementDate}',
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  '${value[index].achievementLocation}',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Icon(
+                                    Icons.verified_user,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    '${value[index].shortName}',
+                                    style: const TextStyle(fontSize: 15),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.calendar_month,
-                                  size: 20,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  '${value[index].achievementDate}',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.lock_clock,
-                                  size: 20,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  '${value[index].achievementDate}',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Divider(
+                          const Divider(
                             endIndent: 0,
                             color: Colors.black,
                             indent: 0,
                             height: 15,
+                          ),
+                          const SizedBox(
+                            width: 20,
                           ),
                           Container(
                             child: Row(
@@ -273,19 +290,25 @@ class AchievementScreen extends StatelessWidget {
                                   alignment: Alignment.topRight,
                                   child: seemore(context, 'title'),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Container(
                                   alignment: Alignment.topRight,
-                                  child: edit(context, 'title'),
+                                  child: edit(context, 'title', value[index],
+                                      controller),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Container(
                                   alignment: Alignment.topRight,
-                                  child: hapus(context, 'title'),
+                                  child: hapus(
+                                    context,
+                                    'title',
+                                    value[index],
+                                    controller,
+                                  ),
                                 ),
                               ],
                             ),
@@ -299,7 +322,7 @@ class AchievementScreen extends StatelessWidget {
     );
   }
 
-  Widget hapus(context, title) {
+  Widget hapus(context, title, value, AchievementController controller) {
     return InkWell(
       onTap: () {
         showDialog<void>(
@@ -316,7 +339,7 @@ class AchievementScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 325),
+                        padding: const EdgeInsets.only(left: 325),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -325,12 +348,12 @@ class AchievementScreen extends StatelessWidget {
                                 onTap: () {
                                   Get.back();
                                 },
-                                child: Icon(Icons.close)),
+                                child: const Icon(Icons.close)),
                           ],
                         ),
                       ),
-                      SizedBox(height: 10),
-                      Text(
+                      const SizedBox(height: 10),
+                      const Text(
                         'Do you want to delete this Achievement?',
                         style: TextStyle(
                             color: Colors.black,
@@ -338,12 +361,14 @@ class AchievementScreen extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                             letterSpacing: 2),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              controller.deleteAchievementData(value.id);
+                            },
                             borderRadius: BorderRadius.circular(20),
                             child: Container(
                               height: AppSize.screenHeight * 0.04,
@@ -352,16 +377,18 @@ class AchievementScreen extends StatelessWidget {
                                 color: AppColors.bilu,
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Center(
+                              child: const Center(
                                   child: Text('Yes',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 11.5))),
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Get.back();
+                            },
                             borderRadius: BorderRadius.circular(20),
                             child: Container(
                               height: AppSize.screenHeight * 0.04,
@@ -370,7 +397,7 @@ class AchievementScreen extends StatelessWidget {
                                 color: AppColors.bilu,
                                 borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Center(
+                              child: const Center(
                                   child: Text('No',
                                       style: TextStyle(
                                           color: Colors.white,
@@ -386,7 +413,8 @@ class AchievementScreen extends StatelessWidget {
             });
       },
       child: Container(
-          padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
+          padding:
+              const EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
           decoration: BoxDecoration(
               color: AppColors.bilu,
               borderRadius: BorderRadius.circular(15),
@@ -395,10 +423,10 @@ class AchievementScreen extends StatelessWidget {
                     color: Colors.grey.shade400,
                     blurRadius: 10,
                     spreadRadius: 1,
-                    offset: Offset(5, 5))
+                    offset: const Offset(5, 5))
               ]),
           child: Row(
-            children: [
+            children: const [
               Icon(
                 Icons.delete,
                 size: 10,
@@ -416,15 +444,27 @@ class AchievementScreen extends StatelessWidget {
     );
   }
 
-  Widget edit(context, title) {
+  Widget edit(
+      context, title, DataAchievement value, AchievementController controller) {
     return InkWell(
       onTap: () {
+        controller.userIdTextController.text = value.userId ?? "";
+        controller.achievementDateTextController.text =
+            value.achievementDate ?? "";
+        controller.achievementTitleTextController.text =
+            value.achievementTitle ?? "";
+        controller.achievementDetailsTextController.text =
+            value.achievementDetails ?? "";
+        controller.achievementLocationTextController.text =
+            value.achievementLocation ?? "";
+        controller.documentationTextController.text = value.documentation ?? "";
+
         showDialog<void>(
             context: context,
             barrierDismissible: true,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Container(
+                content: SizedBox(
                   height: 550,
                   width: 550,
                   child: SingleChildScrollView(
@@ -433,7 +473,7 @@ class AchievementScreen extends StatelessWidget {
                         Column(
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left: 525),
+                              padding: const EdgeInsets.only(left: 525),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -443,7 +483,7 @@ class AchievementScreen extends StatelessWidget {
                                       onTap: () {
                                         Get.back();
                                       },
-                                      child: Icon(Icons.close)),
+                                      child: const Icon(Icons.close)),
                                 ],
                               ),
                             ),
@@ -452,8 +492,8 @@ class AchievementScreen extends StatelessWidget {
                         Column(
                           children: [
                             Container(
-                              margin: EdgeInsets.all(10),
-                              child: Text(
+                              margin: const EdgeInsets.all(10),
+                              child: const Text(
                                 'Form Achievement UKM',
                                 style: TextStyle(
                                     color: Colors.black,
@@ -464,26 +504,29 @@ class AchievementScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Keterangan Prestasi'),
-                            SizedBox(
+                            const Text('Keterangan Prestasi'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 600,
                               child: TextField(
+                                controller:
+                                    controller.achievementDetailsTextController,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.description),
+                                  prefixIcon: const Icon(Icons.description),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Keterangan Prestasi',
                                 ),
@@ -491,53 +534,65 @@ class AchievementScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Sumber Prestasi'),
-                            SizedBox(
+                            const Text('Judul Prestasi'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 600,
                               child: TextField(
+                                controller:
+                                    controller.achievementTitleTextController,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.source),
+                                  prefixIcon: const Icon(Icons.description),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
-                                  hintText: 'Sumber Prestasi',
+                                  hintText: 'Judul Prestasi',
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Tanggal Prestasi'),
-                            SizedBox(
+                            const Text('Tanggal Prestasi'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 600,
                               child: TextField(
+                                onTap: () async {
+                                  String selectedDate =
+                                      await selectDate(context);
+                                  controller.achievementDateTextController
+                                      .text = selectedDate;
+                                },
+                                controller:
+                                    controller.achievementDateTextController,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.calendar_month),
+                                  prefixIcon: const Icon(Icons.calendar_month),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Tanggal Prestasi',
                                 ),
@@ -545,53 +600,29 @@ class AchievementScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Waktu Prestasi'),
-                            SizedBox(
+                            const Text('Tempat Prestasi'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 600,
                               child: TextField(
+                                controller: controller
+                                    .achievementLocationTextController,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.lock_clock),
+                                  prefixIcon: const Icon(Icons.location_city),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  hintText: 'Waktu Prestasi',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Tempat Prestasi'),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              width: 600,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.location_city),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Tempat Prestasi',
                                 ),
@@ -599,26 +630,29 @@ class AchievementScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Dokumentasil'),
-                            SizedBox(
+                            const Text('Dokumentasil'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 600,
                               child: TextField(
+                                controller:
+                                    controller.documentationTextController,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.photo),
+                                  prefixIcon: const Icon(Icons.photo),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Dokumentasi',
                                 ),
@@ -626,7 +660,7 @@ class AchievementScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -635,18 +669,20 @@ class AchievementScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    controller.updateAchievementData(value.id);
+                                  },
                                   child: Container(
-                                    margin: EdgeInsets.only(top: 10),
+                                    margin: const EdgeInsets.only(top: 10),
                                     height: AppSize.screenHeight * 0.04,
                                     width: AppSize.screenWidth * 0.17,
                                     decoration: BoxDecoration(
                                       color: AppColors.bilu,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
-                                    child: Center(
+                                    child: const Center(
                                         child: Text(
-                                      'Save Changes',
+                                      'Submit',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 11.5),
                                     )),
@@ -664,7 +700,7 @@ class AchievementScreen extends StatelessWidget {
             });
       },
       child: Container(
-        padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
+        padding: const EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
         decoration: BoxDecoration(
             color: AppColors.bilu,
             borderRadius: BorderRadius.circular(15),
@@ -673,10 +709,10 @@ class AchievementScreen extends StatelessWidget {
                   color: Colors.grey.shade400,
                   blurRadius: 10,
                   spreadRadius: 1,
-                  offset: Offset(5, 5))
+                  offset: const Offset(5, 5))
             ]),
         child: Row(
-          children: [
+          children: const [
             Icon(
               Icons.edit,
               size: 15,
@@ -703,7 +739,7 @@ class AchievementScreen extends StatelessWidget {
             barrierDismissible: true,
             builder: (BuildContext context) {
               return AlertDialog(
-                  content: Container(
+                  content: SizedBox(
                       height: 550,
                       width: 750,
                       child: SingleChildScrollView(
@@ -711,7 +747,7 @@ class AchievementScreen extends StatelessWidget {
                         Column(
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left: 725),
+                              padding: const EdgeInsets.only(left: 725),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -721,18 +757,18 @@ class AchievementScreen extends StatelessWidget {
                                       onTap: () {
                                         Get.back();
                                       },
-                                      child: Icon(Icons.close)),
+                                      child: const Icon(Icons.close)),
                                 ],
                               ),
                             ),
                           ],
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 10, bottom: 10),
+                          margin: const EdgeInsets.only(top: 10, bottom: 10),
                           child: Column(
                             children: [
                               Container(
-                                child: Text(
+                                child: const Text(
                                   'Politeknik Piksi Ganesha crowned champions for Novice First Best Speaker in Asian English Olympics 2018',
                                   style: TextStyle(
                                       fontSize: 20,
@@ -740,45 +776,45 @@ class AchievementScreen extends StatelessWidget {
                                       letterSpacing: 3),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
-                              Container(
+                              SizedBox(
                                 height: 200,
                                 width: 200,
-                                child: Image(
+                                child: const Image(
                                     fit: BoxFit.cover,
                                     image: NetworkImage(
                                         'https://cdn-icons-png.flaticon.com/128/4048/4048675.png')),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               Row(
-                                children: [
+                                children: const [
                                   Text(
                                     'Deskripsi Kegiatan:',
                                     style: TextStyle(fontSize: 12),
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
-                              Text(
+                              const Text(
                                 'Politeknik Piksi Ganesha Debate Society has made us very proud to be crowned champions of the Asian English Olympics (AEO) in the debate division. This is a much-coveted win at the AEO hosted by BINUS University in Indonesia and attended by several prominent institutions in Asia.',
                                 style: TextStyle(
                                     fontSize: 15, color: Colors.black),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text(
+                              const Text(
                                 'This prestigious competition is a series of English language-related challenges that assess students’ abilities in different forms of spoken and written English and also puts their critical thinking and communication skills to the test. Our students distinguished themselves in several of the challenges. ',
                                 style: TextStyle(
                                     fontSize: 15, color: Colors.black),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                             ],
@@ -788,7 +824,8 @@ class AchievementScreen extends StatelessWidget {
             });
       },
       child: Container(
-          padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
+          padding:
+              const EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
           decoration: BoxDecoration(
               color: AppColors.bilu,
               borderRadius: BorderRadius.circular(15),
@@ -797,10 +834,10 @@ class AchievementScreen extends StatelessWidget {
                     color: Colors.grey.shade400,
                     blurRadius: 10,
                     spreadRadius: 1,
-                    offset: Offset(5, 5))
+                    offset: const Offset(5, 5))
               ]),
           child: Row(
-            children: [
+            children: const [
               Icon(
                 Icons.remove_red_eye,
                 size: 10,
@@ -818,255 +855,267 @@ class AchievementScreen extends StatelessWidget {
     );
   }
 
-  Widget buttonAdd(context, title) {
+  Widget buttonAdd(context, title, AchievementController controller) {
     return InkWell(
       onTap: () {
+        controller.userIdTextController.text = "";
+        controller.achievementDateTextController.text = "";
+        controller.achievementTitleTextController.text = "";
+        controller.achievementDetailsTextController.text = "";
+        controller.achievementLocationTextController.text = "";
+        controller.documentationTextController.text = "";
+
         showDialog<void>(
             context: context,
             barrierDismissible: true,
             builder: (BuildContext context) {
               return AlertDialog(
-                  content: Container(
-                height: 550,
-                width: 550,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 525),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                content: SizedBox(
+                  height: 550,
+                  width: 550,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 525),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                      onTap: () {
+                                        Get.back();
+                                      },
+                                      child: const Icon(Icons.close)),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.all(10),
+                              child: const Text(
+                                'Form Achievement UKM',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 28.0,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 2),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Keterangan Prestasi'),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            SizedBox(
+                              width: 600,
+                              child: TextField(
+                                controller:
+                                    controller.achievementDetailsTextController,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(Icons.description),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Keterangan Prestasi',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Judul Prestasi'),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            SizedBox(
+                              width: 600,
+                              child: TextField(
+                                controller:
+                                    controller.achievementTitleTextController,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(Icons.description),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Judul Prestasi',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Tanggal Prestasi'),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            SizedBox(
+                              width: 600,
+                              child: TextField(
+                                onTap: () async {
+                                  String selectedDate =
+                                      await selectDate(context);
+                                  controller.achievementDateTextController
+                                      .text = selectedDate;
+                                },
+                                controller:
+                                    controller.achievementDateTextController,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(Icons.calendar_month),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Tanggal Prestasi',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Tempat Prestasi'),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            SizedBox(
+                              width: 600,
+                              child: TextField(
+                                controller: controller
+                                    .achievementLocationTextController,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(Icons.location_city),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Tempat Prestasi',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Dokumentasi'),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            SizedBox(
+                              width: 600,
+                              child: TextField(
+                                controller:
+                                    controller.documentationTextController,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(Icons.photo),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.blue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Dokumentasi',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 InkWell(
-                                    onTap: () {
-                                      Get.back();
-                                    },
-                                    child: Icon(Icons.close)),
+                                  onTap: () {
+                                    controller.insertAchievementData();
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(top: 10),
+                                    height: AppSize.screenHeight * 0.04,
+                                    width: AppSize.screenWidth * 0.17,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.bilu,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: const Center(
+                                        child: Text(
+                                      'Submit',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 11.5),
+                                    )),
+                                  ),
+                                ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.all(10),
-                            child: Text(
-                              'Form Achievement UKM',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 28.0,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 2),
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Keterangan Prestasi'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.description),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(10)),
-                                hintText: 'Keterangan Prestasi',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Sumber Prestasi'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.source),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(10)),
-                                hintText: 'Sumber Prestasi',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Tanggal Prestasi'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.calendar_month),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(10)),
-                                hintText: 'Tanggal Prestasi',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Waktu Prestasi'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.lock_clock),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(10)),
-                                hintText: 'Waktu Prestasi',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Tempat Prestasi'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.location_city),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(10)),
-                                hintText: 'Tempat Prestasi',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Dokumentasil'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: 600,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.photo),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(10)),
-                                hintText: 'Dokumentasi',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 10),
-                                  height: AppSize.screenHeight * 0.04,
-                                  width: AppSize.screenWidth * 0.17,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.bilu,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Center(
-                                      child: Text(
-                                    'Save Changes',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 11.5),
-                                  )),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ));
+              );
             });
       },
       borderRadius: BorderRadius.circular(20),
       child: Container(
-          margin: EdgeInsets.only(right: 20),
-          padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
+          margin: const EdgeInsets.only(right: 20),
+          padding:
+              const EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
           decoration: BoxDecoration(
             color: AppColors.bilu,
             borderRadius: BorderRadius.circular(5),
           ),
           child: Row(
-            children: [
+            children: const [
               Icon(
                 Icons.add,
                 size: 15,

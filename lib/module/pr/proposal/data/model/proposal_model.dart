@@ -38,6 +38,8 @@ class DataProposal {
   String? location;
   String? description;
   String? documentation;
+  String? organizationName;
+  String? shortName;
 
   DataProposal(
       {this.id,
@@ -46,7 +48,9 @@ class DataProposal {
       this.title,
       this.location,
       this.description,
-      this.documentation});
+      this.documentation,
+      this.organizationName,
+      this.shortName});
 
   DataProposal.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -56,6 +60,8 @@ class DataProposal {
     location = json['location'];
     description = json['description'];
     documentation = json['documentation'];
+    organizationName = json['organization_name'];
+    shortName = json['short_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -67,6 +73,8 @@ class DataProposal {
     data['location'] = this.location;
     data['description'] = this.description;
     data['documentation'] = this.documentation;
+    data['organization_name'] = this.organizationName;
+    data['short_name'] = this.shortName;
     return data;
   }
 }

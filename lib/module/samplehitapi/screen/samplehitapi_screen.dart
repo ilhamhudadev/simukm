@@ -19,7 +19,7 @@ class SamplehitapiScreen extends StatelessWidget {
                 if (snapshot.hasData) {
                   var value = snapshot.data;
                   return Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       height: AppSize.screenHeight,
                       width: AppSize.screenWidth,
                       child: ListView.builder(
@@ -29,8 +29,8 @@ class SamplehitapiScreen extends StatelessWidget {
                           itemCount: value!.length,
                           itemBuilder: ((context, index) {
                             return Container(
-                              margin: EdgeInsets.only(bottom: 10),
-                              padding: EdgeInsets.all(20),
+                              margin: const EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(10),
@@ -49,7 +49,7 @@ class SamplehitapiScreen extends StatelessWidget {
                             );
                           })));
                 } else {
-                  return Center(
+                  return const Center(
                     child: Text("GAK ADA DATA BROWW"),
                   );
                 }

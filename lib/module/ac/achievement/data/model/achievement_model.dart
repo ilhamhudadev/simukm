@@ -39,6 +39,8 @@ class DataAchievement {
   String? achievementDetails;
   String? achievementLocation;
   String? documentation;
+  String? organizationName;
+  String? shortName;
 
   DataAchievement(
       {this.id,
@@ -47,7 +49,9 @@ class DataAchievement {
       this.achievementTitle,
       this.achievementDetails,
       this.achievementLocation,
-      this.documentation});
+      this.documentation,
+      this.organizationName,
+      this.shortName});
 
   DataAchievement.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -57,6 +61,8 @@ class DataAchievement {
     achievementDetails = json['achievement_details'];
     achievementLocation = json['achievement_location'];
     documentation = json['documentation'];
+    organizationName = json['organization_name'];
+    shortName = json['short_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -68,6 +74,8 @@ class DataAchievement {
     data['achievement_details'] = this.achievementDetails;
     data['achievement_location'] = this.achievementLocation;
     data['documentation'] = this.documentation;
+    data['organization_name'] = this.organizationName;
+    data['short_name'] = this.shortName;
     return data;
   }
 }

@@ -18,13 +18,13 @@ class ListukmScreen extends StatelessWidget {
               body: SingleChildScrollView(
                 child: Center(
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColors.greywhite,
                     ),
                     child: Column(
                       children: [
                         Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: AppColors.greywhite,
                           ),
                           child: Column(
@@ -35,8 +35,9 @@ class ListukmScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(top: 10, left: 43),
-                                    child: Text('List UKM',
+                                    margin: const EdgeInsets.only(
+                                        top: 10, left: 43),
+                                    child: const Text('List UKM',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 30.0,
@@ -47,7 +48,7 @@ class ListukmScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 30),
+                              const SizedBox(height: 30),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -55,19 +56,19 @@ class ListukmScreen extends StatelessWidget {
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(5),
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
                                               color: Colors.grey,
                                               blurRadius: 2.0,
                                               offset: Offset(0, 1))
                                         ]),
-                                    margin: EdgeInsets.only(
+                                    margin: const EdgeInsets.only(
                                         bottom: 5, left: 20, right: 20),
                                     child: Row(
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           width: AppSize.screenWidth * 0.5,
-                                          child: TextField(
+                                          child: const TextField(
                                             decoration: InputDecoration(
                                                 contentPadding:
                                                     EdgeInsets.only(left: 10),
@@ -93,13 +94,13 @@ class ListukmScreen extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(
+                          margin: const EdgeInsets.only(
                             top: 5,
                             left: 10,
                           ),
                           height: AppSize.screenHeight,
                           width: AppSize.screenWidth * 2.585,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Color.fromARGB(255, 233, 232, 232),
                           ),
                           child: ListView.builder(
@@ -123,14 +124,14 @@ Widget buttonsearch() {
   return InkWell(
     onTap: () {},
     child: Container(
-      padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
+      decoration: const BoxDecoration(
         color: AppColors.bilu,
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
       ),
       child: Row(
-        children: [
+        children: const [
           Text(
             'Search',
             style: TextStyle(color: Colors.white, fontSize: 15),
@@ -149,7 +150,7 @@ Widget create(context) {
           barrierDismissible: true,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: Container(
+              content: SizedBox(
                 height: 500,
                 width: 500,
                 child: SingleChildScrollView(
@@ -164,24 +165,24 @@ Widget create(context) {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
+                                children: const [
                                   Icon(Icons.close),
                                 ],
                               )),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                                 left: 35, right: 35, top: 35, bottom: 5),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.add_link,
                                         color: Colors.black, size: 20),
                                     SizedBox(width: 5),
@@ -194,7 +195,7 @@ Widget create(context) {
                                     ),
                                   ],
                                 ),
-                                Divider(
+                                const Divider(
                                     endIndent: 0,
                                     color: Colors.black,
                                     indent: 0,
@@ -205,7 +206,7 @@ Widget create(context) {
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             left: 40.0, right: 40.0, bottom: 10.0),
                         child: Column(
                           children: [
@@ -213,15 +214,15 @@ Widget create(context) {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Logo',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -232,20 +233,20 @@ Widget create(context) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Nama UKM',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -256,20 +257,20 @@ Widget create(context) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Penanggung Jawab',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -280,20 +281,20 @@ Widget create(context) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Contact Person',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 TextFormField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 13,
@@ -307,7 +308,7 @@ Widget create(context) {
                           ],
                         ),
                       ),
-                      SizedBox(width: 15),
+                      const SizedBox(width: 15),
                       Padding(
                         padding: const EdgeInsets.only(left: 40.0),
                         child: Row(
@@ -317,14 +318,14 @@ Widget create(context) {
                             InkWell(
                               onTap: () {},
                               child: Container(
-                                margin: EdgeInsets.only(top: 10),
-                                padding: EdgeInsets.only(
+                                margin: const EdgeInsets.only(top: 10),
+                                padding: const EdgeInsets.only(
                                     bottom: 9.5, top: 9.5, left: 12, right: 12),
                                 decoration: BoxDecoration(
                                   color: AppColors.bilu,
                                   borderRadius: BorderRadius.circular(15),
                                 ),
-                                child: Center(
+                                child: const Center(
                                     child: Text(
                                   'Create',
                                   style: TextStyle(
@@ -343,8 +344,8 @@ Widget create(context) {
           });
     },
     child: Container(
-      margin: EdgeInsets.only(right: 20, top: 20),
-      padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
+      margin: const EdgeInsets.only(right: 20, top: 20),
+      padding: const EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
       decoration: BoxDecoration(
         color: Colors.blueAccent.shade700,
         borderRadius: BorderRadius.circular(15),
@@ -352,7 +353,7 @@ Widget create(context) {
       child: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           Icon(Icons.add, color: Colors.white, size: 15),
           Text(
             'Create',
@@ -376,7 +377,7 @@ Widget item(ListukmOrganization model, context) {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
             ),
             child: Row(
@@ -385,24 +386,24 @@ Widget item(ListukmOrganization model, context) {
                 Container(
                   height: 60,
                   width: 60,
-                  margin: EdgeInsets.only(left: 20),
+                  margin: const EdgeInsets.only(left: 20),
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: NetworkImage("${model.urlfoto}")),
                       borderRadius: BorderRadius.circular(50)),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
               ],
             )),
         Container(child: Text("${model.nama}")),
         Container(child: Text("${model.pj}")),
         Container(child: Text("${model.tlp}")),
         Container(
-          margin: EdgeInsets.only(right: 20),
+          margin: const EdgeInsets.only(right: 20),
           child: Row(
             children: [
               edit(context),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               bottonDelete(context),
             ],
           ),
@@ -429,7 +430,7 @@ Widget bottonDelete(context) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
-                      children: [
+                      children: const [
                         Icon(Icons.warning),
                         SizedBox(
                           width: 10,
@@ -443,14 +444,14 @@ Widget bottonDelete(context) {
                         InkWell(
                           onTap: () {},
                           child: Container(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                 bottom: 5, top: 5, left: 30, right: 30),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5)),
-                            child: Text("Yes"),
+                            child: const Text("Yes"),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         InkWell(
@@ -458,9 +459,9 @@ Widget bottonDelete(context) {
                             Get.back();
                           },
                           child: Container(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                 bottom: 5, top: 5, left: 30, right: 30),
-                            child: Text("No"),
+                            child: const Text("No"),
                           ),
                         ),
                       ],
@@ -472,12 +473,13 @@ Widget bottonDelete(context) {
           });
     },
     child: Container(
-      padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+      padding:
+          const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
       decoration: BoxDecoration(
         color: AppColors.bilu,
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Row(children: [
+      child: Row(children: const [
         Icon(
           Icons.delete,
           size: 15,
@@ -503,7 +505,7 @@ Widget edit(context) {
           barrierDismissible: true,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: Container(
+              content: SizedBox(
                 height: 500,
                 width: 500,
                 child: Column(
@@ -517,26 +519,26 @@ Widget edit(context) {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
+                              children: const [
                                 Icon(Icons.close),
                               ],
                             )),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(
+                          margin: const EdgeInsets.only(
                               left: 35, right: 35, top: 35, bottom: 5),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                children: [
+                                children: const [
                                   Icon(Icons.edit,
-                                      color: const Color.fromRGBO(0, 0, 0, 1),
+                                      color: Color.fromRGBO(0, 0, 0, 1),
                                       size: 20),
                                   SizedBox(width: 5),
                                   Text(
@@ -548,7 +550,7 @@ Widget edit(context) {
                                   ),
                                 ],
                               ),
-                              Divider(
+                              const Divider(
                                   endIndent: 0,
                                   color: Colors.black,
                                   indent: 0,
@@ -559,7 +561,7 @@ Widget edit(context) {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                           left: 40.0, right: 40.0, bottom: 10.0),
                       child: Column(
                         children: [
@@ -567,14 +569,14 @@ Widget edit(context) {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Logo',
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 13,
@@ -585,19 +587,19 @@ Widget edit(context) {
                               ),
                             ],
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Nama UKM',
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 13,
@@ -608,19 +610,19 @@ Widget edit(context) {
                               ),
                             ],
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Penanggung Jawab',
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 13,
@@ -631,19 +633,19 @@ Widget edit(context) {
                               ),
                             ],
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Contact Person',
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 13,
@@ -657,7 +659,7 @@ Widget edit(context) {
                         ],
                       ),
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Padding(
                       padding: const EdgeInsets.only(left: 40.0),
                       child: Row(
@@ -667,14 +669,14 @@ Widget edit(context) {
                           InkWell(
                             onTap: () {},
                             child: Container(
-                              margin: EdgeInsets.only(top: 10),
+                              margin: const EdgeInsets.only(top: 10),
                               height: AppSize.screenHeight * 0.04,
                               width: AppSize.screenWidth * 0.15,
                               decoration: BoxDecoration(
                                 color: AppColors.bilu,
                                 borderRadius: BorderRadius.circular(3),
                               ),
-                              child: Center(
+                              child: const Center(
                                   child: Text(
                                 'Update',
                                 style: TextStyle(
@@ -692,12 +694,12 @@ Widget edit(context) {
           });
     },
     child: Container(
-        padding: EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
+        padding: const EdgeInsets.only(bottom: 8, top: 8, left: 13, right: 13),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Row(children: [
+        child: Row(children: const [
           Icon(
             Icons.edit,
             size: 15,

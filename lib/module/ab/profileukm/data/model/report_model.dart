@@ -19,10 +19,10 @@ class ReportModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['statusCode'] = this.statusCode;
-    data['statusMessage'] = this.statusMessage;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['statusCode'] = statusCode;
+    data['statusMessage'] = statusMessage;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -38,6 +38,8 @@ class DataReport {
   String? responsibleParty;
   String? reportContent;
   String? attachment;
+  String? organizationName;
+  String? shortName;
 
   DataReport(
       {this.id,
@@ -46,7 +48,9 @@ class DataReport {
       this.reportTitle,
       this.responsibleParty,
       this.reportContent,
-      this.attachment});
+      this.attachment,
+      this.organizationName,
+      this.shortName});
 
   DataReport.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -56,17 +60,21 @@ class DataReport {
     responsibleParty = json['responsible_party'];
     reportContent = json['report_content'];
     attachment = json['attachment'];
+    organizationName = json['organization_name'];
+    shortName = json['short_name'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['report_date'] = this.reportDate;
-    data['report_title'] = this.reportTitle;
-    data['responsible_party'] = this.responsibleParty;
-    data['report_content'] = this.reportContent;
-    data['attachment'] = this.attachment;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['report_date'] = reportDate;
+    data['report_title'] = reportTitle;
+    data['responsible_party'] = responsibleParty;
+    data['report_content'] = reportContent;
+    data['attachment'] = attachment;
+    data['organization_name'] = organizationName;
+    data['short_name'] = shortName;
     return data;
   }
 }

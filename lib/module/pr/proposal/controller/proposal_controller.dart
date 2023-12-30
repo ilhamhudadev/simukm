@@ -16,9 +16,9 @@ class ProposalController extends GetxController with ProposalRepo {
   Future<void> getProposalLetter() async {
     var searchText = searchController.value.text;
     try {
-      final Dio _dio = Dio();
+      final Dio dio = Dio();
       final response =
-          await _dio.get('http://localhost:3000/api/proposal/${searchText}');
+          await dio.get('http://localhost:3000/api/proposal/${searchText}');
 
       ProposalModel value = ProposalModel.fromJson(response.data);
 
@@ -27,6 +27,76 @@ class ProposalController extends GetxController with ProposalRepo {
       } else {
         AppConstant().setSnackbar("UKM Tidak Ditemukan");
       }
+    } catch (e) {
+      throw Exception(null);
+    }
+  }
+
+  // Text Editor Controllers
+  TextEditingController userIdTextController = TextEditingController();
+  TextEditingController dateTextController = TextEditingController();
+  TextEditingController titleTextController = TextEditingController();
+  TextEditingController locationTextController = TextEditingController();
+  TextEditingController descriptionTextController = TextEditingController();
+  TextEditingController documentationTextController = TextEditingController();
+
+  Future<void> insertProposalData() async {
+    var data = {
+      "user_id": userIdTextController.text,
+      "date": dateTextController.text,
+      "title": titleTextController.text,
+      "location": locationTextController.text,
+      "description": descriptionTextController.text,
+      "documentation": documentationTextController.text,
+    };
+    try {
+      final Dio dio = Dio();
+      final response = await dio.post(
+        'http://localhost:3000/api/proposal/new',
+        data: data,
+      );
+
+      Get.back();
+      getProposalLetter();
+    } catch (e) {
+      throw Exception(null);
+    }
+  }
+
+  Future<void> updateProposalData(id) async {
+    var data = {
+      "id": id,
+      "user_id": userIdTextController.text,
+      "date": dateTextController.text,
+      "title": titleTextController.text,
+      "location": locationTextController.text,
+      "description": descriptionTextController.text,
+      "documentation": documentationTextController.text,
+    };
+    try {
+      final Dio dio = Dio();
+      final response = await dio.post(
+        'http://localhost:3000/api/proposal/update',
+        data: data,
+      );
+
+      Get.back();
+      getProposalLetter();
+    } catch (e) {
+      throw Exception(null);
+    }
+  }
+
+  Future<void> deleteProposalData(id) async {
+    var data = {"id": "$id"};
+    try {
+      final Dio dio = Dio();
+      final response = await dio.post(
+        'http://localhost:3000/api/proposal/delete',
+        data: data,
+      );
+      Get.back();
+      getProposalLetter();
     } catch (e) {
       throw Exception(null);
     }

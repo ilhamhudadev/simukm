@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:standard_project/core/globalcontroller/app_function.dart';
 import 'package:standard_project/core/style/app_color.dart';
 import 'package:standard_project/core/style/app_size.dart';
 import 'package:standard_project/core/variables/app_constant.dart';
@@ -22,7 +23,7 @@ class ReportScreen extends StatelessWidget {
                 Container(
                   height: 150,
                   width: AppSize.screenWidth * 3,
-                  decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
+                  decoration: const BoxDecoration(color: Color(0xFFE9E8E8)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -30,9 +31,9 @@ class ReportScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                                 top: 20, left: 20, right: 20, bottom: 20),
-                            child: Text(
+                            child: const Text(
                               'Laporan Pertanggung jawaban ',
                               style: TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.bold),
@@ -47,20 +48,21 @@ class ReportScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(5),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                       color: Colors.grey,
                                       blurRadius: 1.0,
                                       offset: Offset(0, 1))
                                 ]),
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                               left: 20,
                             ),
                             child: Row(
                               children: [
-                                Container(
+                                SizedBox(
                                   width: AppSize.screenWidth * 0.5,
                                   child: TextField(
+                                    controller: controller.searchController,
                                     decoration: InputDecoration(
                                         contentPadding:
                                             EdgeInsets.only(left: 10),
@@ -72,25 +74,25 @@ class ReportScreen extends StatelessWidget {
                                             borderSide: BorderSide())),
                                   ),
                                 ),
-                                buttonsearch()
+                                buttonsearch(controller)
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          buttonAdd(context)
+                          buttonAdd(context, controller)
                         ],
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Obx(() => Container(
                     width: AppSize.screenWidth * 3,
-                    decoration: BoxDecoration(color: Color(0xFFE9E8E8)),
+                    decoration: const BoxDecoration(color: Color(0xFFE9E8E8)),
                     child: controller.reportData.isNotEmpty
                         ? ListView.builder(
                             scrollDirection: Axis.vertical,
@@ -98,8 +100,8 @@ class ReportScreen extends StatelessWidget {
                             itemCount: controller.reportData.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Center(
-                                  child: item(
-                                      controller.reportData, index, context));
+                                  child: item(controller.reportData, index,
+                                      context, controller));
                             },
                           )
                         : Container())),
@@ -109,9 +111,16 @@ class ReportScreen extends StatelessWidget {
         });
   }
 
-  Widget buttonAdd(context) {
+  Widget buttonAdd(context, ReportController controller) {
     return InkWell(
       onTap: () {
+        controller.userIdTextController.text = "";
+        controller.reportDateTextController.text = "";
+        controller.reportTitleTextController.text = "";
+        controller.responsiblePartyTextController.text = "";
+        controller.reportContentTextController.text = "";
+        controller.attachmentTextController.text = "";
+
         showDialog<void>(
             context: context,
             barrierDismissible: true,
@@ -133,7 +142,7 @@ class ReportScreen extends StatelessWidget {
                                 Get.back();
                               },
                               child: Container(
-                                child: Icon(Icons.close),
+                                child: const Icon(Icons.close),
                               ),
                             ),
                           ],
@@ -141,22 +150,29 @@ class ReportScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Tanggal LPJ'),
-                            SizedBox(
+                            const Text('Tanggal LPJ'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                onTap: () async {
+                                  String selectedDate =
+                                      await selectDate(context);
+                                  controller.reportDateTextController.text =
+                                      selectedDate;
+                                },
+                                controller: controller.reportDateTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     hintText: 'Tanggal LPJ',
@@ -165,29 +181,31 @@ class ReportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Judul'),
-                            SizedBox(
+                            const Text('Judul'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.reportTitleTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     hintText: 'Judul',
@@ -196,28 +214,31 @@ class ReportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Penanggung Jawab'),
-                            SizedBox(
+                            const Text('Penanggung Jawab'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.responsiblePartyTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Penanggung Jawab',
                                 ),
@@ -225,28 +246,31 @@ class ReportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Deskripsi'),
-                            SizedBox(
+                            const Text('Deskripsi'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.reportContentTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Deskripsi',
                                 ),
@@ -254,28 +278,30 @@ class ReportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Link Dokumen'),
-                            SizedBox(
+                            const Text('Link Dokumen'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller: controller.attachmentTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Link Dokumen',
                                 ),
@@ -283,22 +309,24 @@ class ReportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            controller.insertReportData();
+                          },
                           child: Container(
                               width: 200,
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   color: AppColors.bilu,
                                   borderRadius: BorderRadius.circular(10)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: const [
                                   Icon(
-                                    Icons.add,
+                                    Icons.edit,
                                     size: 30,
                                     color: Colors.white,
                                   ),
@@ -306,7 +334,7 @@ class ReportScreen extends StatelessWidget {
                                     width: 10,
                                   ),
                                   Text(
-                                    'Add',
+                                    'Submit',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ],
@@ -320,14 +348,15 @@ class ReportScreen extends StatelessWidget {
             });
       },
       child: Container(
-        margin: EdgeInsets.only(right: 20),
-        padding: EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
+        margin: const EdgeInsets.only(right: 20),
+        padding:
+            const EdgeInsets.only(right: 15, left: 10, bottom: 15, top: 15),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Row(
-          children: [
+          children: const [
             Icon(
               Icons.add,
               size: 15,
@@ -343,18 +372,22 @@ class ReportScreen extends StatelessWidget {
     );
   }
 
-  Widget buttonsearch() {
+  Widget buttonsearch(ReportController controller) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        controller.reportData.value =
+            controller.search(controller.searchController.text);
+      },
       child: Container(
-        padding: EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
-        decoration: BoxDecoration(
+        padding:
+            const EdgeInsets.only(right: 20, left: 20, bottom: 15, top: 15),
+        decoration: const BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
         ),
         child: Row(
-          children: [
+          children: const [
             Text(
               'Search',
               style: TextStyle(color: Colors.white, fontSize: 15),
@@ -365,10 +398,11 @@ class ReportScreen extends StatelessWidget {
     );
   }
 
-  Widget item(List<DataReport> value, int index, BuildContext context) {
+  Widget item(
+      List<DataReport> value, int index, BuildContext context, controller) {
     return Container(
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Colors.white,
@@ -381,64 +415,101 @@ class ReportScreen extends StatelessWidget {
               Container(
                 width: 50,
                 height: 50,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('assets/documents.png'))),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
-              Text(
-                '${value[index].reportTitle}',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+              SizedBox(
+                  width: 250,
+                  child: Text(
+                    '${value[index].reportTitle}',
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.calendar_month,
+                    size: 15,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    '${value[index].reportDate}',
+                    style: const TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(
+                    Icons.verified_user,
+                    size: 20,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    '${value[index].shortName}',
+                    style: const TextStyle(fontSize: 15),
+                  ),
+                ],
               ),
             ],
           ),
-          Row(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                Icons.calendar_month,
-                size: 15,
-              ),
-              SizedBox(
-                width: 5,
-              ),
               Text(
-                '${value[index].reportDate}',
-                style: TextStyle(color: Colors.grey, fontSize: 15),
+                'Penanggung Jawab',
+                style: const TextStyle(color: Colors.black, fontSize: 15),
               ),
-            ],
-          ),
-          Row(
-            children: [
-              Icon(
-                Icons.location_on,
-                size: 20,
+              const SizedBox(
+                height: 10,
               ),
-              SizedBox(
-                width: 5,
+              Row(
+                children: [
+                  Text(
+                    '${value[index].responsibleParty}',
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.bold),
+                  )
+                ],
               ),
-              Text(
-                '${value[index].responsibleParty}',
-                style: TextStyle(fontSize: 15),
-              )
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               seemore(context, value[index].attachment ?? ""),
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
-              Edit(context),
-              SizedBox(
+              Edit(context, controller, value[index]),
+              const SizedBox(
                 width: 5,
               ),
-              bottonDelete(context),
+              bottonDelete(context, controller, value[index]),
             ],
           )
         ],
@@ -470,24 +541,24 @@ class ReportScreen extends StatelessWidget {
                                 Get.back();
                               },
                               child: Container(
-                                child: Icon(Icons.close),
+                                child: const Icon(Icons.close),
                               ),
                             ),
                           ],
                         ),
-                        Text(
+                        const Text(
                           'File ',
                           style: TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        Container(
+                        const SizedBox(
                             height: 200,
                             width: 200,
                             child: Image(image: AssetImage('assets/pdf.jpg'))),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         url != ""
@@ -497,7 +568,7 @@ class ReportScreen extends StatelessWidget {
                                 },
                                 child: Container(
                                     width: 200,
-                                    padding: EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
                                         color: AppColors.bilu,
                                         borderRadius:
@@ -505,7 +576,7 @@ class ReportScreen extends StatelessWidget {
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: [
+                                      children: const [
                                         Icon(
                                           Icons.download,
                                           size: 30,
@@ -529,12 +600,13 @@ class ReportScreen extends StatelessWidget {
             });
       },
       child: Container(
-        padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+        padding:
+            const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Row(children: [
+        child: Row(children: const [
           Icon(
             Icons.remove_red_eye,
             size: 15,
@@ -552,9 +624,17 @@ class ReportScreen extends StatelessWidget {
     );
   }
 
-  Widget Edit(context) {
+  Widget Edit(context, ReportController controller, DataReport value) {
     return InkWell(
       onTap: () {
+        controller.userIdTextController.text = value.userId ?? "";
+        controller.reportDateTextController.text = value.reportDate ?? "";
+        controller.reportTitleTextController.text = value.reportTitle ?? "";
+        controller.responsiblePartyTextController.text =
+            value.responsibleParty ?? "";
+        controller.reportContentTextController.text = value.reportContent ?? "";
+        controller.attachmentTextController.text = value.attachment ?? "";
+
         showDialog<void>(
             context: context,
             barrierDismissible: true,
@@ -576,7 +656,7 @@ class ReportScreen extends StatelessWidget {
                                 Get.back();
                               },
                               child: Container(
-                                child: Icon(Icons.close),
+                                child: const Icon(Icons.close),
                               ),
                             ),
                           ],
@@ -584,22 +664,29 @@ class ReportScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Tanggal LPJ'),
-                            SizedBox(
+                            const Text('Tanggal LPJ'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                onTap: () async {
+                                  String selectedDate =
+                                      await selectDate(context);
+                                  controller.reportDateTextController.text =
+                                      selectedDate;
+                                },
+                                controller: controller.reportDateTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     hintText: 'Tanggal LPJ',
@@ -608,29 +695,31 @@ class ReportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Judul'),
-                            SizedBox(
+                            const Text('Judul'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.reportTitleTextController,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.grey),
+                                          const BorderSide(color: Colors.grey),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.blue),
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue),
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     hintText: 'Judul',
@@ -639,28 +728,31 @@ class ReportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Penanggung Jawab'),
-                            SizedBox(
+                            const Text('Penanggung Jawab'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.responsiblePartyTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Penanggung Jawab',
                                 ),
@@ -668,28 +760,31 @@ class ReportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Deskripsi'),
-                            SizedBox(
+                            const Text('Deskripsi'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller:
+                                    controller.reportContentTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Deskripsi',
                                 ),
@@ -697,28 +792,30 @@ class ReportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Link Dokumen'),
-                            SizedBox(
+                            const Text('Link Dokumen'),
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: 520,
                               child: TextField(
+                                controller: controller.attachmentTextController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
+                                    borderSide:
+                                        const BorderSide(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
-                                          BorderSide(color: Colors.blue),
+                                          const BorderSide(color: Colors.blue),
                                       borderRadius: BorderRadius.circular(10)),
                                   hintText: 'Link Dokumen',
                                 ),
@@ -726,20 +823,22 @@ class ReportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            controller.updateReportData(value.id);
+                          },
                           child: Container(
                               width: 200,
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   color: AppColors.bilu,
                                   borderRadius: BorderRadius.circular(10)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: const [
                                   Icon(
                                     Icons.edit,
                                     size: 30,
@@ -763,12 +862,13 @@ class ReportScreen extends StatelessWidget {
             });
       },
       child: Container(
-        padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+        padding:
+            const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Row(children: [
+        child: Row(children: const [
           Icon(
             Icons.edit,
             size: 15,
@@ -786,7 +886,7 @@ class ReportScreen extends StatelessWidget {
     );
   }
 
-  Widget bottonDelete(context) {
+  Widget bottonDelete(context, ReportController controller, DataReport value) {
     return InkWell(
       onTap: () {
         showDialog<void>(
@@ -803,7 +903,7 @@ class ReportScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        children: [
+                        children: const [
                           Icon(Icons.warning),
                           SizedBox(
                             width: 10,
@@ -815,16 +915,18 @@ class ReportScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              controller.deleteReportData(value.id);
+                            },
                             child: Container(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   bottom: 5, top: 5, left: 30, right: 30),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5)),
-                              child: Text("Yes"),
+                              child: const Text("Yes"),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           InkWell(
@@ -832,9 +934,9 @@ class ReportScreen extends StatelessWidget {
                               Get.back();
                             },
                             child: Container(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   bottom: 5, top: 5, left: 30, right: 30),
-                              child: Text("No"),
+                              child: const Text("No"),
                             ),
                           ),
                         ],
@@ -846,12 +948,13 @@ class ReportScreen extends StatelessWidget {
             });
       },
       child: Container(
-        padding: EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
+        padding:
+            const EdgeInsets.only(bottom: 9.5, top: 9.5, left: 12, right: 12),
         decoration: BoxDecoration(
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Row(children: [
+        child: Row(children: const [
           Icon(
             Icons.delete,
             size: 15,

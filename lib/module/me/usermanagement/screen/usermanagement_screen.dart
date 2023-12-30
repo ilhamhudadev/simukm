@@ -59,8 +59,8 @@ class UsermanagementScreen extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(5),
-                                      boxShadow: [
-                                        const BoxShadow(
+                                      boxShadow: const [
+                                        BoxShadow(
                                             color: Colors.grey,
                                             blurRadius: 1.0,
                                             offset: Offset(0, 1))
@@ -95,7 +95,7 @@ class UsermanagementScreen extends StatelessWidget {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                buttonAdd(context, controller)
+                                buttonAdd(contextUser, controller)
                               ],
                             ),
                           ],
@@ -153,12 +153,12 @@ class UsermanagementScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        children: [
-                          const Icon(Icons.warning),
-                          const SizedBox(
+                        children: const [
+                          Icon(Icons.warning),
+                          SizedBox(
                             width: 10,
                           ),
-                          const Text("Are you sure to delete"),
+                          Text("Are you sure to delete"),
                         ],
                       ),
                       Row(
@@ -204,16 +204,16 @@ class UsermanagementScreen extends StatelessWidget {
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Row(children: [
-          const Icon(
+        child: Row(children: const [
+          Icon(
             Icons.delete,
             size: 15,
             color: Colors.white,
           ),
-          const SizedBox(
+          SizedBox(
             width: 2,
           ),
-          const Text(
+          Text(
             'delete',
             style: TextStyle(color: Colors.white, fontSize: 13),
           )
@@ -224,17 +224,17 @@ class UsermanagementScreen extends StatelessWidget {
 
   Widget buttonEdit(
       context, UsermanagementController controller, index, Data value) {
-    controller.nameTextController.text = value.organizationName ?? "";
-    controller.emailTextController.text = value.email ?? "";
-    controller.usernameTextController.text = value.username ?? "";
-    controller.passwordTextController.text = value.password ?? "";
-    controller.igTextController.text = value.instagram ?? "";
-    controller.twitterTextController.text = value.twitter ?? "";
-    controller.phoneNumberTextController.text = value.contactNumber ?? "";
-    controller.youtubeTextController.text = value.youtube ?? "";
-    controller.shortNameTextController.text = value.shortName ?? "";
     return InkWell(
       onTap: () {
+        controller.nameTextController.text = value.organizationName ?? "";
+        controller.emailTextController.text = value.email ?? "";
+        controller.usernameTextController.text = value.username ?? "";
+        controller.passwordTextController.text = value.password ?? "";
+        controller.igTextController.text = value.instagram ?? "";
+        controller.twitterTextController.text = value.twitter ?? "";
+        controller.phoneNumberTextController.text = value.contactNumber ?? "";
+        controller.youtubeTextController.text = value.youtube ?? "";
+        controller.shortNameTextController.text = value.shortName ?? "";
         showDialog<void>(
             context: context,
             barrierDismissible: true,
@@ -252,6 +252,15 @@ class UsermanagementScreen extends StatelessWidget {
                             InkWell(
                               onTap: () {
                                 Get.back();
+                                controller.nameTextController.text = "";
+                                controller.emailTextController.text = "";
+                                controller.usernameTextController.text = "";
+                                controller.passwordTextController.text = "";
+                                controller.igTextController.text = "";
+                                controller.twitterTextController.text = "";
+                                controller.phoneNumberTextController.text = "";
+                                controller.youtubeTextController.text = "";
+                                controller.shortNameTextController.text = "";
                               },
                               child: Container(
                                 child: const Icon(Icons.close),
@@ -511,7 +520,7 @@ class UsermanagementScreen extends StatelessWidget {
                               color: AppColors.bilu,
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: const Text('Save',
+                            child: const Text('Submit',
                                 style: TextStyle(color: Colors.white)),
                           ),
                         ),
@@ -528,16 +537,16 @@ class UsermanagementScreen extends StatelessWidget {
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Row(children: [
-          const Icon(
+        child: Row(children: const [
+          Icon(
             Icons.edit,
             size: 15,
             color: Colors.white,
           ),
-          const SizedBox(
+          SizedBox(
             width: 5,
           ),
-          const Text(
+          Text(
             'Edit',
             style: TextStyle(color: Colors.white, fontSize: 15),
           )
@@ -549,6 +558,15 @@ class UsermanagementScreen extends StatelessWidget {
   Widget buttonAdd(context, UsermanagementController controller) {
     return InkWell(
       onTap: () {
+        controller.nameTextController.text = "";
+        controller.emailTextController.text = "";
+        controller.usernameTextController.text = "";
+        controller.passwordTextController.text = "";
+        controller.igTextController.text = "";
+        controller.twitterTextController.text = "";
+        controller.phoneNumberTextController.text = "";
+        controller.youtubeTextController.text = "";
+        controller.shortNameTextController.text = "";
         showDialog<void>(
             context: context,
             barrierDismissible: true,
@@ -825,7 +843,7 @@ class UsermanagementScreen extends StatelessWidget {
                               color: AppColors.bilu,
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: const Text('Save',
+                            child: const Text('Submit',
                                 style: TextStyle(color: Colors.white)),
                           ),
                         ),
@@ -845,14 +863,14 @@ class UsermanagementScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
         ),
         child: Row(
-          children: [
-            const Icon(
+          children: const [
+            Icon(
               Icons.add,
               size: 15,
               color: Colors.white,
             ),
-            const SizedBox(width: 5),
-            const Text(
+            SizedBox(width: 5),
+            Text(
               'Create',
               style: TextStyle(color: Colors.white),
             ),
@@ -876,16 +894,16 @@ class UsermanagementScreen extends StatelessWidget {
               topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
         ),
         child: Row(
-          children: [
-            const Icon(
+          children: const [
+            Icon(
               Icons.search,
               size: 20,
               color: Colors.white,
             ),
-            const SizedBox(
+            SizedBox(
               width: 5,
             ),
-            const Text(
+            Text(
               'Search',
               style: TextStyle(color: Colors.white, fontSize: 15),
             ),
@@ -952,66 +970,64 @@ class UsermanagementScreen extends StatelessWidget {
                       ),
                     ),
                     Row(
-                      children: [],
+                      children: const [],
                     ),
                   ],
                 ),
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 150,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Username',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          Text('${model.email}',
-                              style: const TextStyle(color: Color(0xFF6C6B6B))),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 150,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Email',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            '${model.email}',
-                            style: const TextStyle(color: Color(0xFF6C6B6B)),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 150,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        seemore(model, context),
-                        const SizedBox(
-                          width: 10,
+                        const Text(
+                          'Username',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                        buttonEdit(context, controller, index, model),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        bottonDelete(context, controller, model)
+                        Text('${model.email}',
+                            style: const TextStyle(color: Color(0xFF6C6B6B))),
                       ],
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 150,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Email',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${model.email}',
+                          style: const TextStyle(color: Color(0xFF6C6B6B)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      seemore(model, context),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      buttonEdit(context, controller, index, model),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      bottonDelete(context, controller, model)
+                    ],
+                  )
+                ],
               ),
             ],
           ),
@@ -1109,16 +1125,16 @@ class UsermanagementScreen extends StatelessWidget {
           color: AppColors.bilu,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Row(children: [
-          const Icon(
+        child: Row(children: const [
+          Icon(
             Icons.remove_red_eye,
             size: 13,
             color: Colors.white,
           ),
-          const SizedBox(
+          SizedBox(
             width: 5,
           ),
-          const Text(
+          Text(
             'See more',
             style: TextStyle(color: Colors.white, fontSize: 13),
           )

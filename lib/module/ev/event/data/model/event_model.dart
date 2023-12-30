@@ -37,6 +37,8 @@ class DataEvent {
   String? eventName;
   String? eventDescription;
   String? eventAttachment;
+  String? organizationName;
+  String? shortName;
 
   DataEvent(
       {this.id,
@@ -44,7 +46,9 @@ class DataEvent {
       this.eventDate,
       this.eventName,
       this.eventDescription,
-      this.eventAttachment});
+      this.eventAttachment,
+      this.organizationName,
+      this.shortName});
 
   DataEvent.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -53,6 +57,8 @@ class DataEvent {
     eventName = json['event_name'];
     eventDescription = json['event_description'];
     eventAttachment = json['event_attachment'];
+    organizationName = json['organization_name'];
+    shortName = json['short_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +69,8 @@ class DataEvent {
     data['event_name'] = this.eventName;
     data['event_description'] = this.eventDescription;
     data['event_attachment'] = this.eventAttachment;
+    data['organization_name'] = this.organizationName;
+    data['short_name'] = this.shortName;
     return data;
   }
 }

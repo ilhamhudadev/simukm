@@ -37,6 +37,8 @@ class DataDecision {
   String? decisionTitle;
   String? decisionDate;
   String? letterAttachment;
+  String? organizationName;
+  String? shortName;
 
   DataDecision(
       {this.id,
@@ -44,7 +46,9 @@ class DataDecision {
       this.decisionNumber,
       this.decisionTitle,
       this.decisionDate,
-      this.letterAttachment});
+      this.letterAttachment,
+      this.organizationName,
+      this.shortName});
 
   DataDecision.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -53,6 +57,8 @@ class DataDecision {
     decisionTitle = json['decision_title'];
     decisionDate = json['decision_date'];
     letterAttachment = json['letter_attachment'];
+    organizationName = json['organization_name'];
+    shortName = json['short_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +69,8 @@ class DataDecision {
     data['decision_title'] = this.decisionTitle;
     data['decision_date'] = this.decisionDate;
     data['letter_attachment'] = this.letterAttachment;
+    data['organization_name'] = this.organizationName;
+    data['short_name'] = this.shortName;
     return data;
   }
 }

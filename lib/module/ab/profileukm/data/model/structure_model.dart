@@ -39,6 +39,8 @@ class DataStructure {
   String? president;
   String? vicePresident;
   String? member;
+  String? organizationName;
+  String? shortName;
 
   DataStructure(
       {this.id,
@@ -47,7 +49,9 @@ class DataStructure {
       this.adviser,
       this.president,
       this.vicePresident,
-      this.member});
+      this.member,
+      this.organizationName,
+      this.shortName});
 
   DataStructure.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -57,6 +61,8 @@ class DataStructure {
     president = json['president'];
     vicePresident = json['vice_president'];
     member = json['member'];
+    organizationName = json['organization_name'];
+    shortName = json['short_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -68,6 +74,8 @@ class DataStructure {
     data['president'] = this.president;
     data['vice_president'] = this.vicePresident;
     data['member'] = this.member;
+    data['organization_name'] = this.organizationName;
+    data['short_name'] = this.shortName;
     return data;
   }
 }

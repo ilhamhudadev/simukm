@@ -20,9 +20,9 @@ class VisiModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['statusCode'] = this.statusCode;
-    data['statusMessage'] = this.statusMessage;
-    data['message'] = this.message;
+    data['statusCode'] = statusCode;
+    data['statusMessage'] = statusMessage;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -47,10 +47,10 @@ class DataVisi {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['vision'] = this.vision;
-    data['mission'] = this.mission;
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['vision'] = vision;
+    data['mission'] = mission;
     return data;
   }
 }

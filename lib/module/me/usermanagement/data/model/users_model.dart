@@ -19,10 +19,10 @@ class UsersModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['statusCode'] = this.statusCode;
-    data['statusMessage'] = this.statusMessage;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['statusCode'] = statusCode;
+    data['statusMessage'] = statusMessage;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -57,32 +57,32 @@ class Data {
       this.password});
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    organizationName = json['organization_name'];
-    shortName = json['short_name'];
-    history = json['history'];
-    contactNumber = json['contact_number'];
-    email = json['email'];
+    id = json['id'] ?? "";
+    organizationName = json['organization_name'] ?? "";
+    shortName = json['short_name'] ?? "";
+    history = json['history'] ?? "";
+    contactNumber = json['contact_number'] ?? "";
+    email = json['email'] ?? "";
     instagram = json['instagram'];
-    youtube = json['youtube'];
-    twitter = json['twitter'];
-    username = json['username'];
-    password = json['password'];
+    youtube = json['youtube'] ?? "";
+    twitter = json['twitter'] ?? "";
+    username = json['username'] ?? "";
+    password = json['password'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['organization_name'] = this.organizationName;
-    data['short_name'] = this.shortName;
-    data['history'] = this.history;
-    data['contact_number'] = this.contactNumber;
-    data['email'] = this.email;
-    data['instagram'] = this.instagram;
-    data['youtube'] = this.youtube;
-    data['twitter'] = this.twitter;
-    data['username'] = this.username;
-    data['password'] = this.password;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['organization_name'] = organizationName;
+    data['short_name'] = shortName;
+    data['history'] = history;
+    data['contact_number'] = contactNumber;
+    data['email'] = email;
+    data['instagram'] = instagram;
+    data['youtube'] = youtube;
+    data['twitter'] = twitter;
+    data['username'] = username;
+    data['password'] = password;
     return data;
   }
 }

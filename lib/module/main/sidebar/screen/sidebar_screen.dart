@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sidebarx/sidebarx.dart';
-import 'package:standard_project/core/assets/app_assets.dart';
+import 'package:standard_project/core/globalcontroller/app_function.dart';
 import 'package:standard_project/module/ab/profileukm/screen/Decree_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/organizationalStructure_screen.dart';
 import 'package:standard_project/module/ab/profileukm/screen/report_screen.dart';
-import 'package:standard_project/module/ab/profileukm/screen/visimisi_screen.dart';
 import 'package:standard_project/module/ac/achievement/screen/achievement_screen.dart';
 import 'package:standard_project/module/ev/event/screen/event_screen.dart';
+import 'package:standard_project/module/main/sidebar/controller/sidebar_controller.dart';
 import 'package:standard_project/module/me/profile/screen/profile_screen.dart';
 import 'package:standard_project/module/me/usermanagement/screen/usermanagement_screen.dart';
-import 'package:standard_project/module/mr/listukm/data/repo/listukm_repo.dart';
-import 'package:standard_project/module/mr/listukm/screen/listukm_screen.dart';
 import 'package:standard_project/module/pr/proposal/screen/proposal_screen.dart';
 
 class SideBarScreen extends StatelessWidget {
@@ -21,56 +20,68 @@ class SideBarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: primaryColor,
-        canvasColor: canvasColor,
-        scaffoldBackgroundColor: scaffoldBackgroundColor,
-        textTheme: const TextTheme(
-          headlineSmall: TextStyle(
-            color: Colors.white,
-            fontSize: 46,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      ),
-      home: Builder(
-        builder: (context) {
-          final isSmallScreen = MediaQuery.of(context).size.width < 600;
-          return Scaffold(
-            key: _key,
-            appBar: isSmallScreen
-                ? AppBar(
-                    backgroundColor: canvasColor,
-                    title: Text(_getTitleByIndex(_controller.selectedIndex)),
-                    leading: IconButton(
-                      onPressed: () {
-                        // if (!Platform.isAndroid && !Platform.isIOS) {
-                        //   _controller.setExtended(true);
-                        // }
-                        _key.currentState?.openDrawer();
-                      },
-                      icon: const Icon(Icons.menu),
-                    ),
-                  )
-                : null,
-            drawer: ExampleSidebarX(controller: _controller),
-            body: Row(
-              children: [
-                if (!isSmallScreen) ExampleSidebarX(controller: _controller),
-                Expanded(
-                  child: Center(
-                    child: _ScreensExample(
-                      controller: _controller,
-                    ),
-                  ),
+    return FutureBuilder<String>(
+      future: isUserId(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          userId = snapshot.data ?? "";
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primaryColor: primaryColor,
+              canvasColor: canvasColor,
+              scaffoldBackgroundColor: scaffoldBackgroundColor,
+              textTheme: const TextTheme(
+                headlineSmall: TextStyle(
+                  color: Colors.white,
+                  fontSize: 46,
+                  fontWeight: FontWeight.w800,
                 ),
-              ],
+              ),
+            ),
+            home: Builder(
+              builder: (context) {
+                final isSmallScreen = MediaQuery.of(context).size.width < 600;
+                return Scaffold(
+                  key: _key,
+                  appBar: isSmallScreen
+                      ? AppBar(
+                          backgroundColor: canvasColor,
+                          title:
+                              Text(_getTitleByIndex(_controller.selectedIndex)),
+                          leading: IconButton(
+                            onPressed: () {
+                              // if (!Platform.isAndroid && !Platform.isIOS) {
+                              //   _controller.setExtended(true);
+                              // }
+                              _key.currentState?.openDrawer();
+                            },
+                            icon: const Icon(Icons.menu),
+                          ),
+                        )
+                      : null,
+                  drawer: ExampleSidebarX(controller: _controller),
+                  body: Row(
+                    children: [
+                      if (!isSmallScreen)
+                        ExampleSidebarX(controller: _controller),
+                      Expanded(
+                        child: Center(
+                          child: _ScreensExample(
+                            controller: _controller,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           );
-        },
-      ),
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
     );
   }
 }
@@ -139,11 +150,11 @@ class ExampleSidebarX extends StatelessWidget {
             //  Text("SIM Nilai")
             Center(
                 child: Container(
-          margin: EdgeInsets.all(50),
+          margin: const EdgeInsets.all(50),
           width: 100,
           height: 100,
           decoration: BoxDecoration(
-            image: DecorationImage(
+            image: const DecorationImage(
                 image: NetworkImage(
                     'https://tse4.mm.bing.net/th?id=OIP.v2EJ6yhWzDCJ_v6qIXWlrgHaHa&pid=Api&P=0&h=180'),
                 fit: BoxFit.cover),
@@ -153,7 +164,7 @@ class ExampleSidebarX extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 2,
                 blurRadius: 4,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: const Offset(0, 3), // changes position of shadow
               ),
             ],
           ),
@@ -222,7 +233,7 @@ class _ScreensExample extends StatelessWidget {
 
   final SidebarXController controller;
 
-  Widget buildItem(String title, int value) {
+  Widget buildItem(String title, String value) {
     return GestureDetector(
       onTap: () {
         // Tambahkan aksi yang diinginkan ketika item diklik
@@ -242,15 +253,17 @@ class _ScreensExample extends StatelessWidget {
                 Container(
                     width: 150,
                     child: Center(
-                        child: Text(title, style: TextStyle(fontSize: 20)))),
-                SizedBox(
+                        child:
+                            Text(title, style: const TextStyle(fontSize: 20)))),
+                const SizedBox(
                   height: 20,
                 ),
                 Text(
                   value.toString(),
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 40, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
               ],
@@ -263,6 +276,8 @@ class _ScreensExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SidebarController dashController = Get.put(SidebarController());
+    dashController.getDashboardData();
     final theme = Theme.of(context);
     return AnimatedBuilder(
       animation: controller,
@@ -271,17 +286,58 @@ class _ScreensExample extends StatelessWidget {
         switch (controller.selectedIndex) {
           case 0:
             return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  buildItem('Total Proposal', 2),
-                  buildItem('Total Surat Keputusan', 2),
-                  buildItem('Total Event', 2),
-                  buildItem('Total Laporan Pertanggung Jawaban', 3),
-                ],
-              ),
-            );
+                padding: const EdgeInsets.all(16.0),
+                child: Obx(
+                  () => Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Center(
+                            child: Container(
+                                margin: const EdgeInsets.all(20),
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                    color: Colors.amber[600],
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        "Selamat datang kembali di ",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w300),
+                                      ),
+                                      const Text(
+                                        "Sistem Informasi UKM",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ]))),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            buildItem('Total UKM',
+                                "${dashController.organisasiCount}"),
+                            buildItem('Total SK', "${dashController.skCount}"),
+                            buildItem(
+                                'Total Event', "${dashController.eventCount}"),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            buildItem('Total Proposal',
+                                "${dashController.proposalCount}"),
+                            buildItem(
+                                'Total LPJ', "${dashController.laporanCount}"),
+                          ],
+                        )
+                      ]),
+                ));
           //dashboard
           case 1:
             return ProfileScreen();
@@ -305,7 +361,7 @@ class _ScreensExample extends StatelessWidget {
             return AchievementScreen();
           //  Profile
           case 8:
-            return ProposalScreen();
+            return const ProposalScreen();
           //  Profile
           // case 9:
           //   return VisiMisiScreen();
